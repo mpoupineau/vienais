@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% set page = 'dashboard' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">language</i>
+                    </div>
+                    <p class="card-category">Visites (hier)</p>
+                    <h3 class="card-title">18</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">forward</i>
+                        <a href="#">Domaine des vienais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon" style="background: #3b5998">
+                        <i class="fa fa-facebook"></i>
+                    </div>
+                    <p class="card-category">Amis</p>
+                    <h3 class="card-title">245</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">forward</i>
+                        <a href="#">Facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon" style="background: #1da1f2">
+                        <i class="fa fa-twitter"></i>
+                    </div>
+                    <p class="card-category">Followers</p>
+                    <h3 class="card-title">123</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">forward</i>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-icon" style="background: #fb3958">
+                        <i class="fa fa-instagram"></i>
+                    </div>
+                    <p class="card-category">Abonnés</p>
+                    <h3 class="card-title">1748</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">forward</i>
+                        <a href="#">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

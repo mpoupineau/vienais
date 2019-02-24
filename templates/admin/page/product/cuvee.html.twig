@@ -1,0 +1,157 @@
+{% extends 'admin/page/product.html.twig' %}
+{% set page = 'cuvee' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header card-header-text card-header-info">
+                    <div class="card-text">
+                        <h4 class="card-title">
+                            {% block cuvee_action_title %}
+                            Nouveau
+                            {% endblock %}
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row" style="padding-left: 30px;">
+                        <div class="col-xl-5">
+                            <div class="row">
+                                {% block cuvee_input_image %}
+                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail img-raised">
+                                        <img src="{{ asset('images/no_image.png') }}" alt="pas d'image">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail img-raised" ></div>
+                                    <div>
+                                            <span class="btn btn-raised btn-file btn-primary">
+                                                <span class="fileinput-new">Choisir une image</span>
+                                                <span class="fileinput-exists">Changer</span>
+                                                {{ form_widget(form.image_file) }}
+                                            </span>
+                                        <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Supprimer</a>
+                                    </div>
+                                </div>
+                                {% endblock %}
+                            </div>
+                        </div>
+                        <div class="col-xl-7">
+                            <div class="form-group">
+                                {{ form_label(form.name) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.description) }}
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+                            </div>
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        {{ form_widget(form.visible) }}
+                                        <span class="toggle"></span>
+                                        {{ form_label(form.visible) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" style="text-align: right">
+                                {% block cuvee_action_button %}
+                                    {{ form_widget(form.save, {'label':'Ajouter', 'attr': {'class': 'btn btn-fill btn-success btn-wd'}}) }}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-shopping">
+                        <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th>Nom</th>
+                            <th class="th-description">Description</th>
+                            <th class="th-description">Visible</th>
+                            <th style="width:100px">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for cuvee in cuvees %}
+                            <tr>
+                                <td>
+                                    <div class="" style="text-align: center">
+                                        <img src="{{ asset( image_cuvee_location ~ cuvee.imagePath) }}" alt="image non existante" style="height: 100px">
+                                    </div>
+                                </td>
+                                <td class="td-name">
+                                    {{ cuvee.name }}
+                                </td>
+                                <td>
+                                    {{ cuvee.description }}
+                                </td>
+                                <td>
+                                    {% if cuvee.visible %}
+                                        <i class="material-icons" style="color:green;">done</i>
+                                    {% else %}
+                                        <i class="material-icons" style="color:red;">clear</i>
+                                    {% endif %}
+
+                                </td>
+                                <td class="td-actions">
+                                    <a href="{{ path('admin_product_cuvee_update', { 'cuveeId': cuvee.id }) }}" class="btn btn-success btn-simple">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#cuveeDeleteModal" data-id="{{ cuvee.id }}" data-name="{{ cuvee.name }}">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cuveeDeleteModal" tabindex="-1" role="dialog" aria-labelledby="cuveeDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cuveeDeleteModalLabel">Supprimer la cuvée</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#cuveeDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var name = button.data('name') // Extract info from data-* attributes
+        var id = button.data('id') // Extract info from data-* attributes
+        var url = '{{ path('admin_product_cuvee_delete', { 'cuveeId': 'id' }) }}'
+        url = url.replace("id", id)
+        var modal = $(this)
+        modal.find('.modal-title').text('Supprimer la cuvée ' + name)
+        modal.find('.modal-footer a').attr("href", url)
+    })
+</script>
+{% endblock %}
+
+

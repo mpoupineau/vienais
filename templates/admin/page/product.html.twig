@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block subnavbar %}
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link"  href="#">Bouteille</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link {% if page is defined and page == 'cuvee' %}active{% endif %}" style="background: #9c27b0;" href="{{ path('admin_product_cuvee') }}">Cuvée</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Type de vin</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Capacité</a>
+        </li>
+    </ul>
+{% endblock %}

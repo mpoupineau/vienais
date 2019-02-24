@@ -1,0 +1,89 @@
+{% set list_product = ['bottle', 'cuvee'] %}
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="{{ asset('admin/img/sidebar-3.jpg') }}">
+    <!--
+    Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+    Tip 2: you can also add an image using data-image tag
+-->
+    <div class="logo">
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            Domaine des Vienais
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li class="nav-item {% if page is defined and page == 'dashboard' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('admin_dashboard') }}">
+                    <i class="material-icons">dashboard</i>
+                    <p>Tableau de bord</p>
+                </a>
+            </li>
+            <li class="nav-item {% if page is defined and page in list_product %}active{% endif %}">
+                <a class="nav-link" href="{{ path('admin_product_cuvee') }}">
+                    <i class="material-icons">local_bar</i>
+                    <p>Produits</p>
+                </a>
+            </li>
+            <li class="nav-item {% if page is defined and page == 'price' %}active{% endif %}">
+                <a class="nav-link" href="#">
+                    <i class="material-icons">euro_symbol</i>
+                    <p>Tarif</p>
+                </a>
+            </li>
+            <li class="nav-item {% if page is defined and page == 'navbar' %}active{% endif %}">
+                <a class="nav-link" href="#">
+                    <i class="material-icons">list</i>
+                    <p>Menu</p>
+                </a>
+            </li>
+            <li class="nav-item {% if page is defined and page == 'content' %}active{% endif %}">
+                <a class="nav-link collapsed" data-toggle="collapse" href="#pagesExamples" aria-expanded="false">
+                    <i class="material-icons">image</i>
+                    <p> Pages
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="pagesExamples" style="">
+                    <ul class="nav">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="../examples/pages/pricing.html">
+                                <span class="sidebar-mini"> P </span>
+                                <span class="sidebar-normal"> Pricing </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="../examples/pages/rtl.html">
+                                <span class="sidebar-mini"> RS </span>
+                                <span class="sidebar-normal"> RTL Support </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="../examples/pages/timeline.html">
+                                <span class="sidebar-mini"> T </span>
+                                <span class="sidebar-normal"> Timeline </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item {% if page is defined and page == 'order' %}active{% endif %}">
+                <a class="nav-link" href="#">
+                    <i class="material-icons">payment</i>
+                    <p>Commandes</p>
+                </a>
+            </li>
+            <li class="nav-item {% if page is defined and page == 'message' %}active{% endif %}">
+                <a class="nav-link" href="#">
+                    <i class="material-icons">email</i>
+                    <p>Messages</p>
+                </a>
+            </li>
+            <li class="nav-item {% if page is defined and page == 'message' %}active{% endif %}">
+                <a class="nav-link" href="#">
+                    <i class="material-icons">bar_chart</i>
+                    <p>Statistiques</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

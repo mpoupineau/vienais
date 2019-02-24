@@ -13,6 +13,7 @@ RUN apt-get install -y --no-install-recommends \
     vim
 
 RUN docker-php-ext-install zip
+RUN docker-php-ext-install pdo pdo_mysql
 
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
