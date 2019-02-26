@@ -9,6 +9,7 @@ namespace App\Controller;
  */
 
 use App\Entity\Cuvee;
+use App\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,5 +38,33 @@ class AdminController extends AbstractController
     public function dashboard()
     {
         return $this->render('admin/page/dashboard.html.twig');
+    }
+
+    /**
+     * @Route("/admin/message", name="admin_message")
+     */
+    public function message()
+    {
+
+        return $this->render('admin/page/message.html.twig',
+            [
+                'messages' => $this->getDoctrine()->getRepository(Message::class)->findAll()
+            ]);
+    }
+
+    /**
+     * @Route("/admin/pricing", name="admin_pricing")
+     */
+    public function pricing()
+    {
+        return $this->render('admin/page/pricing.html.twig');
+    }
+
+    /**
+     * @Route("/admin/order", name="admin_order")
+     */
+    public function order()
+    {
+        return $this->render('admin/page/order.html.twig');
     }
 }

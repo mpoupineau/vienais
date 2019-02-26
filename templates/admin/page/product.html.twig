@@ -3,10 +3,10 @@
 {% block subnavbar %}
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a class="nav-link"  href="#">Bouteille</a>
+            <a class="nav-link {% if page is defined and page == 'bottle' %}active{% endif %}"  href="{{ path('admin_product_bottle') }}">Bouteille</a>
         </li>
         <li class="nav-item ">
-            <a class="nav-link {% if page is defined and page == 'cuvee' %}active{% endif %}" style="background: #9c27b0;" href="{{ path('admin_product_cuvee') }}">Cuvée</a>
+            <a class="nav-link {% if page is defined and page == 'cuvee' %}active{% endif %}"  href="{{ path('admin_product_cuvee') }}">Cuvée</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Type de vin</a>

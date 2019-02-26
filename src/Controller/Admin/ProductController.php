@@ -8,6 +8,7 @@ namespace App\Controller\Admin;
  * Time: 15:31
  */
 
+use App\Entity\Bottle;
 use App\Form\Admin\CuveeType;
 use App\Entity\Cuvee;
 use App\Product\CuveeManager;
@@ -88,5 +89,25 @@ class ProductController extends AbstractController
         $session = new Session();
         $session->getFlashBag()->add('success', "Cuvée \"" . $cuvee->getName() . "\" supprimé");
         return $this->redirectToRoute('admin_product_cuvee');
+    }
+
+    /**
+     * @Route("bottle", name="bottle")
+     */
+    public function bottle(Request $request, CuveeManager $cuveeManager)
+    {
+        /*$form = $this->createForm(CuveeType::class, new Cuvee());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $cuveeManager->add($form->getData());
+            $session = new Session();
+            $session->getFlashBag()->add('success', "Cuvee Ajoutée");
+        }*/
+
+        return $this->render('admin/page/product/bottle.html.twig',
+            [
+                'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findAll()
+            ]);
     }
 }

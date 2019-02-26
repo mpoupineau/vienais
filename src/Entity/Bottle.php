@@ -45,37 +45,40 @@ class Bottle
     /**
      * @var bool
      *
-     * @ORM\Column(name="hidden", type="boolean", nullable=false)
+     * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
-    private $hidden = '0';
+    private $visible = true;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="available", type="boolean", nullable=false)
      */
-    private $available = '0';
+    private $available = false;
 
     /**
-     * @var int|null
+     * @var Cuvee|null
      *
-     * @ORM\Column(name="cuvee_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cuvee")
+     * @ORM\JoinColumn(name="cuvee_id", referencedColumnName="id")
      */
-    private $cuveeId;
+    private $cuvee;
 
     /**
-     * @var int|null
+     * @var WineType|null
      *
-     * @ORM\Column(name="wine_type_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\WineType")
+     * @ORM\JoinColumn(name="wine_type_id", referencedColumnName="id")
      */
-    private $wineTypeId;
+    private $wineType;
 
     /**
-     * @var int|null
+     * @var Capacity|null
      *
-     * @ORM\Column(name="capacity_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Capacity")
+     * @ORM\JoinColumn(name="capacity_id", referencedColumnName="id")
      */
-    private $capacityId;
+    private $capacity;
 
     /**
      * @return int
@@ -152,18 +155,18 @@ class Bottle
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isVisible()
     {
-        return $this->hidden;
+        return $this->visible;
     }
 
     /**
-     * @param bool $hidden
+     * @param bool $visible
      * @return Bottle
      */
-    public function setHidden($hidden)
+    public function setVisible($visible)
     {
-        $this->hidden = $hidden;
+        $this->visible = $visible;
         return $this;
     }
 
@@ -185,5 +188,57 @@ class Bottle
         return $this;
     }
 
+    /**
+     * @return Cuvee|null
+     */
+    public function getCuvee()
+    {
+        return $this->cuvee;
+    }
 
+    /**
+     * @param Cuvee|null $cuvee
+     * @return Bottle
+     */
+    public function setCuvee($cuvee)
+    {
+        $this->cuvee = $cuvee;
+        return $this;
+    }
+
+    /**
+     * @return WineType|null
+     */
+    public function getWineType()
+    {
+        return $this->wineType;
+    }
+
+    /**
+     * @param WineType|null $wineType
+     * @return Bottle
+     */
+    public function setWineType($wineType)
+    {
+        $this->wineType = $wineType;
+        return $this;
+    }
+
+    /**
+     * @return Capacity|null
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * @param Capacity|null $capacity
+     * @return Bottle
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+        return $this;
+    }
 }

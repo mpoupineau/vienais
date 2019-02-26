@@ -1,0 +1,107 @@
+{% extends 'admin/base.html.twig' %}
+{% set page = 'order' %}
+
+{% block content %}
+    <div class="row flex-column-reverse flex-md-row" >
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header card-header-text card-header-primary">
+                    <div class="card-text">
+                        <h4 class="card-title"><i class="material-icons">list</i>Liste</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr class="font-weight-bold">
+                                    <td style="width: 65px;">
+                                         <span class="badge badge-primary">#138</span>
+                                    </td>
+                                    <td>
+                                        Jean Dupont <span class="badge badge-info">New</span><br>
+                                        <i class="fa fa-paypal"></i> <b>138,40 €</b>
+                                    </td>
+                                    <td style="vertical-align:top;text-align: right">
+                                        <i class="material-icons text-primary">date_range</i><br>
+                                        18/04/2018
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-primary">#138</span>
+                                    </td>
+                                    <td>
+                                        Jean Dupont<br>
+                                        <b>138,40 €</b>
+                                    </td>
+                                    <td style="vertical-align:top;text-align: right">
+                                        <i class="material-icons  text-primary">date_range</i><br>
+                                        18/04/2018
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-primary">#138</span>
+                                    </td>
+                                    <td>
+                                        Jean Dupont<br>
+                                        <i class="fa fa-paypal text-default"></i> <b>138,40 €</b>
+                                    </td>
+                                    <td style="vertical-align:top;text-align: right">
+                                        <i class="material-icons  text-primary">date_range</i><br>
+                                        18/04/2018
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" >
+            <div class="card">
+                <div class="card-header card-header-text card-header-primary">
+                    <div class="card-text">
+                        <h4 class="card-title"><i class="material-icons">payment</i> Commande</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row" >
+                        <div class="col-xl-2 col-lg-3">
+                            <br>
+                            <span class="badge badge-primary" style="font-size: 20px">#138</span>
+                        </div>
+                        <div class="col-xl-7 col-lg-6">
+                            <dl class="row">
+                                <dt class="col-sm-3"><span class="text-primary">Nom</span></dt>
+                                <dd class="col-sm-8">Jean Dupont</dd>
+                                <dt class="col-sm-3"><span class="text-primary">Téléphone</span> </dt>
+                                <dd class="col-sm-8">0692831792</dd>
+                                <dt class="col-sm-3"><span class="text-primary">Email</span> </dt>
+                                <dd class="col-sm-8">jean.dupont@mail.com</dd>
+                            </dl>
+                        </div>
+                        <div class="col-lg-3 text-right">
+                            Mardi 18 Février 2019 20:12:09
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <span class="text-primary">Commande : </span><br>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo mauris eget ex dictum ullamcorper. Nulla nec nunc iaculis quam tincidunt aliquam pellentesque sed magna.
+                            Donec in ipsum dignissim, pellentesque mi in, cursus odio. Aenean a nulla a sem cursus convallis a in urna. Aliquam a ligula arcu. Aenean tincidunt congue ultricies.
+                            Sed convallis felis blandit ligula blandit,
+                            ultrices consectetur est elementum. Etiam dui mauris, fringilla quis vestibulum id, consequat a enim. Nunc ut ullamcorper nisi, sed hendrerit nisl.
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-dark" >Archiver</a>
+                    <a href="#" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

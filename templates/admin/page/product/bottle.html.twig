@@ -1,0 +1,67 @@
+{% extends 'admin/page/product.html.twig' %}
+{% set page = 'bottle' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-shopping">
+                        <thead class="text-primary">
+                        <tr>
+                            <th class="text-center">Nom</th>
+                            <th class="th-description">Description</th>
+                            <th>Visible</th>
+                            <th>Dispo</th>
+                            <th style="width:100px">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for bottle in bottles %}
+                            <tr>
+                                <td class="td-name text-center">
+                                    {{ bottle.year }} {{ bottle.cuvee.name }}<br>
+                                    {{ bottle.price|number_format(2) }} €
+                                </td>
+                                <td>
+                                    {{ bottle.description }}
+                                </td>
+                                <td>
+                                    {% if bottle.visible %}
+                                        <i class="material-icons" style="color:green;">done</i>
+                                    {% else %}
+                                        <i class="material-icons" style="color:red;">clear</i>
+                                    {% endif %}
+
+                                </td>
+                                <td>
+                                    {% if bottle.available %}
+                                        <i class="material-icons" style="color:green;">done</i>
+                                    {% else %}
+                                        <i class="material-icons" style="color:red;">clear</i>
+                                    {% endif %}
+                                </td>
+                                <td class="td-actions">
+                                    <a href="{{ path('admin_product_cuvee_update', { 'cuveeId': bottle.id }) }}" class="btn btn-success btn-simple">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#" data-id="{{ bottle.id }}">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

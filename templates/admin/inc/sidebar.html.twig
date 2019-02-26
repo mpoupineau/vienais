@@ -24,8 +24,8 @@
                     <p>Produits</p>
                 </a>
             </li>
-            <li class="nav-item {% if page is defined and page == 'price' %}active{% endif %}">
-                <a class="nav-link" href="#">
+            <li class="nav-item {% if page is defined and page == 'pricing' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('admin_pricing') }}">
                     <i class="material-icons">euro_symbol</i>
                     <p>Tarif</p>
                 </a>
@@ -67,18 +67,18 @@
                 </div>
             </li>
             <li class="nav-item {% if page is defined and page == 'order' %}active{% endif %}">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('admin_order') }}">
                     <i class="material-icons">payment</i>
                     <p>Commandes</p>
                 </a>
             </li>
             <li class="nav-item {% if page is defined and page == 'message' %}active{% endif %}">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('admin_message') }}">
                     <i class="material-icons">email</i>
                     <p>Messages</p>
                 </a>
             </li>
-            <li class="nav-item {% if page is defined and page == 'message' %}active{% endif %}">
+            <li class="nav-item {% if page is defined and page == 'stat' %}active{% endif %}">
                 <a class="nav-link" href="#">
                     <i class="material-icons">bar_chart</i>
                     <p>Statistiques</p>
