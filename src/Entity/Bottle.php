@@ -54,7 +54,7 @@ class Bottle
      *
      * @ORM\Column(name="available", type="boolean", nullable=false)
      */
-    private $available = false;
+    private $available = true;
 
     /**
      * @var Cuvee|null
@@ -65,20 +65,19 @@ class Bottle
     private $cuvee;
 
     /**
-     * @var WineType|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\WineType")
-     * @ORM\JoinColumn(name="wine_type_id", referencedColumnName="id")
-     */
-    private $wineType;
-
-    /**
      * @var Capacity|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Capacity")
      * @ORM\JoinColumn(name="capacity_id", referencedColumnName="id")
      */
     private $capacity;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="priority", type="integer")
+     */
+    private $priority = 0;
 
     /**
      * @return int
@@ -207,24 +206,6 @@ class Bottle
     }
 
     /**
-     * @return WineType|null
-     */
-    public function getWineType()
-    {
-        return $this->wineType;
-    }
-
-    /**
-     * @param WineType|null $wineType
-     * @return Bottle
-     */
-    public function setWineType($wineType)
-    {
-        $this->wineType = $wineType;
-        return $this;
-    }
-
-    /**
      * @return Capacity|null
      */
     public function getCapacity()
@@ -239,6 +220,24 @@ class Bottle
     public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     * @return Cuvee
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
         return $this;
     }
 }

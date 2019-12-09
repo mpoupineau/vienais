@@ -18,3 +18,7 @@
  - Administation (soon) : [http://localhost:8037/admin/](http://localhost:8037/admin/)
  - PhpMyAdmin : [http://localhost:8038/](http://localhost:8038/)
 
+### BDD
+ - Dans le container web 
+    - php bin/console make:migration
+    - php bin/console doctrine:migrations:migrate

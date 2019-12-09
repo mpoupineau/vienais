@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block stylesheets %}
+
+    {% endblock %}
+    <title>{% block title %}Welcome!!!{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="{{ asset('images/icons/favicon.png') }}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/fonts/themify/themify-icons.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/animate/animate.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/css-hamburgers/hamburgers.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/animsition/css/animsition.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/select2/select2.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/daterangepicker/daterangepicker.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/slick/slick.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/lightbox2/css/lightbox.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/css/main.css') }}">
+    <!--===============================================================================================-->
+</head>
+<body class="animsition">
+    {% include 'client/inc/header.html.twig' %}
+    <!-- Title Page -->
+    <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url({{ asset('images/cave.jpg')}});">
+        <h2 class="tit6 t-center">
+            {% block title_page %}{% endblock %}
+        </h2>
+    </section>
+    {% block body %}{% endblock %}
+    {% include 'client/inc/footer.html.twig' %}
+
+    <!-- Back to top -->
+    <div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+    </div>
+
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/animsition/js/animsition.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/bootstrap/js/popper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/select2/select2.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/daterangepicker/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/slick/slick.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('client/theme/js/slick-custom.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/parallax100/parallax100.js') }}"></script>
+    <script type="text/javascript">
+        $('.parallax100').parallax100();
+    </script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/countdowntime/countdowntime.js') }}"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/lightbox2/js/lightbox.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script src="{{ asset('client/theme/js/main.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
+    </body>
+
+</html>

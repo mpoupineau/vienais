@@ -7,6 +7,7 @@ namespace App\Form\Admin;
  * Time: 20:26
  */
 
+use App\Entity\WineType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -18,6 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Cuvee;
 
 class CuveeType extends AbstractType
@@ -35,6 +38,32 @@ class CuveeType extends AbstractType
                 [
                     'label' => 'Nom'
                 ])
+            ->add('wineType', EntityType::class,
+                [
+                    'label' => 'Type',
+                    'class' => WineType::class,
+                    'choice_label' => 'name'
+                ])
+            ->add('variety', TextareaType::class,
+                [
+                    'required' => false,
+                    'label' => 'Cépage'
+                ])
+            ->add('vinification', TextareaType::class,
+                [
+                    'required' => false,
+                    'label' => 'Vinification'
+                ])
+            ->add('tasting', TextareaType::class,
+                [
+                    'required' => false,
+                    'label' => 'Dégustation'
+                ])
+            ->add('accord', TextareaType::class,
+                [
+                    'required' => false,
+                    'label' => 'Accord'
+                ])
             ->add('description', TextareaType::class,
                 [
                     'label' => 'Description'
@@ -51,6 +80,10 @@ class CuveeType extends AbstractType
             ->add('image_file', FileType::class,
                 [
                     'required' => false
+                ])
+            ->add('priority', IntegerType::class,
+                [
+                    'label' => 'Priorité'
                 ])
             ->add('save', SubmitType::class)
         ;

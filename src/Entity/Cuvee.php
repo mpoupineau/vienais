@@ -36,6 +36,42 @@ class Cuvee
     private $description;
 
     /**
+     * @var WineType
+     *
+     * @ORM\ManyToOne(targetEntity="WineType")
+     * @ORM\JoinColumn(name="wine_type_id", referencedColumnName="id")
+     */
+    private $wineType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="variety", type="text", nullable=true)
+     */
+    private $variety;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vinification", type="text", nullable=true)
+     */
+    private $vinification;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tasting", type="text", nullable=true)
+     */
+    private $tasting;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="accord", type="text", nullable=true)
+     */
+    private $accord;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="image_path", type="string", length=255, nullable=true)
@@ -44,6 +80,13 @@ class Cuvee
 
 
     private $imageFile;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="priority", type="integer")
+     */
+    private $priority = 0;
 
     /**
      * @var bool
@@ -107,6 +150,24 @@ class Cuvee
     }
 
     /**
+     * @return WineType
+     */
+    public function getWineType()
+    {
+        return $this->wineType;
+    }
+
+    /**
+     * @param WineType $wineType
+     * @return Cuvee
+     */
+    public function setWineType(WineType $wineType)
+    {
+        $this->wineType = $wineType;
+        return $this;
+    }
+
+    /**
      * @return null|string
      */
     public function getImagePath()
@@ -153,5 +214,93 @@ class Cuvee
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getVariety()
+    {
+        return $this->variety;
+    }
 
+    /**
+     * @param string $variety
+     * @return Cuvee
+     */
+    public function setVariety(string $variety): Cuvee
+    {
+        $this->variety = $variety;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVinification()
+    {
+        return $this->vinification;
+    }
+
+    /**
+     * @param string $vinification
+     * @return Cuvee
+     */
+    public function setVinification(string $vinification): Cuvee
+    {
+        $this->vinification = $vinification;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTasting()
+    {
+        return $this->tasting;
+    }
+
+    /**
+     * @param string $tasting
+     * @return Cuvee
+     */
+    public function setTasting(string $tasting): Cuvee
+    {
+        $this->tasting = $tasting;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccord()
+    {
+        return $this->accord;
+    }
+
+    /**
+     * @param string $accord
+     * @return Cuvee
+     */
+    public function setAccord(string $accord): Cuvee
+    {
+        $this->accord = $accord;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     * @return Cuvee
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+        return $this;
+    }
 }

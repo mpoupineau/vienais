@@ -6,6 +6,77 @@
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
+                <div class="card-header card-header-text card-header-info">
+                    <div class="card-text">
+                        <h4 class="card-title">
+                            {% block bottle_action_title %}
+                                Nouveau
+                            {% endblock %}
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                {{ form_label(form.year) }}
+                                {{ form_widget(form.year, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group" style="padding-bottom:50px;">
+                                {{ form_widget(form.cuvee, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group" style="padding-bottom:50px;">
+                                {{ form_widget(form.capacity, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.price) }}
+                                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        {{ form_widget(form.available) }}
+                                        <span class="toggle"></span>
+                                        {{ form_label(form.available) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        {{ form_widget(form.visible) }}
+                                        <span class="toggle"></span>
+                                        {{ form_label(form.visible) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.priority) }}
+                                {{ form_widget(form.priority, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="width: 100%">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="text-align: right">
+                            {% block bottle_action_button %}
+                                {% if action == 'update' %}
+                                    {{ form_widget(form.save, {'label':'Modifier', 'attr': {'class': 'btn btn-fill btn-warning btn-wd'}}) }}
+                                {% else %}
+                                    {{ form_widget(form.save, {'label':'Ajouter', 'attr': {'class': 'btn btn-fill btn-success btn-wd'}}) }}
+                                {% endif %}                            {% endblock %}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
         <div class="col-xl-6 col-lg-12">
@@ -47,7 +118,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="td-actions">
-                                    <a href="{{ path('admin_product_cuvee_update', { 'cuveeId': bottle.id }) }}" class="btn btn-success btn-simple">
+                                    <a href="{{ path('admin_product_bottle_update', { 'bottleId': bottle.id }) }}" class="btn btn-success btn-simple">
                                         <i class="material-icons">edit</i>
                                     </a>
                                     <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#" data-id="{{ bottle.id }}">
