@@ -1,0 +1,113 @@
+{% extends 'admin/page/photo.html.twig' %}
+{% set page = 'photoTag' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header card-header-text card-header-info">
+                    <div class="card-text">
+                        <h4 class="card-title">
+                            {% block photo_action_title %}
+                                {% if action == 'update' %}
+                                    Modification
+                                {% else %}
+                                    Nouveau
+                                {% endif %}
+                            {% endblock %}
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="width: 100%">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="text-align: right">
+                            {% block photoTag_action_button %}
+                                {% if action == 'update' %}
+                                    {{ form_widget(form.save, {'label':'Modifier', 'attr': {'class': 'btn btn-fill btn-warning btn-wd'}}) }}
+                                {% else %}
+                                    {{ form_widget(form.save, {'label':'Ajouter', 'attr': {'class': 'btn btn-fill btn-success btn-wd'}}) }}
+                                {% endif %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-shopping">
+                        <thead class="text-primary">
+                        <tr>
+                            <th>Nom</th>
+                            <th style="width:100px">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for photoTag in photoTags %}
+                            <tr>
+                                <td class="td-name">
+                                    {{ photoTag.name }}
+                                </td>
+                                <td class="td-actions">
+                                    <a href="{{ path('admin_photo_tag_update', { 'tagId': photoTag.id }) }}" class="btn btn-success btn-simple">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#photoTagDeleteModal" data-id="{{ photoTag.id }}" data-name="{{ photoTag.name }}">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="photoTagDeleteModal" tabindex="-1" role="dialog" aria-labelledby="photoTagDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="photoTagDeleteModalLabel">Supprimer l'étiquette</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+$('#photoTagDeleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var name = button.data('name') // Extract info from data-* attributes
+    var id = button.data('id') // Extract info from data-* attributes
+    var url = '{{ path('admin_photo_tag_delete', { 'tagId': 'id' }) }}'
+        url = url.replace("id", id);
+        var modal = $(this);
+        modal.find('.modal-title').text('Supprimer l\'étiquette ' + name);
+        modal.find('.modal-footer a').attr("href", url)
+    })
+</script>
+{% endblock %}
+
+

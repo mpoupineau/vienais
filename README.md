@@ -22,3 +22,6 @@
  - Dans le container web 
     - php bin/console make:migration
     - php bin/console doctrine:migrations:migrate
+    
+### Commandes
+ - Publish assets : php bin/console assets:install --symlink public

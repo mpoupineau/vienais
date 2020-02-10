@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
+                <img src="{{ asset( image_cuvee_location ~ cuvee.imagePath) }}" alt="no image">
+            </div>
+            <h4 class="title-main t-center">
+                {{ cuvee.name }}
+            </h4>
+        </div>
+        <div class="col-8">
+            <p>
+                <span class="title-category">
+                    Description
+                </span><br/>
+                {{ cuvee.description }}
+            </p>
+            <p>
+                <span class="title-category">
+                    Cépage
+                </span><br/>
+                {{ cuvee.variety }}
+            <p>
+            </p>
+            <p>
+                <span class="title-category">
+                    Vinification
+                </span><br/>
+                {{ cuvee.vinification }}
+            </p>
+            <p>
+                <span class="title-category">
+                    Dégustation
+                </span><br/>
+                {{ cuvee.tasting }}
+            </p>
+            <p>
+                <span class="title-category">
+                    Accord
+                </span><br/>
+                {{ cuvee.accord }}
+            </p>
+        </div>
+    </div>
+</div>

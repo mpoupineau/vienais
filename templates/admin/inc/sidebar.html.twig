@@ -1,4 +1,5 @@
 {% set list_product = ['bottle', 'cuvee', 'wineType', 'capacity'] %}
+{% set list_photos = ['photo', 'photoTag'] %}
 <div class="sidebar" data-color="purple" data-background-color="white" data-image="{{ asset('admin/img/sidebar-3.jpg') }}">
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -30,15 +31,15 @@
                     <p>Tarif</p>
                 </a>
             </li>
-            <li class="nav-item {% if page is defined and page == 'navbar' %}active{% endif %}">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">list</i>
-                    <p>Menu</p>
+            <li class="nav-item {% if page is defined and page in list_photos %}active{% endif %}">
+                <a class="nav-link" href="{{ path('admin_photo_photo') }}">
+                    <i class="material-icons">image</i>
+                    <p>Photos</p>
                 </a>
             </li>
             <li class="nav-item {% if page is defined and page == 'content' %}active{% endif %}">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#pagesExamples" aria-expanded="false">
-                    <i class="material-icons">image</i>
+                    <i class="material-icons">list</i>
                     <p> Pages
                         <b class="caret"></b>
                     </p>

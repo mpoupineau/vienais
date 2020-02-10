@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block subnavbar %}
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link {% if page is defined and page == 'photo' %}active{% endif %}"  href="{{ path('admin_photo_photo') }}">Photos</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link {% if page is defined and page == 'photoTag' %}active{% endif %}"  href="{{ path('admin_photo_tag') }}">Etiquettes</a>
+        </li>
+    </ul>
+{% endblock %}

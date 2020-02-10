@@ -1,0 +1,27 @@
+.cuvee-image {
+  cursor: pointer;
+}
+.modal-body-cuvee {
+  background: url("../../../images/back_grey.png");
+  color: white;
+  padding: 20px;
+}
+.modal-body-cuvee p {
+  color: white;
+}
+.modal-body-cuvee .title-main {
+  color: #faed26;
+  text-transform: uppercase;
+  margin: 3px;
+}
+.modal-body-cuvee .title-category {
+  color: #faed26;
+}
+.title {
+  color: #8860d0;
+}
+.bottle_line {
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid black;
+}

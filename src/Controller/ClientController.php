@@ -8,7 +8,10 @@ namespace App\Controller;
  * Time: 15:54
  */
 
+use App\Entity\Bottle;
 use App\Entity\Cuvee;
+use App\Entity\Photo;
+use App\Entity\PhotoTag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,14 +35,45 @@ class ClientController extends AbstractController
     }
 
     /**
+     * @Route("/galerie", name="client_gallery")
+     */
+    public function gallery()
+    {
+        return $this->render('client/page/gallery.html.twig',
+            [
+                'photos' => $this->getDoctrine()->getRepository(Photo::class)->findBy(
+                    [
+                        "visible"=> true
+                    ],
+                    [
+                        "priority" => 'DESC'
+                    ]
+                ),
+                "photoTags" => $this->getDoctrine()->getRepository(PhotoTag::class)->findAll()
+            ]);
+    }
+
+    /**
      * @Route("/nos-vins", name="client_wine")
      */
     public function wine()
     {
         return $this->render('client/page/wine.html.twig',
             [
-                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findAll()
-            ]);;
+                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findBy(
+                    [
+                        "visible"=> true
+                    ]
+                ),
+                "bottles" => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
+                    [
+                        "visible" => true
+                    ],
+                    [
+                        "cuvee" => "ASC"
+                    ]
+                )
+            ]);
     }
 
     /**

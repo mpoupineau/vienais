@@ -4,3 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         image_cuvee_location: '%image_cuvee_location%'
+        photo_location: '%photo_location%'

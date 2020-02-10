@@ -19,3 +19,6 @@
 ###< symfony/web-server-bundle ###
 
 /.idea
+
+public/images/cuvee/*
+public/images/photo/*

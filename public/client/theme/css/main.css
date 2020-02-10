@@ -1304,7 +1304,7 @@ body {
   box-sizing: border-box;
 }
 .item-gallery {
-  width: calc(-13.33333333%);
+  width: calc( (100% - 140px) / 3);
   margin: 30px 15px;
   position: relative;
 }

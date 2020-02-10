@@ -1,0 +1,14 @@
+.row-photo {
+    margin: 5px;
+    text-align: center;
+}
+
+.col-photo {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.col-photo img {
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,.42), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+    max-width: 100%;
+}

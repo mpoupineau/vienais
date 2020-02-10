@@ -1,5 +1,7 @@
 {% extends 'client/base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/wine.css') }}">
+{% endblock %}
 {% block title_page %}Nos vins{% endblock %}
 
 {% block body %}
@@ -53,12 +55,11 @@
             <div class="container">
                 <div class="row">
                     {% for cuvee in cuvees %}
-                        {% if cuvee.visible %}
                             <div class="col-md-4 p-t-30">
                                 <!-- Block1 -->
                                 <div class="blo1">
-                                    <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-                                        <a href="#"><img src="{{ asset( image_cuvee_location ~ cuvee.imagePath) }}" alt="no image"></a>
+                                    <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom"  data-toggle="modal" data-id="{{ cuvee.id }}" data-target="#modalCuvee">
+                                        <img class="cuvee-image" src="{{ asset( image_cuvee_location ~ cuvee.imagePath) }}" alt="no image">
                                     </div>
 
                                     <div class="wrap-text-blo1 p-t-35">
@@ -70,19 +71,30 @@
                                             {{ cuvee.description }}
                                         </p>
 
-                                        <button type="button" class="txt4" data-toggle="modal" data-target="#exampleModal">
+                                        <!--<button type="button" class="txt4" data-toggle="modal" data-id="{{ cuvee.id }}" data-target="#modalCuvee">
                                             En savoir plus
                                             <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-                                        </button>
+                                        </button>-->
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="modalCuvee" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg"  role="document">
+            <div class="modal-content">
+                <div class="modal-body-cuvee">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Intro -->
     <section class="section-intro">
@@ -98,102 +110,39 @@
 
         <div class="content-intro bg-white p-t-77 p-b-133">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-4 p-t-30">
-                        <!-- Block1 -->
-                        <div class="blo1">
-                            <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-                                <a href="#"><img src="{{ asset('images/bouteille.jpg') }}" alt="IMG-INTRO"></a>
+
+                    {% for bottle in bottles %}
+                        <div class="row bottle_line">
+                            <div class="col-2">
+                                <div >
+                                <img style="width:100px" src="{{ asset( image_cuvee_location ~ bottle.cuvee.imagePath) }}" alt="no image">
+                                </div>
                             </div>
-
-                            <div class="wrap-text-blo1 p-t-35">
-                                <a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-                                        Rouge
-                                    </h4></a>
-
-                                <p class="m-b-20">
-                                    Phasellus lorem enim, luctus ut velit eget, con-vallis egestas eros.
-                                </p>
-
-                                <a href="#" class="txt4">
-                                    Learn More
-                                    <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-                                </a>
+                            <div class="col-2">
+                                <b>{{ bottle.year }} {{ bottle.cuvee.name }}</b>
+                            </div>
+                            <div class="col-6">
+                                <span class="title">
+                                    Description :
+                                </span><br/>
+                                {{ bottle.description }}
+                            </div>
+                            <div class="col-2">
+                                {{ bottle.price|number_format(2) }} €
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-4 p-t-30">
-                        <!-- Block1 -->
-                        <div class="blo1">
-                            <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-                                <a href="#"><img src="{{ asset('images/bouteille.jpg') }}" alt="IMG-INTRO"></a>
-                            </div>
-
-                            <div class="wrap-text-blo1 p-t-35">
-                                <a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-                                        Rosé
-                                    </h4></a>
-
-                                <p class="m-b-20">
-                                    Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
-                                </p>
-
-                                <a href="#" class="txt4">
-                                    Learn More
-                                    <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 p-t-30">
-                        <!-- Block1 -->
-                        <div class="blo1">
-                            <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-                                <a href="#"><img src="{{ asset('images/bouteille.jpg') }}" alt="IMG-INTRO"></a>
-                            </div>
-
-                            <div class="wrap-text-blo1 p-t-35">
-                                <a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-                                        Blanc
-                                    </h4></a>
-
-                                <p class="m-b-20">
-                                    Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
-                                </p>
-
-                                <a href="#" class="txt4">
-                                    Learn More
-                                    <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                    {% endfor %}
             </div>
         </div>
     </section>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="color:white;background: black">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
+
+    <div id="modalCuvee">t
     </div>
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script type="text/javascript" src="{{ asset('client/js/page/wine.js') }}"></script>
+{% endblock %}
