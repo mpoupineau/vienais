@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PhotoTag
  *
- * @ORM\Table(name="photo_tag")
+ * @ORM\Table(name="v_photo_tag")
  * @ORM\Entity
  */
 class PhotoTag

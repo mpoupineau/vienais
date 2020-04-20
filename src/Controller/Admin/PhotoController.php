@@ -38,7 +38,12 @@ class PhotoController extends AbstractController
 
         return $this->render('admin/page/photo/photo.html.twig',
             [
-                'photos' => $this->getDoctrine()->getRepository(Photo::class)->findAll(),
+                'photos' => $this->getDoctrine()->getRepository(Photo::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
                 'form' => $form->createView(),
                 'action' => 'add'
             ]);
@@ -69,7 +74,12 @@ class PhotoController extends AbstractController
 
         return $this->render('admin/page/photo/photo_update.html.twig',
             [
-                'photos' => $this->getDoctrine()->getRepository(Photo::class)->findAll(),
+                'photos' => $this->getDoctrine()->getRepository(Photo::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
                 'form' => $form->createView(),
                 'action' => 'update'
             ]);

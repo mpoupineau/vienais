@@ -40,11 +40,13 @@
 <body class="animsition">
     {% include 'client/inc/header.html.twig' %}
     <!-- Title Page -->
-    <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url({{ asset('images/cave.jpg')}});">
+    {% block header_image %}
+    <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url({{ asset('client/images/header-other-1.jpg')}});">
         <h2 class="tit6 t-center">
             {% block title_page %}{% endblock %}
         </h2>
     </section>
+    {% endblock %}
     {% block body %}{% endblock %}
     {% include 'client/inc/footer.html.twig' %}
 

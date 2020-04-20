@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * photo
  *
- * @ORM\Table(name="photo")
+ * @ORM\Table(name="v_photo")
  * @ORM\Entity
  */
 class Photo

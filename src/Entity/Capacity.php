@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Capacity
  *
- * @ORM\Table(name="capacity")
+ * @ORM\Table(name="v_capacity")
  * @ORM\Entity
  */
 class Capacity

@@ -1,0 +1,29 @@
+{% extends 'admin/page/news/news.html.twig' %}
+
+{% block news_input_image %}
+    {% if form.image_path.vars.value is not null and form.image_path.vars.value != "" %}
+        <div class="fileinput text-center fileinput-exists" data-provides="fileinput">
+            <div class="fileinput-new thumbnail img-raised">
+                <img src="{{ asset('admin/img/no_image.png') }}" alt="pas d'image">
+            </div>
+            <div class="fileinput-preview fileinput-exists thumbnail img-raised" style="">
+                <img src="{{ asset( image_news_location ~   form.image_path.vars.value)}}">
+            </div>
+            <div>
+            <span class="btn btn-raised btn-file btn-primary">
+                <span class="fileinput-new">Choisir une image</span>
+                <span class="fileinput-exists">Changer</span>
+                {{ form_widget(form.image_file) }}
+            <div class="ripple-container"></div></span>
+                <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Supprimer</a>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+
+{% block news_action_button %}
+    {{ form_widget(form.save, {'label':'Modifier', 'attr': {'class': 'btn btn-fill btn-warning btn-wd'}}) }}
+{% endblock %}

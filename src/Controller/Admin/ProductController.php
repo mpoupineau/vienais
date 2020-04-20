@@ -44,7 +44,12 @@ class ProductController extends AbstractController
 
         return $this->render('admin/page/product/bottle.html.twig',
             [
-                'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findAll(),
+                'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
                 'form' => $form->createView(),
                 'action' => 'add'
             ]);
@@ -75,7 +80,12 @@ class ProductController extends AbstractController
 
         return $this->render('admin/page/product/bottle.html.twig',
             [
-                'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findAll(),
+                'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
                 'form' => $form->createView(),
                 'action' => 'update'
             ]);
@@ -116,7 +126,12 @@ class ProductController extends AbstractController
 
         return $this->render('admin/page/product/cuvee.html.twig',
             [
-                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findAll(),
+                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
                 'form' => $form->createView()
             ]);
     }
@@ -146,7 +161,12 @@ class ProductController extends AbstractController
 
         return $this->render('admin/page/product/cuvee_update.html.twig',
             [
-                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findAll(),
+                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
                 'form' => $form->createView()
             ]);
     }

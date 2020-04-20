@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Bottle;
 use App\Entity\Cuvee;
+use App\Entity\News;
 use App\Entity\Photo;
 use App\Entity\PhotoTag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -82,5 +83,13 @@ class ClientController extends AbstractController
     public function contact()
     {
         return $this->render('client/page/contact.html.twig');
+    }
+
+    /**
+     * @Route("/commande", name="client_order")
+     */
+    public function order()
+    {
+        return $this->render('client/page/order.html.twig');
     }
 }

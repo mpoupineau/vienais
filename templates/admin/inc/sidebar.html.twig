@@ -37,6 +37,12 @@
                     <p>Photos</p>
                 </a>
             </li>
+            <li class="nav-item {% if page is defined and page == 'news' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('admin_news') }}">
+                    <i class="material-icons">post_add</i>
+                    <p>Actualités</p>
+                </a>
+            </li>
             <li class="nav-item {% if page is defined and page == 'content' %}active{% endif %}">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#pagesExamples" aria-expanded="false">
                     <i class="material-icons">list</i>

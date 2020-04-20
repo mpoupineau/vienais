@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * WineType
  *
- * @ORM\Table(name="wine_type")
+ * @ORM\Table(name="v_wine_type")
  * @ORM\Entity
  */
 class WineType

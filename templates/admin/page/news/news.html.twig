@@ -1,0 +1,123 @@
+{% extends 'admin/base.html.twig' %}
+{% set page = 'news' %}
+
+{% block content %}
+    <div class="row flex-column-reverse flex-md-row" >
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header card-header-text card-header-primary">
+                    <div class="card-text">
+                        <h4 class="card-title"><i class="material-icons">list</i>Liste</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                            {% for news in newsList %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('admin_news_update', { 'newsId': news.id }) }}">
+                                            <i class="material-icons text-primary">title</i> {{ news.title }}<br>
+                                            </a>
+                                            {{ news.text }}
+
+                                        </td>
+                                        <td style="vertical-align:top;text-align: right">
+                                            <i class="material-icons  text-primary">date_range</i><br>
+                                            {{ news.createdAt|date("d/m/Y") }}
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" >
+            <div class="card">
+                <div class="card-header card-header-text card-header-primary">
+                    <div class="card-text">
+                        <h4 class="card-title"><i class="material-icons">message</i> Message</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row" style="padding-left: 30px;">
+                        <div class="col-xl-5">
+                            <div class="row">
+                                {% block news_input_image %}
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail img-raised">
+                                            <img src="{{ asset('admin/img/no_image.png') }}" alt="pas d'image">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail img-raised" ></div>
+                                        <div>
+                                            <span class="btn btn-raised btn-file btn-primary">
+                                                <span class="fileinput-new">Choisir une image</span>
+                                                <span class="fileinput-exists">Changer</span>
+                                                {{ form_widget(form.image_file) }}
+                                            </span>
+                                            <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Supprimer</a>
+                                        </div>
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        </div>
+                        <div class="col-xl-7">
+                            <div class="form-group">
+                                {{ form_label(form.createdAt) }}
+                                {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.title) }}
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        {{ form_widget(form.visible) }}
+                                        <span class="toggle"></span>
+                                        {{ form_label(form.visible) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        {{ form_widget(form.homePage) }}
+                                        <span class="toggle"></span>
+                                        {{ form_label(form.homePage) }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="width: 100%">
+                            {{ form_label(form.text) }}
+                            {{ form_widget(form.text, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="text-align: right">
+                            {% block news_action_button %}
+                            {{ form_widget(form.save, {'label':'Ajouter', 'attr': {'class': 'btn btn-fill btn-success btn-wd'}}) }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            // you may need to change this code if you are not using Bootstrap Datepicker
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+{% endblock %}

@@ -9,7 +9,7 @@ Modification
     {% if form.image_path.vars.value is not null and form.image_path.vars.value != "" %}
     <div class="fileinput text-center fileinput-exists" data-provides="fileinput">
         <div class="fileinput-new thumbnail img-raised">
-            <img src="/images/no_image.png" alt="pas d'image">
+            <img src="{{ asset('admin/img/no_image.png') }}" alt="pas d'image">
         </div>
         <div class="fileinput-preview fileinput-exists thumbnail img-raised" style="">
             <img src="{{ asset( image_cuvee_location ~   form.image_path.vars.value)}}">

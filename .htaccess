@@ -1,0 +1,5 @@
+AuthName "Accès Privé Domaine-des-vienais.com"
+AuthType Basic
+Require valid-user
+AuthUserFile /home/domainedwla/stage/.htpasswd
+
