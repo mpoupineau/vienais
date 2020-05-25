@@ -5,61 +5,75 @@
 {% block body %}
     <section class="section-contact bg1-pattern p-t-90 p-b-113">
         <div class="container">
+            {% if "" != formResponse %}
+            <p class="font-weight-bold t-center">
+                {{ formResponse }}
+            </p>
+            {% endif %}
             <h3 class="tit7 t-center p-b-62 p-t-105">
                 {{ "Envoyez nous un message" | trans }}
             </h3>
 
-            <form class="wrap-form-reservation size22 m-l-r-auto">
+            {{ form_start(form, {'attr': {'class': 'wrap-form-reservation size22 m-l-r-auto'}}) }}
                 <div class="row">
-                    <div class="col-md-4">
-                        <!-- Name -->
+                    <div class="col-md-6">
+                        <!-- Firstname -->
                         <span class="txt9">
-							Nom
+							{{ form_label(form.firstname, 'Prénom'|trans ) }} *
 						</span>
 
                         <div class="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                            <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name">
+                            {{ form_widget(form.firstname, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        <!-- Lastname -->
+                        <span class="txt9">
+							{{ form_label(form.lastname, 'Nom'|trans ) }} *
+						</span>
+
+                        <div class="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                            {{ form_widget(form.lastname, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
                         <!-- Email -->
                         <span class="txt9">
-							Email
+							{{ form_label(form.email, 'Email'|trans ) }} *
 						</span>
 
                         <div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                            <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email" placeholder="Email">
+                            {{ form_widget(form.email, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <!-- Phone -->
                         <span class="txt9">
-							Téléphone
-						</span>
+							{{ form_label(form.phone, 'Téléphone'|trans ) }}
+                        </span>
 
                         <div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                            <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="phone" placeholder="Phone">
+                            {{ form_widget(form.phone, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
                         </div>
                     </div>
 
                     <div class="col-12">
                         <!-- Message -->
                         <span class="txt9">
-							Message
+							{{ form_label(form.comment, 'Message'|trans ) }} *
 						</span>
-                        <textarea class="bo-rad-10 size35 bo2 txt10 p-l-20 p-t-15 m-b-10 m-t-3" name="message" placeholder="Message"></textarea>
+                        {{ form_widget(form.comment, {'attr': {'class': 'bo-rad-10 size35 bo2 txt10 p-l-20 p-t-15 m-b-10 m-t-3'}}) }}
                     </div>
                 </div>
-
+                <p>* Champ obligatoire</p>
                 <div class="wrap-btn-booking flex-c-m m-t-13">
                     <!-- Button3 -->
-                    <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">
-                        Envoyer
-                    </button>
+                    {{ form_widget(form.send, {'attr': {'class': 'btn3 flex-c-m size36 txt11 trans-0-4'}}) }}
                 </div>
-            </form>
+            {{ form_end(form) }}
 
             <div class="row p-t-135">
                 <div class="col-sm-8 col-md-4 col-lg-4 m-l-r-auto p-t-30">
@@ -126,4 +140,5 @@
     <section class="section-lunch bgwhite">
         <iframe style="width:100%" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=EARL+des+Vienais,+3+Rue+des+Lavandi%C3%A8res,+37140+Benais&amp;aq=0&amp;oq=earl&amp;sll=47.293988,0.218997&amp;sspn=0.016736,0.042272&amp;vpsrc=0&amp;ie=UTF8&amp;hq=EARL+des+Vienais,&amp;hnear=3+Rue+des+Lavandi%C3%A8res,+37140+Benais,+Indre-et-Loire,+Centre&amp;t=h&amp;ll=47.294039,0.216411&amp;spn=0.006295,0.006295&amp;output=embed"></iframe><br />
     </section>
+
 {% endblock %}

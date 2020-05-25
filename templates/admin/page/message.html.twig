@@ -14,106 +14,25 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tbody>
-                            <tr class="font-weight-bold">
+                        {% for message in messages %}
+                            {% if message.new %}
+                                <tr class="font-weight-bold">
+                            {% else %}
+                                <tr class="">
+                            {% endif %}
                                 <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant <span class="badge badge-info">New</span><br>
-                                    <b>Demande de contact</b> <span class="d-none d-xl-inline">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</span>
+                                    <a href="{{ path('admin_message_details', { 'messageId': message.id }) }}">
+                                        <i class="material-icons text-primary">person</i> {{ message.firstname }} {{ message.lastname }}  {% if message.new %}<span class="badge badge-info">New</span>{% endif %}<br>
+                                    </a>
+                                    <span class="d-none d-xl-inline">{{ message.comment|slice(0,100) }} ...</span>
+
                                 </td>
                                 <td style="vertical-align:top;text-align: right">
                                     <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
+                                    {{ message.date|date("d/m/Y", "Europe/Paris") }}
                                 </td>
                             </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
-                            <tr class="table-warnng">
-                                <td>
-                                    <i class="material-icons text-primary">person</i> Jean Durant<br>
-                                    <b>Demande de contact</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-                                </td>
-                                <td style="vertical-align:top;text-align: right">
-                                    <i class="material-icons  text-primary">date_range</i><br>
-                                    18/04/2018
-                                </td>
-                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -121,6 +40,11 @@
         </div>
     </div>
     <div class="col-md-8" >
+        {% if messageDetails is defined %}
+            {% set messageToDisplay = messageDetails%}
+        {% else %}
+            {% set messageToDisplay = messages|first %}
+        {% endif %}
         <div class="card">
             <div class="card-header card-header-text card-header-primary">
                 <div class="card-text">
@@ -130,32 +54,100 @@
             <div class="card-body">
                 <div class="row" >
                     <div class="col-md-6">
-                        <strong class="text-primary">De : </strong>Jean Dupont (jean.dupont@mail.com)
+                        <strong class="text-primary">De : </strong>{{ messageToDisplay.firstname }} {{ messageToDisplay.lastname }} ({{ messageToDisplay.email }})
                     </div>
                     <div class="col-md-6 text-right">
-                        Mardi 18 Février 2019 20:12:09
+                        {{ messageToDisplay.date|date("d/m/Y \à H:i:s", "Europe/Paris") }}
                     </div>
                 </div>
-                <div class="row" style="border-bottom: 1px solid #DDDDDD; border-top: 1px solid #AAAAAA; margin: 5px 0px 10px 0px;">
-                    <div class="col-xl-12">
-                        <strong class="text-primary">Objet : </strong>Demande de contact
-                    </div>
-                </div>
-                <div class="row">
+                <div class="row" style="border-top: 1px solid #DDDDDD; padding-top: 5px; margin-top: 5px;" >
                     <div class="col-xl-12">
                         <strong class="text-primary">Message : </strong><br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo mauris eget ex dictum ullamcorper. Nulla nec nunc iaculis quam tincidunt aliquam pellentesque sed magna.
-                        Donec in ipsum dignissim, pellentesque mi in, cursus odio. Aenean a nulla a sem cursus convallis a in urna. Aliquam a ligula arcu. Aenean tincidunt congue ultricies.
-                        Sed convallis felis blandit ligula blandit,
-                        ultrices consectetur est elementum. Etiam dui mauris, fringilla quis vestibulum id, consequat a enim. Nunc ut ullamcorper nisi, sed hendrerit nisl.
+                        {{ messageToDisplay.comment }}
                     </div>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="#" class="btn btn-dark" >Archiver</a>
-                <a href="#" class="btn btn-danger">Supprimer</a>
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#messageArchiveModal" data-id="{{ messageToDisplay.id }}" data-name="{{ messageToDisplay.firstname ~ " " ~ messageToDisplay.lastname }}">
+                    Archiver
+                </button>
+
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#messageDeleteModal" data-id="{{ messageToDisplay.id }}" data-name="{{ messageToDisplay.firstname ~ " " ~ messageToDisplay.lastname }}">
+                    Supprimer
+                </button>
+
             </div>
         </div>
     </div>
 </div>
+
+    <div class="modal fade" id="messageArchiveModal" tabindex="-1" role="dialog" aria-labelledby="messageArchiveModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageArchiveModalLabel">Archiver le message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Un message archivé peut être récupéré si besoin (contrairement à s'il est supprimé)
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-danger">Archiver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="messageDeleteModal" tabindex="-1" role="dialog" aria-labelledby="messageDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageDeleteModalLabel">Supprimer définitivement le message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+$('#messageArchiveModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var name = button.data('name') // Extract info from data-* attributes
+    var id = button.data('id') // Extract info from data-* attributes
+    var url = '{{ path('admin_message_archive', { 'messageId': 'id' }) }}'
+        url = url.replace("id", id)
+        var modal = $(this)
+        modal.find('.modal-title').text('Archiver le message de  ' + name)
+        modal.find('.modal-footer a').attr("href", url)
+    })
+</script>
+
+<script>
+$('#messageDeleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var name = button.data('name') // Extract info from data-* attributes
+    var id = button.data('id') // Extract info from data-* attributes
+    var url = '{{ path('admin_message_delete', { 'messageId': 'id' }) }}'
+        url = url.replace("id", id)
+        var modal = $(this)
+        modal.find('.modal-title').text('Supprimer définitivement le message de  ' + name)
+        modal.find('.modal-footer a').attr("href", url)
+    })
+</script>
 {% endblock %}
