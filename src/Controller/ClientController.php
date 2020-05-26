@@ -54,29 +54,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/nos-vins", name="client_wine")
-     */
-    public function wine()
-    {
-        return $this->render('client/page/wine.html.twig',
-            [
-                'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findBy(
-                    [
-                        "visible"=> true
-                    ]
-                ),
-                "bottles" => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
-                    [
-                        "visible" => true
-                    ],
-                    [
-                        "cuvee" => "ASC"
-                    ]
-                )
-            ]);
-    }
-
-    /**
      * @Route("/commande", name="client_order")
      */
     public function order()

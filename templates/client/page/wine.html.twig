@@ -36,7 +36,7 @@
 
     <!-- nos vins -->
     <section class="section-intro">
-        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/bandeau-nos-vins-1.jpg') }});">
+        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/header-other-1.jpg') }});">
 			<span class="tit2 p-l-15 p-r-15">
 				Découvrer
 			</span>
@@ -53,20 +53,21 @@
                             <div class="col-md-4 p-t-30">
                                 <!-- Block1 -->
                                 <div class="blo1">
-                                    <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom"  data-toggle="modal" data-id="{{ cuvee.id }}" data-target="#modalCuvee">
+                                    <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom" data-toggle="modal" data-id="{{ cuvee.id }}" data-target="#modalCuvee">
                                         <img class="cuvee-image" src="{{ asset( image_cuvee_location ~ cuvee.imagePath) }}" alt="no image">
                                     </div>
 
                                     <div class="wrap-text-blo1 p-t-35">
-                                        <a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
+                                        <a href="#">
+                                            <h4 class="txt5 color0-hov trans-0-4 m-b-13">
                                                 {{ cuvee.name }}
-                                            </h4></a>
-
+                                            </h4>
+                                        </a>
                                         <p class="m-b-20">
                                             {{ cuvee.description }}
                                         </p>
 
-                                        <!--<button type="button" class="txt4" data-toggle="modal" data-id="{{ cuvee.id }}" data-target="#modalCuvee">
+                                        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
                                             En savoir plus
                                             <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
                                         </button>-->
@@ -80,12 +81,9 @@
     </section>
 
     <div class="modal fade" id="modalCuvee" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg"  role="document">
+        <div class="modal-dialog modal-xlg"  role="document">
             <div class="modal-content">
                 <div class="modal-body-cuvee">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
@@ -93,46 +91,64 @@
 
     <!-- Intro -->
     <section class="section-intro">
-        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/bandeau-nos-vins-1.jpg') }});">
+        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/bouteilles.jpeg') }});">
 			<span class="tit2 p-l-15 p-r-15">
 				Découvrer
 			</span>
 
             <h3 class="tit4 t-center p-l-15 p-r-15 p-t-3">
-                Nos bouteilles
+                Nos millésimes
             </h3>
         </div>
 
         <div class="content-intro bg-white p-t-77 p-b-133">
-            <div class="container">
 
-                    {% for bottle in bottles %}
-                        <div class="row bottle_line">
-                            <div class="col-2">
-                                <div >
-                                <img style="width:100px" src="{{ asset( image_cuvee_location ~ bottle.cuvee.imagePath) }}" alt="no image">
+                <div class="container">
+                    <div class="row">
+                    {% for vintage in vintages %}
+
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card card-vintage">
+                                        <div class="card-horizontal">
+                                            <div class="img-square-wrapper">
+                                                <img class="" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="Card image cap">
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title txt21">
+                                                    <div class="pointer" data-toggle="modal" data-id="{{ vintage.cuvee.id }}" data-target="#modalCuvee">
+                                                    {{ vintage.cuvee.name }}
+                                                    </div>
+                                                    {{ vintage.year }}
+                                                </h4>
+                                                <p class="card-text txt23">
+                                                    {{ vintage.description }}
+                                                    <!--<i class="fa fa-shopping-basket" aria-hidden="true"></i>-->
+                                                </p>
+                                                <p class="txt22" style="text-align: right" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
+                                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!--<div class="card-footer">
+                                            <small class="text-muted txt23">{{ vintage.description }}</small>
+                                        </div>-->
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <b>{{ bottle.year }} {{ bottle.cuvee.name }}</b>
-                            </div>
-                            <div class="col-6">
-                                <span class="title">
-                                    Description :
-                                </span><br/>
-                                {{ bottle.description }}
-                            </div>
-                            <div class="col-2">
-                                {{ bottle.price|number_format(2) }} €
-                            </div>
-                        </div>
                     {% endfor %}
-            </div>
+
+                    </div>
+                </div>
         </div>
     </section>
 
-
-    <div id="modalCuvee">t
+    <div class="modal fade" id="modalVintage" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xlg"  role="document">
+            <div class="modal-content">
+                <div class="modal-body-vintage">
+                    failed
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

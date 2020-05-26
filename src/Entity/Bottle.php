@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bottle
  *
- * @ORM\Table(name="v_bottle", indexes={@ORM\Index(name="fk_foreign_capacity_id", columns={"capacity_id"}), @ORM\Index(name="fk_foreign_cuvee_id", columns={"cuvee_id"})})
+ * @ORM\Table(name="v_bottle", indexes={@ORM\Index(name="fk_foreign_capacity_id", columns={"capacity_id"}), @ORM\Index(name="fk_foreign_vintage_id", columns={"vintage_id"})})
  * @ORM\Entity
  */
 class Bottle
@@ -22,25 +22,11 @@ class Bottle
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="year", type="integer", nullable=false)
-     */
-    private $year;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
      */
     private $price;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
-     */
-    private $description;
 
     /**
      * @var bool
@@ -59,10 +45,10 @@ class Bottle
     /**
      * @var Cuvee|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Cuvee")
-     * @ORM\JoinColumn(name="cuvee_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vintage", inversedBy="vintages")
+     * @ORM\JoinColumn(name="vintage_id", referencedColumnName="id")
      */
-    private $cuvee;
+    private $vintage;
 
     /**
      * @var Capacity|null
@@ -72,12 +58,6 @@ class Bottle
      */
     private $capacity;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="priority", type="integer")
-     */
-    private $priority = 0;
 
     /**
      * @return int
@@ -98,24 +78,6 @@ class Bottle
     }
 
     /**
-     * @return int
-     */
-    public function getYear()
-    {
-        return $this->year;
-    }
-
-    /**
-     * @param int $year
-     * @return Bottle
-     */
-    public function setYear($year)
-    {
-        $this->year = $year;
-        return $this;
-    }
-
-    /**
      * @return float
      */
     public function getPrice()
@@ -130,24 +92,6 @@ class Bottle
     public function setPrice($price)
     {
         $this->price = $price;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return Bottle
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
         return $this;
     }
 
@@ -188,20 +132,20 @@ class Bottle
     }
 
     /**
-     * @return Cuvee|null
+     * @return Vintage|null
      */
-    public function getCuvee()
+    public function getVintage()
     {
-        return $this->cuvee;
+        return $this->vintage;
     }
 
     /**
-     * @param Cuvee|null $cuvee
+     * @param Vintage|null $cuvee
      * @return Bottle
      */
-    public function setCuvee($cuvee)
+    public function setVintage($vintage)
     {
-        $this->cuvee = $cuvee;
+        $this->vintage = $vintage;
         return $this;
     }
 
@@ -220,24 +164,6 @@ class Bottle
     public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param int $priority
-     * @return Cuvee
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
         return $this;
     }
 }

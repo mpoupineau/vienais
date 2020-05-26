@@ -1,5 +1,5 @@
 {% extends 'admin/page/product.html.twig' %}
-{% set page = 'bottle' %}
+{% set page = 'vintage' %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
                 <div class="card-header card-header-text card-header-info">
                     <div class="card-text">
                         <h4 class="card-title">
-                            {% block bottle_action_title %}
+                            {% block vintage_action_title %}
                                 Nouveau
                             {% endblock %}
                         </h4>
@@ -19,27 +19,15 @@
                     {{ form_start(form) }}
                     <div class="row">
                         <div class="col-xl-6">
-                            <div class="form-group" style="padding-bottom:50px;">
-                                {{ form_widget(form.vintage, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="form-group" style="padding-bottom:50px;">
-                                {{ form_widget(form.capacity, {'attr': {'class': 'form-control'}}) }}
-                            </div>
                             <div class="form-group">
-                                {{ form_label(form.price) }}
-                                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_label(form.year) }}
+                                {{ form_widget(form.year, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group" style="padding-bottom:50px;">
+                                {{ form_widget(form.cuvee, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
                         <div class="col-xl-6">
-                            <div class="form-group">
-                                <div class="togglebutton">
-                                    <label>
-                                        {{ form_widget(form.available) }}
-                                        <span class="toggle"></span>
-                                        {{ form_label(form.available) }}
-                                    </label>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <div class="togglebutton">
                                     <label>
@@ -49,11 +37,21 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                {{ form_label(form.priority) }}
+                                {{ form_widget(form.priority, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0 30px;">
+                        <div class="form-group" style="width: 100%">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
                         </div>
                     </div>
                     <div class="row" style="padding: 0 30px;">
                         <div class="form-group" style="text-align: right">
-                            {% block bottle_action_button %}
+                            {% block vintage_action_button %}
                                 {% if action == 'update' %}
                                     {{ form_widget(form.save, {'label':'Modifier', 'attr': {'class': 'btn btn-fill btn-warning btn-wd'}}) }}
                                 {% else %}
@@ -73,42 +71,33 @@
                         <thead class="text-primary">
                         <tr>
                             <th class="text-center">Nom</th>
-                            <th>Type</th>
+                            <th class="th-description">Description</th>
                             <th>Visible</th>
-                            <th>Dispo</th>
                             <th style="width:100px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for bottle in bottles %}
+                        {% for vintage in vintages %}
                             <tr>
                                 <td class="td-name text-center">
-                                    {{ bottle.vintage.year }} {{ bottle.vintage.cuvee.name }}<br>
-                                    {{ bottle.price|number_format(2) }} €
+                                    {{ vintage.year }} {{ vintage.cuvee.name }}
                                 </td>
                                 <td>
-                                    {{ bottle.capacity.name }}
+                                    {{ vintage.description }}
                                 </td>
                                 <td>
-                                    {% if bottle.visible %}
+                                    {% if vintage.visible %}
                                         <i class="material-icons" style="color:green;">done</i>
                                     {% else %}
                                         <i class="material-icons" style="color:red;">clear</i>
                                     {% endif %}
 
                                 </td>
-                                <td>
-                                    {% if bottle.available %}
-                                        <i class="material-icons" style="color:green;">done</i>
-                                    {% else %}
-                                        <i class="material-icons" style="color:red;">clear</i>
-                                    {% endif %}
-                                </td>
                                 <td class="td-actions">
-                                    <a href="{{ path('admin_product_bottle_update', { 'bottleId': bottle.id }) }}" class="btn btn-success btn-simple">
+                                    <a href="{{ path('admin_product_vintage_update', { 'vintageId': vintage.id }) }}" class="btn btn-success btn-simple">
                                         <i class="material-icons">edit</i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#" data-id="{{ bottle.id }}">
+                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#" data-id="{{ vintage.id }}">
                                         <i class="material-icons">close</i>
                                     </button>
                                 </td>

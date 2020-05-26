@@ -4,10 +4,13 @@
   cursor: pointer;
 }
 
+.modal-content {
+  box-shadow: 0 3px 9px rgba(0,0,0,.5)
+}
+
 .modal-body-cuvee {
-  background: url("../../../images/back_grey.png");
+  background: url('../../images/bois_modal.jpg');
   color: white;
-  padding: 20px;
 
   p {
     color: white;
@@ -25,6 +28,16 @@
   }
 }
 
+.modal-body-vintage {
+  background: url('../../images/clair_modal.jpg');
+
+  .title-main {
+    color: @main-color;
+    text-transform: uppercase;
+    margin: 3px;
+  }
+}
+
 .title {
   color: @main-color;
 }
@@ -32,4 +45,30 @@
   padding-bottom: 5px;
   margin-bottom:5px;
   border-bottom: 1px solid black;
+}
+
+
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.card-vintage {
+  margin-bottom: 10px;
+  transition: 0.3s;
+  background: #F4F4F4;
+  border: 0px;
+}
+.card-vintage:hover {
+  background: #F1F1F1;
+  box-shadow: 3px 2px 3px rgba(0,0,0,.3)
+}
+
+.card-vintage img {
+  width: 100%;
+  max-width: 120px;
+}
+
+.pointer:hover {
+  cursor: pointer;
 }

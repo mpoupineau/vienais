@@ -1,105 +1,5 @@
 @import "../variable";
 
-/*------------------------------------------------------------------
-Project:  Pato
-Version:
-Last change:
-Assigned to:  Kevin Nguyen
-Primary use:  Company
--------------------------------------------------------------------*/
-/*------------------------------------------------------------------
-[LAYOUT]
-
-* body
-  + Header / header
-  + Page Content / .page-content .name-page
-        + Section Layouts / section .name-section
-        ...
-  + Footer / footer
-
--------------------------------------------------------------------*/
-/*------------------------------------------------------------------
-[COLOR CODES]
-
-# Text Color      :
-# Primary Color 01:
-# Primary Color 02:
-# Primary Color 03:
-
-------------------------------------------------------------------*/
-/*------------------------------------------------------------------
-[TYPOGRAPHY]
-
-Body            : 16px/1.6 '', Arial, sans-serif;
-Title           : 18px/1.6 '', Arial, sans-serif;
-Paragrap        : 18px/1.6 '', Arial, sans-serif;
-Input, textarea : 14px/1.6 '', Arial, sans-serif;
--------------------------------------------------------------------*/
-
-
-
-/*[ FONT ]
-///////////////////////////////////////////////////////////
-*/
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
-
-@import url('https://fonts.googleapis.com/css?family=Courgette');
-
-@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700');
-
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
-
-@font-face {
-  font-family: Montserrat-Regular;
-  src: url('../fonts/montserrat/Montserrat-Regular.ttf');
-}
-
-@font-face {
-  font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf');
-}
-
-@font-face {
-  font-family: Courgette-Regular;
-  src: url('../fonts/courgette/Courgette-Regular.ttf');
-}
-
-@font-face {
-  font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf');
-}
-
-@font-face {
-  font-family: Poppins-Medium;
-  src: url('../fonts/poppins/Poppins-Medium.ttf');
-}
-
-@font-face {
-  font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf');
-}
-
-@font-face {
-  font-family: Poppins-Light;
-  src: url('../fonts/poppins/Poppins-Light.ttf');
-}
-
-@font-face {
-  font-family: NotoSans-Regular;
-  src: url('../fonts/notosans/NotoSans-Regular.ttf');
-}
-
-
-
-/*[ RESTYLE TAG ]
-///////////////////////////////////////////////////////////
-*/
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-}
-
 body, html {
   height: 100%;
   font-family: Montserrat, sans-serif;
@@ -784,7 +684,7 @@ input[type="date"] {
 }
 
 .item-gallery-sidebar:hover:after {
-  background-color: rgba(236,29,37,0.7);
+  background-color: @main-color;
 }
 
 @media (max-width: 576px) {
@@ -933,12 +833,12 @@ input[type="date"] {
 
 .slick1-dots li button:hover {
   border: 3px solid white;
-  background-color: #d41b22;
+  background-color: @main-color;
 }
 
 .slick1-dots li.slick-active button {
   border: 3px solid white;
-  background-color: #d41b22;
+  background-color: @main-color;
 }
 
 /*[ Caption ]
@@ -1086,13 +986,13 @@ input[type="date"] {
 
 
 .slick2-dots li button:hover {
-  border: 1px solid #d41b22;
-  background-color: #d41b22;
+  border: 1px solid @main-color;
+  background-color: @main-color;
 }
 
 .slick2-dots li.slick-active button {
-  border: 1px solid #d41b22;
-  background-color: #d41b22;
+  border: 1px solid @main-color;
+  background-color: @main-color;
 }
 
 
@@ -1160,13 +1060,13 @@ input[type="date"] {
 
 
 .slick3-dots li button:hover {
-  border: 1px solid #d41b22;
-  background-color: #d41b22;
+  border: 1px solid @main-color;
+  background-color: @main-color;
 }
 
 .slick3-dots li.slick-active button {
-  border: 1px solid #d41b22;
-  background-color: #d41b22;
+  border: 1px solid @main-color;
+  background-color: @main-color;
 }
 
 
@@ -1413,7 +1313,7 @@ body {padding-right: 0px !important;}
 }
 
 .item-gallery-footer:hover:after {
-  background-color: rgba(236,29,37,0.7);
+  background-color: @main-color;
 }
 
 
@@ -1513,7 +1413,7 @@ body {padding-right: 0px !important;}
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(236,29,37,0.8);
+  background-color: @main-color;
   opacity: 0;
 }
 

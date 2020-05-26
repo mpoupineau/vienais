@@ -10,15 +10,18 @@ namespace App\Controller\Admin;
 
 use App\Entity\Bottle;
 use App\Entity\Capacity;
+use App\Entity\Vintage;
 use App\Entity\WineType;
 use App\Form\Admin\Product\BottleType;
 use App\Form\Admin\Product\CuveeType;
 use App\Form\Admin\Product\CapacityType;
+use App\Form\Admin\Product\VintageType;
 use App\Form\Admin\Product\WineTypeType;
 use App\Entity\Cuvee;
 use App\Manager\Product\BottleManager;
 use App\Manager\Product\CapacityManager;
 use App\Manager\Product\CuveeManager;
+use App\Manager\Product\VintageManager;
 use App\Manager\Product\WineTypeManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,16 +42,14 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bottleManager->add($form->getData());
             $session = new Session();
-            $session->getFlashBag()->add('success', "Capacité Ajoutée");
+            $session->getFlashBag()->add('success', "Bouteille Ajoutée");
         }
 
         return $this->render('admin/page/product/bottle.html.twig',
             [
                 'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
                     [],
-                    [
-                        'priority' => 'DESC'
-                    ]
+                    []
                 ),
                 'form' => $form->createView(),
                 'action' => 'add'
@@ -82,9 +83,7 @@ class ProductController extends AbstractController
             [
                 'bottles' => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
                     [],
-                    [
-                        'priority' => 'DESC'
-                    ]
+                    []
                 ),
                 'form' => $form->createView(),
                 'action' => 'update'
@@ -332,5 +331,87 @@ class ProductController extends AbstractController
         $session = new Session();
         $session->getFlashBag()->add('success', "Capacité \"" . $capacity->getName() . "\" supprimé");
         return $this->redirectToRoute('admin_product_capacity');
+    }
+
+    /**
+     * @Route("millesime", name="vintage")
+     */
+    public function vintage(Request $request, VintageManager $vintageManager)
+    {
+        $form = $this->createForm(VintageType::class, new Vintage());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vintageManager->add($form->getData());
+            $session = new Session();
+            $session->getFlashBag()->add('success', "Millésime Ajouté");
+        }
+
+        return $this->render('admin/page/product/vintage.html.twig',
+            [
+                'vintages' => $this->getDoctrine()->getRepository(Vintage::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
+                'form' => $form->createView(),
+                'action' => 'add'
+            ]);
+    }
+
+    /**
+     * @Route("millesime/{vintageId}", name="vintage_update")
+     */
+    public function vintage_update(Request $request, VintageManager $vintageManager, $vintageId)
+    {
+        $vintage = $this->getDoctrine()->getRepository(Vintage::class)->find($vintageId);
+
+        if (!$vintage) {
+            $session = new Session();
+            $session->getFlashBag()->add('danger', 'Impossible de retrouver la cuvée n°' . $vintageId);
+            return $this->redirectToRoute('admin_product_vintage');
+        }
+
+        $form = $this->createForm(VintageType::class, $vintage);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vintageManager->add($form->getData());
+            $session = new Session();
+            $session->getFlashBag()->add('success', "Millésime modifié");
+            return $this->redirectToRoute('admin_product_vintage');
+        }
+
+        return $this->render('admin/page/product/vintage.html.twig',
+            [
+                'vintages' => $this->getDoctrine()->getRepository(Vintage::class)->findBy(
+                    [],
+                    [
+                        'priority' => 'DESC'
+                    ]
+                ),
+                'form' => $form->createView(),
+                'action' => 'update'
+            ]);
+    }
+
+    /**
+     * @Route("millesime/{vintageId}/delete", name="vintage_delete")
+     */
+    public function vintage_delete(VintageManager $vintageManager, $vintageId)
+    {
+        $vintage = $this->getDoctrine()->getRepository(Vintage::class)->find($vintageId);
+
+        if (!$vintage) {
+            $session = new Session();
+            $session->getFlashBag()->add('danger', 'Impossible de retrouver le millésime n°' . $vintageId);
+            return $this->redirectToRoute('admin_product_vintage');
+        }
+
+        $vintageManager->delete($vintage);
+        $session = new Session();
+        $session->getFlashBag()->add('success', "Millésime \"" . $vintage->getName() . "\" supprimé");
+        return $this->redirectToRoute('admin_product_vintage');
     }
 }

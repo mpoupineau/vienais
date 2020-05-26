@@ -12,6 +12,7 @@
  - Lancement du container :
      * Mode normal : ```docker-compose up```
      * Mode daemon : ```docker-compose up -d```
+ - Connexion au docker web : ```docker exec -it vienais-web bash```
 
 ## URL
  - Site : [http://localhost:8037/](http://localhost:8037/)

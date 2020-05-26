@@ -7,19 +7,19 @@ namespace App\Form\Admin\Product;
  * Time: 20:26
  */
 
-use App\Entity\Capacity;
-use App\Entity\Vintage;
+use App\Entity\Cuvee;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Bottle;
+use App\Entity\Vintage;
 
-class BottleType extends AbstractType
+class VintageType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,32 +30,27 @@ class BottleType extends AbstractType
                     'required' => false,
                     'attr' => ['readonly' => true]
                 ])
-            ->add('price', NumberType::class,
+            ->add('year', IntegerType::class,
                 [
-                    'label' => 'Prix (en €)'
+                    'label' => 'Année'
                 ])
-            ->add('vintage', EntityType::class,
+            ->add('cuvee', EntityType::class,
                 [
                     'label' => 'Type',
-                    'class' => Vintage::class,
-                    'choice_label' => function ($vintage) {
-                        return $vintage->getYear() . " " . $vintage->getCuvee()->getName();
-                    }
-                ])
-            ->add('capacity', EntityType::class,
-                [
-                    'label' => 'Contenant',
-                    'class' => Capacity::class,
+                    'class' => Cuvee::class,
                     'choice_label' => 'name'
+                ])
+            ->add('description', TextareaType::class,
+                [
+                    'label' => 'Description'
                 ])
             ->add('visible', CheckboxType::class,
                 [
                     'required' => false
                 ])
-            ->add('available', CheckboxType::class,
+            ->add('priority', IntegerType::class,
                 [
-                    'required' => false,
-                    'label' => 'Disponible',
+                    'label' => 'Priorité'
                 ])
             ->add('save', SubmitType::class)
         ;
@@ -64,7 +59,7 @@ class BottleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Bottle::class,
+            'data_class' => Vintage::class,
         ]);
     }
 }

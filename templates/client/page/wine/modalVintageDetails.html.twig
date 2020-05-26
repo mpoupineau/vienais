@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-md-4 d-none d-md-block">
+        <div class="hov-img-zoom">
+            <img src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
+        </div>
+
+    </div>
+    <div class="col-md-8">
+        <h4 class="title-main t-center txt5 m-b-18">
+            {{ vintage.cuvee.name }} {{ vintage.year }}
+        </h4>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for bottle in vintage.bottles %}
+                <tr>
+                    <td>{{ bottle.capacity.name}}</td>
+                    <td>{{ bottle.price|number_format(2) }} €</td>
+                    <td><input size="4" type="number"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

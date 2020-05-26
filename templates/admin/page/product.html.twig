@@ -2,11 +2,14 @@
 
 {% block subnavbar %}
     <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a class="nav-link {% if page is defined and page == 'bottle' %}active{% endif %}"  href="{{ path('admin_product_bottle') }}">Bouteille</a>
-        </li>
         <li class="nav-item ">
             <a class="nav-link {% if page is defined and page == 'cuvee' %}active{% endif %}"  href="{{ path('admin_product_cuvee') }}">Cuvée</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link {% if page is defined and page == 'vintage' %}active{% endif %}"  href="{{ path('admin_product_vintage') }}">Millésime</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if page is defined and page == 'bottle' %}active{% endif %}"  href="{{ path('admin_product_bottle') }}">Bouteille</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {% if page is defined and page == 'wineType' %}active{% endif %}"  href="{{ path('admin_product_wineType') }}">Type de vin</a>

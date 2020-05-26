@@ -1,45 +1,53 @@
-<div class="container">
     <div class="row">
-        <div class="col-4">
-            <div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
+        <div class="col-md-4 d-none d-md-block">
+            <div class="hov-img-zoom">
                 <img src="{{ asset( image_cuvee_location ~ cuvee.imagePath) }}" alt="no image">
             </div>
-            <h4 class="title-main t-center">
+
+        </div>
+        <div class="col-md-8">
+            <h4 class="title-main t-center txt5 m-b-18">
                 {{ cuvee.name }}
             </h4>
-        </div>
-        <div class="col-8">
+            {% if cuvee.description %}
             <p>
-                <span class="title-category">
+                <span class="title-category txt4">
                     Description
                 </span><br/>
                 {{ cuvee.description }}
             </p>
+            {% endif %}
+            {% if cuvee.variety %}
             <p>
-                <span class="title-category">
+                <span class="title-category txt4">
                     Cépage
                 </span><br/>
                 {{ cuvee.variety }}
-            <p>
             </p>
+            {% endif %}
+            {% if cuvee.vinification %}
             <p>
-                <span class="title-category">
+                <span class="title-category txt4">
                     Vinification
                 </span><br/>
                 {{ cuvee.vinification }}
             </p>
+            {% endif %}
+            {% if cuvee.tasting %}
             <p>
-                <span class="title-category">
+                <span class="title-category txt4">
                     Dégustation
                 </span><br/>
                 {{ cuvee.tasting }}
             </p>
+            {% endif %}
+            {% if cuvee.accord %}
             <p>
-                <span class="title-category">
+                <span class="title-category txt4">
                     Accord
                 </span><br/>
                 {{ cuvee.accord }}
             </p>
+            {% endif %}
         </div>
     </div>
-</div>
