@@ -30,10 +30,14 @@ class PhotoController extends AbstractController
         $form = $this->createForm(PhotoType::class, new Photo());
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $photoManager->add($form->getData());
+        if ($form->isSubmitted()) {
             $session = new Session();
-            $session->getFlashBag()->add('success', "Photo Ajoutée");
+            if ($form->isValid()) {
+                $photoManager->add($form->getData());
+                $session->getFlashBag()->add('success', "Photo Ajoutée");
+            } else {
+                $session->getFlashBag()->add('warning', "L'ajout de la photo a échoué");
+            }
         }
 
         return $this->render('admin/page/photo/photo.html.twig',
@@ -65,12 +69,17 @@ class PhotoController extends AbstractController
         $form = $this->createForm(PhotoType::class, $photo);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $photoManager->add($form->getData());
+        if ($form->isSubmitted()) {
             $session = new Session();
-            $session->getFlashBag()->add('success', "Photo modifiée");
-            return $this->redirectToRoute('admin_photo_photo');
+
+            if ($form->isValid()) {
+            $photoManager->add($form->getData());
+                $session->getFlashBag()->add('success', "Photo modifiée");
+                return $this->redirectToRoute('admin_photo_photo');
+            } else {
+                $session->getFlashBag()->add('warning', "La modification de la photo a échoué");
         }
+    }
 
         return $this->render('admin/page/photo/photo_update.html.twig',
             [

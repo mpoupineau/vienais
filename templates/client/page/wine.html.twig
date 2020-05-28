@@ -5,8 +5,8 @@
 {% block title_page %}Nos vins{% endblock %}
 
 {% block body %}
-    <!-- Welcome -->
-    <section class="section-welcome bg1-pattern p-t-120 p-b-105">
+    <!-- Intro-->
+    <section class="bg1-pattern p-t-120 p-b-105">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 p-t-45 p-b-30">
@@ -20,7 +20,7 @@
                         </h3>
 
                         <p class="t-center m-b-22 size3 m-l-r-auto">
-                            Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia, nisl ante egestas mi, ac facilisis ligula sem id neque.
+                            La récolte, la vinification et l’élevage de nos vins, effectués par nos soins, se font dans le respect de la tradition, avec l’aide et la connaissance des techniques modernes. Ils vieillissent dans nos caves de tuffeau (galeries souterraines) où la température reste constante toute l’année. Notre production représente actuellement 95 % pour le BOURGUEIL Rouge et 5% pour le BOURGUEIL Rosé.
                         </p>
                     </div>
                 </div>
@@ -34,8 +34,7 @@
         </div>
     </section>
 
-    <!-- nos vins -->
-    <section class="section-intro">
+    <section>
         <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/header-other-1.jpg') }});">
 			<span class="tit2 p-l-15 p-r-15">
 				Découvrer
@@ -84,13 +83,13 @@
         <div class="modal-dialog modal-xlg"  role="document">
             <div class="modal-content">
                 <div class="modal-body-cuvee">
+                    Une erreur est apparue
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Intro -->
-    <section class="section-intro">
+    <section>
         <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/bouteilles.jpeg') }});">
 			<span class="tit2 p-l-15 p-r-15">
 				Découvrer
@@ -124,7 +123,7 @@
                                                     {{ vintage.description }}
                                                     <!--<i class="fa fa-shopping-basket" aria-hidden="true"></i>-->
                                                 </p>
-                                                <p class="txt22" style="text-align: right" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
+                                                <p class="txt22" style="cursor: pointer; text-align: right" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
                                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                                 </p>
                                             </div>
@@ -145,7 +144,7 @@
         <div class="modal-dialog modal-xlg"  role="document">
             <div class="modal-content">
                 <div class="modal-body-vintage">
-                    failed
+                    Une erreur est apparue
                 </div>
             </div>
         </div>

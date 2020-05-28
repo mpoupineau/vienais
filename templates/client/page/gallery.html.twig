@@ -1,9 +1,21 @@
 {% extends 'client/base.html.twig' %}
 
+{% block stylesheets %}
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/lightbox2/css/lightbox.min.css') }}">
+{% endblock %}
 {% block title_page %}Galerie{% endblock %}
 
 {% block body %}
-    <div class="section-gallery p-t-118 p-b-100">
+    <div class="container">
+        <div class="row m-t-20">
+            <p class="t-center txt12 size15 m-l-r-auto">
+                Pour découvrir nos dernières photos, rejoignez-nous sur <a class="txt12" href="#">instagram <i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </p>
+        </div>
+    </div>
+
+    <div class="section-gallery p-t-50 p-b-100">
         <div class="wrap-label-gallery filter-tope-group size27 flex-w flex-sb-m m-l-r-auto flex-col-c-sm p-l-15 p-r-15 m-b-60">
             <button class="label-gallery txt26 trans-0-4 is-actived" data-filter="*">
                 Toutes

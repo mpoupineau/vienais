@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Bottle;
 use App\Entity\Cuvee;
+use App\Entity\News;
 use App\Entity\Photo;
 use App\Entity\PhotoTag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,32 @@ class ClientController extends AbstractController
      */
     public function home()
     {
-        return $this->render('client/page/home.html.twig');
+        return $this->render('client/page/home.html.twig',
+            [
+                "cuvee" => $this->getDoctrine()->getRepository(Cuvee::class)->findBy(
+                    [
+                        "visible" => true
+                    ],
+                    [
+                        "priority" => 'DESC'
+                    ],
+                    1
+                ),
+                "news" => $this->getDoctrine()->getRepository(News::class)->findOneBy(
+                    [
+                        "homePage" => true
+                    ]
+                ),
+                "photos" => $this->getDoctrine()->getRepository(Photo::class)->findBy(
+                    [
+                        "visible" => true
+                    ],
+                    [
+                        "priority" => 'DESC'
+                    ],
+                    3
+                )
+            ]);
     }
 
     /**

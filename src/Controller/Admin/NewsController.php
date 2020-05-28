@@ -22,10 +22,14 @@ class NewsController extends AbstractController
         $form = $this->createForm(NewsType::class, new News());
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $newsManager->add($form->getData());
+        if ($form->isSubmitted()) {
             $session = new Session();
-            $session->getFlashBag()->add('success', "Actualité Ajoutée");
+            if ($form->isValid()) {
+                $newsManager->add($form->getData());
+                $session->getFlashBag()->add('success', "Actualité Ajoutée");
+            } else {
+                $session->getFlashBag()->add('warning', "L'ajout de l'actualité a échoué");
+            }
         }
 
         return $this->render('admin/page/news/news.html.twig',
@@ -57,11 +61,16 @@ class NewsController extends AbstractController
         $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $newsManager->add($form->getData());
+        if ($form->isSubmitted()) {
             $session = new Session();
-            $session->getFlashBag()->add('success', "Actualité modifiée");
-            return $this->redirectToRoute('admin_news');
+
+            if ($form->isValid()) {
+                $newsManager->add($form->getData());
+                $session->getFlashBag()->add('success', "Actualité modifiée");
+                return $this->redirectToRoute('admin_news');
+            } else {
+                $session->getFlashBag()->add('warning', "La modification de l'actualité a échoué");
+            }
         }
 
         return $this->render('admin/page/news/news_update.html.twig',

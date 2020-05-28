@@ -1222,7 +1222,7 @@ body {
   box-sizing: border-box;
 }
 .item-gallery {
-  width: calc(-13.33333333%);
+  width:  calc( (100% - 140px) / 3 ) ;
   margin: 30px 15px;
   position: relative;
 }
@@ -1236,7 +1236,7 @@ body {
   opacity: 0;
 }
 .overlay-item-gallery:hover {
-  opacity: 1;
+  opacity: 0.3;
 }
 .btn-show-gallery {
   font-size: 18px;

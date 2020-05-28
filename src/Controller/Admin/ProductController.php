@@ -117,10 +117,15 @@ class ProductController extends AbstractController
         $form = $this->createForm(CuveeType::class, new Cuvee());
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cuveeManager->add($form->getData());
+        if ($form->isSubmitted()) {
             $session = new Session();
-            $session->getFlashBag()->add('success', "Cuvee Ajoutée");
+
+            if ($form->isValid()) {
+                $cuveeManager->add($form->getData());
+                $session->getFlashBag()->add('success', "Cuvee Ajoutée");
+            } else {
+                $session->getFlashBag()->add('warning', "L'ajout de la cuvée a échoué");
+            }
         }
 
         return $this->render('admin/page/product/cuvee.html.twig',
@@ -151,12 +156,17 @@ class ProductController extends AbstractController
         $form = $this->createForm(CuveeType::class, $cuvee);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cuveeManager->add($form->getData());
+        if ($form->isSubmitted()) {
             $session = new Session();
-            $session->getFlashBag()->add('success', "Cuvee modifié");
-            return $this->redirectToRoute('admin_product_cuvee');
-        }
+
+            if ($form->isValid()) {
+                $cuveeManager->add($form->getData());
+                $session->getFlashBag()->add('success', "Cuvee modifié");
+                return $this->redirectToRoute('admin_product_cuvee');
+            } else {
+                $session->getFlashBag()->add('warning', "La modification de la cuvee a échoué");
+            }
+    }
 
         return $this->render('admin/page/product/cuvee_update.html.twig',
             [

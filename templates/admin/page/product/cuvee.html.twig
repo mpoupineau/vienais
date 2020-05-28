@@ -20,6 +20,7 @@
                     <div class="row" style="padding-left: 30px;">
                         <div class="col-xl-5">
                             <div class="row">
+                                {{ form_errors(form.image_file) }}
                                 {% block cuvee_input_image %}
                                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail img-raised">
