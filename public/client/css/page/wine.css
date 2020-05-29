@@ -17,6 +17,7 @@
 .modal-body-cuvee {
   background: url('../../images/bois_modal.jpg');
   color: white;
+  min-height: 100px;
 }
 .modal-body-cuvee p {
   color: white;
@@ -31,6 +32,7 @@
 }
 .modal-body-vintage {
   background: url('../../images/clair_modal.jpg');
+  min-height: 100px;
 }
 .modal-body-vintage .title-main {
   color: #8860d0;

@@ -38,14 +38,15 @@
             <button id="add-to-cart-button" type="submit">
                 Ajouter au panier <i class="fa fa-shopping-basket" aria-hidden="true"></i>
             </button>
-            <p id="result-add-to-cart"></p>
+            <div id="result-add-to-cart">
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     $( "#add-to-cart-button" ).click(() => {
-        $('#result-add-to-cart').html('');
+        $('#result-add-to-cart').html('<div class="loader-wrapper" id="loader-1-s-2"><div id="loader"></div><\div>');
         const bottles = [];
         $(':input[name^=\'bottle_\']').each((index, elem) => {
             bottles[$(elem).attr('name').substring(7)] = $(elem).val();

@@ -45,7 +45,7 @@ class Bottle
     /**
      * @var Cuvee|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Vintage", inversedBy="vintages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vintage", inversedBy="bottles")
      * @ORM\JoinColumn(name="vintage_id", referencedColumnName="id")
      */
     private $vintage;

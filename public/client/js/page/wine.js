@@ -1,4 +1,6 @@
 $('#modalCuvee').on('show.bs.modal', function (event) {
+    const modal = $(this);
+    modal.find('.modal-body-cuvee').html('<div class="loader-wrapper" id="loader-1-s-5"><div id="loader"></div><\div>');
     const button = $(event.relatedTarget);
     const cuveeId = button.data('id');
     $.ajax({
@@ -7,16 +9,17 @@ $('#modalCuvee').on('show.bs.modal', function (event) {
         }),
         type: "GET",
         success: (data) => {
-            const modal = $(this);
             modal.find('.modal-body-cuvee').html(data);
         },
         error: (results, status, error) => {
-            $("#modalLayout").modal('show');
+            modal.find('.modal-body-cuvee').html('Une erreur est survenue');
         }
     })
 });
 
 $('#modalVintage').on('show.bs.modal', function (event) {
+    const modal = $(this);
+    modal.find('.modal-body-vintage').html('<div class="loader-wrapper" id="loader-1-s-5"><div id="loader"></div><\div>');
     const button = $(event.relatedTarget);
     const vintageId = button.data('id');
     $.ajax({
@@ -25,11 +28,10 @@ $('#modalVintage').on('show.bs.modal', function (event) {
         }),
         type: "GET",
         success: (data) => {
-            const modal = $(this);
             modal.find('.modal-body-vintage').html(data);
         },
         error: (results, status, error) => {
-            $("#modalLayout").modal('show');
+            modal.find('.modal-body-vintage').html('Une erreur est survenue');
         }
     })
 });

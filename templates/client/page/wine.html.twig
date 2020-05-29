@@ -1,11 +1,16 @@
 {% extends 'client/base.html.twig' %}
+
+{% block title %}Domaine Des Vienais - Nos vins{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/wine.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/vendor/loader/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/vendor/loader/loader-1.css') }}">
 {% endblock %}
 {% block title_page %}Nos vins{% endblock %}
 
 {% block body %}
-    <!-- Intro-->
     <section class="bg1-pattern p-t-120 p-b-105">
         <div class="container">
             <div class="row">
@@ -35,7 +40,7 @@
     </section>
 
     <section>
-        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/header-other-1.jpg') }});">
+        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/vins/header-other-1.jpg') }});">
 			<span class="tit2 p-l-15 p-r-15">
 				Découvrer
 			</span>
@@ -83,14 +88,16 @@
         <div class="modal-dialog modal-xlg"  role="document">
             <div class="modal-content">
                 <div class="modal-body-cuvee">
-                    Une erreur est apparue
+                    <div class="loader-wrapper" id="loader-1-s-5">
+                        <div id="loader"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <section>
-        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/bouteilles.jpeg') }});">
+        <div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url({{ asset('client/images/vins/bouteilles.jpeg') }});">
 			<span class="tit2 p-l-15 p-r-15">
 				Découvrer
 			</span>
@@ -139,8 +146,10 @@
     <div class="modal fade" id="modalVintage" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-xlg"  role="document">
             <div class="modal-content">
-                <div class="modal-body-vintage">
-                    Une erreur est apparue
+                <div class="color1 modal-body-vintage">
+                    <div class="loader-wrapper" id="loader-1">
+                        <div id="loader"></div>
+                    </div>
                 </div>
             </div>
         </div>

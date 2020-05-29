@@ -28,6 +28,9 @@ class WineController extends AbstractController
                 'cuvees' => $this->getDoctrine()->getRepository(Cuvee::class)->findBy(
                     [
                         "visible"=> true
+                    ],
+                    [
+                        "priority" => "DESC"
                     ]
                 ),
                 "vintages" => $this->getDoctrine()->getRepository(Vintage::class)->findBy(

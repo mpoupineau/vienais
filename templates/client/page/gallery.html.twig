@@ -1,9 +1,12 @@
 {% extends 'client/base.html.twig' %}
 
+{% block title %}Domaine Des Vienais - Galerie{% endblock %}
+
 {% block stylesheets %}
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/lightbox2/css/lightbox.min.css') }}">
 {% endblock %}
+
 {% block title_page %}Galerie{% endblock %}
 
 {% block body %}
@@ -50,5 +53,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script type="text/javascript" src="{{ asset('client/theme/vendor/lightbox2/js/lightbox.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('client/theme/vendor/isotope/isotope.pkgd.min.js') }}"></script>
 {% endblock %}
