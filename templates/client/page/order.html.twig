@@ -3,7 +3,73 @@
 {% block title_page %}Commande{% endblock %}
 
 {% block body %}
-    <div style="text-align: center;height: 300px;">
-        A venir
+<section class="bg1-pattern p-t-50 p-b-105">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table" style="background: white">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Quantité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for vintage in vintages %}
+                        {%  if vintage.bottles is not empty %}
+                        <tr>
+                            <td rowspan="{{ 1 + vintage.bottles|length }}" style="text-align: center;">
+                                <div class="hov-img-zoom">
+                                    <img style="width:100%; max-width: 120px;" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
+                                </div>
+                            </td>
+                            <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
+                        </tr>
+                        {% for bottle in vintage.bottles %}
+                        <tr>
+                            <td>{{ bottle.capacity.name}}</td>
+                            <td>{{ bottle.price|number_format(2) }} €</td>
+                            <td>
+                                {% if bottle.available %}
+                                    <input size="4" type="number" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
+                                {% else %}
+                                    <i>indisponible</i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2" style="background: white;">
+                    <table class="table">
+                        <tbody>
+                    <tr>
+                        <td>{{ "Sous-total"|trans }}</td>
+                        <td>20,00€</td>
+                    </tr>
+                    <tr>
+                        <td>{{ "Frais de port"|trans }}</td>
+                        <td>10,00€</td>
+                    </tr>
+                    <tr>
+                        <td>{{ "Total"|trans }}</td>
+                        <td>30,00€</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4">
+                        Continuer
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
+</section>
 {% endblock %}

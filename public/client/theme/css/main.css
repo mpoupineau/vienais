@@ -607,7 +607,7 @@ input[type="date"] {
 .item-gallery-sidebar {
   display: block;
   position: relative;
-  width: calc(23.33333333%);
+  width: calc((100% - 30px) / 3 );
   margin: 5px;
 }
 .item-gallery-sidebar::after {
@@ -757,7 +757,7 @@ input[type="date"] {
   background-color: #8860d0;
 }
 .slick1-dots li.slick-active button {
-  border: 3px solid white;
+  border: 2px solid white;
   background-color: #8860d0;
 }
 /*[ Caption ]
@@ -1134,7 +1134,7 @@ body {
 .item-gallery-footer {
   display: block;
   position: relative;
-  width: calc(12.5%);
+  width: calc((100% - 50px) / 4 );
   margin-right: 10px;
   margin-bottom: 10px;
 }
@@ -1222,7 +1222,7 @@ body {
   box-sizing: border-box;
 }
 .item-gallery {
-  width:  calc( (100% - 140px) / 3 ) ;
+  width: calc( (100% - 140px) / 3 );
   margin: 30px 15px;
   position: relative;
 }
@@ -1248,12 +1248,12 @@ body {
 }
 @media (max-width: 768px) {
   .item-gallery {
-    width: calc(-5%);
+    width: calc((100% - 110px) / 2);
   }
 }
 @media (max-width: 576px) {
   .item-gallery {
-    width: calc(70%);
+    width: calc((100% - 30px) / 1);
   }
   .wrap-gallery {
     padding-left: 0;

@@ -33,7 +33,8 @@
                                 <a href="{{ path('client_contact') }}">Contact</a>
                             </li>
                             <li>
-                                <a href="{{ path('client_order') }}">Commande</a>
+                                <a href="{{ path('client_order') }}">Commande{{ render(path('client_order_partial_bottles_number')) }}</a>
+
                             </li>
                         </ul>
                     </nav>
@@ -77,11 +78,8 @@
             <a href="{{ path('client_contact') }}" class="txt19">Contact</a>
         </li>
 
-        <li class="t-center">
-            <!-- Button3 -->
-            <a href="{{ path('client_order') }}" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-                Commande
-            </a>
+        <li class="t-center m-b-13">
+            <a href="{{ path('client_order') }}" class="txt19">Commande</a>
         </li>
     </ul>
 </aside>

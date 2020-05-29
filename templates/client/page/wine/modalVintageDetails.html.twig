@@ -5,7 +5,7 @@
         </div>
 
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 p-r-30">
         <h4 class="title-main t-center txt5 m-b-18">
             {{ vintage.cuvee.name }} {{ vintage.year }}
         </h4>
@@ -23,10 +23,45 @@
                 <tr>
                     <td>{{ bottle.capacity.name}}</td>
                     <td>{{ bottle.price|number_format(2) }} €</td>
-                    <td><input size="4" type="number"></td>
+                    <td>
+                        {% if bottle.available %}
+                            <input size="4" name="bottle_{{ bottle.id }}" type="number" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
+                        {% else %}
+                            <i>indisponible</i>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="t-right">
+            <button id="add-to-cart-button" type="submit">
+                Ajouter au panier <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            </button>
+            <p id="result-add-to-cart"></p>
+        </div>
     </div>
 </div>
+
+<script>
+    $( "#add-to-cart-button" ).click(() => {
+        $('#result-add-to-cart').html('');
+        const bottles = [];
+        $(':input[name^=\'bottle_\']').each((index, elem) => {
+            bottles[$(elem).attr('name').substring(7)] = $(elem).val();
+            console.log($(elem).attr('name')+ " => "+ $(elem).attr('name').substring(7)+ " => "+ $(elem).val());
+        });
+
+        $.ajax({
+            url: Routing.generate('client_wine_partial_bottle_update'),
+            type: "POST",
+            data: {bottles:bottles},
+            success: (data) => {
+                $('#result-add-to-cart').html('Ajouté avec succès');
+            },
+            error: (results, status, error) => {
+                $('#result-add-to-cart').html('Une erreur est survenue');
+            }
+        });
+    });
+</script>

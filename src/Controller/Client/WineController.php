@@ -9,6 +9,7 @@ namespace App\Controller\Client;
  */
 
 use App\Entity\Vintage;
+use App\Manager\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,12 +55,22 @@ class WineController extends AbstractController
     /**
      * @Route("/partial/vintage/{vintageId}", options = { "expose" = true }, name="_partial_vintage_details")
      */
-    public function getVintageDetails(Request $request, $vintageId)
+    public function getVintageDetails(Request $request, SessionManager $sessionManager, $vintageId)
     {
         $vintage = $this->getDoctrine()->getRepository(Vintage::class)->find($vintageId);
         return $this->render('client/page/wine/modalVintageDetails.html.twig',
             [
-                'vintage' => $vintage
+                'vintage' => $vintage,
+                "bottlesOrdered" => $sessionManager->getBottles()
             ]);
+    }
+
+    /**
+     * @Route("/partial/bottle/update", options = { "expose" = true }, name="_partial_bottle_update")
+     */
+    public function updateBottle(Request $request, SessionManager $sessionManager)
+    {
+        $sessionManager->updateBottles($request->get('bottles'));
+        return $this->json(['action' => 'ok']);
     }
 }

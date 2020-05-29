@@ -8,7 +8,6 @@ namespace App\Controller;
  * Time: 15:54
  */
 
-use App\Entity\Bottle;
 use App\Entity\Cuvee;
 use App\Entity\News;
 use App\Entity\Photo;
@@ -77,13 +76,5 @@ class ClientController extends AbstractController
                 ),
                 "photoTags" => $this->getDoctrine()->getRepository(PhotoTag::class)->findAll()
             ]);
-    }
-
-    /**
-     * @Route("/commande", name="client_order")
-     */
-    public function order()
-    {
-        return $this->render('client/page/order.html.twig');
     }
 }
