@@ -62,7 +62,7 @@
   box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.3);
 }
 .card-vintage img {
-  width: 100%;
+  width: 120px;
   max-width: 120px;
 }
 .pointer:hover {

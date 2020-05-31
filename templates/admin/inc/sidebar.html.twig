@@ -7,7 +7,7 @@
     Tip 2: you can also add an image using data-image tag
 -->
     <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="{{ path('admin_dashboard') }}" class="simple-text logo-normal">
             Domaine des Vienais
         </a>
     </div>
@@ -25,12 +25,12 @@
                     <p>Produits</p>
                 </a>
             </li>
-            <li class="nav-item {% if page is defined and page == 'pricing' %}active{% endif %}">
+            <!--<li class="nav-item {% if page is defined and page == 'pricing' %}active{% endif %}">
                 <a class="nav-link" href="{{ path('admin_pricing') }}">
                     <i class="material-icons">euro_symbol</i>
                     <p>Tarif</p>
                 </a>
-            </li>
+            </li>-->
             <li class="nav-item {% if page is defined and page in list_photos %}active{% endif %}">
                 <a class="nav-link" href="{{ path('admin_photo_photo') }}">
                     <i class="material-icons">image</i>
@@ -43,7 +43,7 @@
                     <p>Actualités</p>
                 </a>
             </li>
-            <li class="nav-item {% if page is defined and page == 'content' %}active{% endif %}">
+            <!--<li class="nav-item {% if page is defined and page == 'content' %}active{% endif %}">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#pagesExamples" aria-expanded="false">
                     <i class="material-icons">list</i>
                     <p> Pages
@@ -72,7 +72,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li>-->
             <li class="nav-item {% if page is defined and page == 'order' %}active{% endif %}">
                 <a class="nav-link" href="{{ path('admin_order') }}">
                     <i class="material-icons">payment</i>
@@ -85,12 +85,12 @@
                     <p>Messages</p>
                 </a>
             </li>
-            <li class="nav-item {% if page is defined and page == 'stat' %}active{% endif %}">
+            <!--<li class="nav-item {% if page is defined and page == 'stat' %}active{% endif %}">
                 <a class="nav-link" href="#">
                     <i class="material-icons">bar_chart</i>
                     <p>Statistiques</p>
                 </a>
-            </li>
+            </li>-->
         </ul>
     </div>
 </div>
