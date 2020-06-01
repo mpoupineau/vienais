@@ -2,6 +2,10 @@
 {% block title %}Domaine Des Vienais - Commande{% endblock %}
 {% block title_page %}Commande{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/order.css') }}">
+{% endblock %}
+
 {% block body %}
 <section class="bg1-pattern p-t-50 p-b-105">
     <div class="container">
@@ -22,7 +26,7 @@
                         <tr>
                             <td rowspan="{{ 1 + vintage.bottles|length }}" style="text-align: center;">
                                 <div class="hov-img-zoom">
-                                    <img style="width:100%; max-width: 120px;" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
+                                    <img style="width:120px" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
                                 </div>
                             </td>
                             <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
@@ -33,7 +37,8 @@
                             <td>{{ bottle.price|number_format(2) }} €</td>
                             <td>
                                 {% if bottle.available %}
-                                    <input size="4" type="number" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
+                                    <input type="hidden" id="price_{{ bottle.id }}" name="price_{{ bottle.id }}" value="{{ bottle.price }}" readonly>
+                                    <input type="number" id="qty_{{ bottle.id }}" name="qty_{{ bottle.id }}"size="4" min="0" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
                                 {% else %}
                                     <i>indisponible</i>
                                 {% endif %}
@@ -46,30 +51,38 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <div class="p-2" style="background: white;">
-                    <table class="table">
-                        <tbody>
-                    <tr>
-                        <td>{{ "Sous-total"|trans }}</td>
-                        <td>20,00€</td>
-                    </tr>
-                    <tr>
-                        <td>{{ "Frais de port"|trans }}</td>
-                        <td>10,00€</td>
-                    </tr>
-                    <tr>
-                        <td>{{ "Total"|trans }}</td>
-                        <td>30,00€</td>
-                    </tr>
-                    </tbody>
-                    </table>
-                    <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4">
-                        Continuer
-                    </button>
+                <div class="basket-promotion">
+
+                </div>
+                <div class="basket-information" style="background: white;padding: 30px;">
+                    <div class="sub-total-price">
+                        <span class="basket-category">{{ "Panier"|trans }}</span>
+                        <span class="basket-result"></span>
+                        <hr class="basket-separator">
+                    </div>
+                    <div class="transport-fees">
+                        <span class="basket-category">{{ "Frais de livraison"|trans }}</span>
+                        <span class="basket-result">0,00 €</span>
+                        <hr class="basket-separator">
+                    </div>
+                    <div class="total-price">
+                        <span class="basket-category">{{ "TOTAL"|trans }}</span>
+                        <span class="basket-result"></span>
+                    </div>
+                    <div class="submit">
+                        <a href="{{ path('client_order_delivery') }}" class="btn basket-button">
+                            Valider mon panier
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script type="text/javascript" src="{{ asset('client/js/page/order.js') }}"></script>
 {% endblock %}

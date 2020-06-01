@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>{% block title %}Domaine Des Vienais{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="{{ asset('client/images/logo.png') }}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/animate/animate.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/animsition/css/animsition.min.css') }}"> <!-- Before launch page -->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/vendor/slick/slick.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/order.css') }}">
+    {% block stylesheets %}
+    {% endblock %}
+
+</head>
+<body  class="bg1-pattern">
+<!-- Title Page -->
+{% block header_image %}
+    <section class="bg-title-page-payment p-t-30 p-b-30" style="background-image: url({{ asset('client/images/fond_vignes.jpeg')}});">
+        <div class="t-center">
+            <a href="{{ path('client_home') }}">
+                <img src="{{ asset('client/images/logo.png') }}" alt="IMG-LOGO">
+            </a>
+        </div>
+    </section>
+{% endblock %}
+
+    <div class="container t-center p-t-40 m-b-40">
+        <ul class="breadcrumb-payment">
+            <li class="breadcrumb-payment-item{% if step is not defined %}breadcrumb-payment-item-active{% endif %}">
+                1
+                <span  class="breadcrumb-payment-label">Panier</span>
+            </li>
+            <li class="breadcrumb-payment-item {% if step is defined and step == 'delivery' %}breadcrumb-payment-item-active{% endif %}">
+                2
+                <span class="breadcrumb-payment-label">Livraison</span>
+            </li>
+            <li class="breadcrumb-payment-item {% if step is defined and step == 'payment' %}breadcrumb-payment-item-active{% endif %}">
+                3
+                <span class="breadcrumb-payment-label">Paiement</span>
+            </li>
+            <li class="breadcrumb-payment-item {% if step is defined and step == 'recap' %}breadcrumb-payment-item-active{% endif %}">
+                4
+                <span class="breadcrumb-payment-label">Récapitulatif</span>
+            </li>
+        </ul>
+    </div>
+<div style="min-height: 800px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 m-t-20 m-b-20">
+                <a href="{{ path('client_order') }}" class="btn return-button"><i class="fa fa-arrow-left"></i> Retour à la commande</a>
+            </div>
+        </div>
+    </div>
+    {% block body %}
+    {% endblock %}
+
+    ><!-- Back to top -->
+    <div class="btn-back-to-top bg0-hov" id="myBtn">
+            <span class="symbol-btn-back-to-top">
+                <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+            </span>
+    </div>
+</div>
+<footer>
+<div class="end-footer bg2">
+    <div class="container">
+        <div class="flex-sb-m flex-w p-t-22 p-b-22">
+            <div class="txt17 p-r-20 p-t-5 p-b-5">
+                Copyright &copy; <span style="visibility: hidden;"> |  This template is made with <i class="fa fa-heart"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+</footer>
+
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/animsition/js/animsition.min.js') }}"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/bootstrap/js/popper.js') }}"></script>
+<script type="text/javascript" src="{{ asset('client/theme/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/select2/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/slick/slick.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('client/theme/js/slick-custom.js') }}"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/parallax100/parallax100.js') }}"></script>
+<script type="text/javascript">
+    $('.parallax100').parallax100();
+</script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/vendor/daterangepicker/daterangepicker.js') }}"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="{{ asset('client/theme/js/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('client/js/page/order.js') }}"></script>
+{% block javascripts %}{% endblock %}
+</body>
+
+</html>

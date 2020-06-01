@@ -1,0 +1,97 @@
+{% extends 'client/basePayment.html.twig' %}
+
+{% set step = 'payment' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="order-card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h2><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h2>
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            <span href="#" id="show-basket-button"><i class="fa fa-plus"></i></span>
+                        </div>
+                    </div>
+                    <div id="basket-summary" class="row">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Produit</th>
+                                <th class="t-center" scope="col">Quantité</th>
+                                <th class="t-right" scope="col">Prix</th>
+                            </tr>
+                            </thead>
+                            {% for bottle in order.basket %}
+                                <tr>
+                                    <td>{{ bottle.name }}</td>
+                                    <td class="t-center">{{ bottle.quantity }}
+                                            {% set totalPrice = bottle.price * bottle.quantity %}
+                                    <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <div class="order-card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h2><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h2>
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            <span href="#" id="show-delivery-button"><i class="fa fa-plus"></i></span>
+                        </div>
+                    </div>
+                    <div id="delivery-summary" class="row">
+                        <div class="col-md-6">
+                            <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
+                            {{ order.deliveryAddress.address }} <br>
+                            {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }} <br>
+                            {{ order.deliveryAddress.phone }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h2><i class="fa fa-credit-card"></i> {{ "Moyen de paiement"|trans }}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="basket-promotion">
+                </div>
+                <div class="basket-information  p-b-50 order-card">
+                    <div class="sub-total-price">
+                        <span class="basket-category">{{ "Panier"|trans }}</span>
+                        <span class="basket-result">{{ order.subPrice|number_format(2) }} €</span>
+                        <hr class="basket-separator">
+                    </div>
+                    <div class="transport-fees">
+                        <span class="basket-category">{{ "Frais de livraison"|trans }}</span>
+                        <span class="basket-result">{{ order.deliveryFees|number_format(2) }} €</span>
+                        <hr class="basket-separator">
+                    </div>
+                    <div class="total-price">
+                        <span class="basket-category">{{ "TOTAL"|trans }}</span>
+                        <span class="basket-result">{{ order.price|number_format(2) }} €</span>
+                    </div>
+                    <div class="submit">
+                        <a href="#" class="btn basket-button">
+                            Payer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
