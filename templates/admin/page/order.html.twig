@@ -14,46 +14,23 @@
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <tbody>
-                                <tr class="font-weight-bold">
-                                    <td style="width: 65px;">
-                                         <span class="badge badge-primary">#138</span>
-                                    </td>
-                                    <td>
-                                        Jean Dupont <span class="badge badge-info">New</span><br>
-                                        <i class="fa fa-paypal"></i> <b>154,20 €</b>
-                                    </td>
-                                    <td style="vertical-align:top;text-align: right">
-                                        <i class="material-icons text-primary">date_range</i><br>
-                                        18/04/2018
-                                    </td>
-                                </tr>
-
+                            {% for order in orders %}
                                 <tr>
                                     <td>
-                                        <span class="badge badge-primary">#138</span>
+                                        <a href="{{ path('admin_order_details', { 'orderId': order.id }) }}">
+                                        <span class="badge badge-primary">#{{ order.id }}</span>
+                                        </a>
                                     </td>
                                     <td>
-                                        Jean Dupont<br>
-                                        <b>138,40 €</b>
+                                        {{ order.deliveryAddress.firstname }} {{ order.deliveryAddress.lastname }}<br>
+                                        <b>{{ order.price|number_format(2) }} €</b>
                                     </td>
                                     <td style="vertical-align:top;text-align: right">
                                         <i class="material-icons  text-primary">date_range</i><br>
-                                        18/04/2018
+                                        {{ order.createdAt|date("d/m/Y", "Europe/Paris") }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <span class="badge badge-primary">#138</span>
-                                    </td>
-                                    <td>
-                                        Jean Dupont<br>
-                                        <i class="fa fa-paypal text-default"></i> <b>138,40 €</b>
-                                    </td>
-                                    <td style="vertical-align:top;text-align: right">
-                                        <i class="material-icons  text-primary">date_range</i><br>
-                                        18/04/2018
-                                    </td>
-                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -61,6 +38,11 @@
             </div>
         </div>
         <div class="col-md-8" >
+            {% if orderDetails is defined %}
+                {% set orderToDisplay = orderDetails%}
+            {% else %}
+                {% set orderToDisplay = orders|first %}
+            {% endif %}
             <div class="card">
                 <div class="card-header card-header-text card-header-primary">
                     <div class="card-text">
@@ -70,21 +52,24 @@
                 <div class="card-body">
                     <div class="row" >
                         <div class="col-xl-2 col-lg-3">
-                            <span class="badge badge-primary" style="font-size: 15px">#138</span><br><br>
+                            <span class="badge badge-primary" style="font-size: 15px">#{{ orderToDisplay.id }}</span><br><br>
                         </div>
                         <div class="col-xl-7 col-lg-6">
                             <dl class="row">
                                 <dt class="col-sm-3"><span class="text-primary">Nom</span></dt>
-                                <dd class="col-sm-8">Jean Dupont</dd>
+                                <dd class="col-sm-8">{{ orderToDisplay.deliveryAddress.firstname }} {{ orderToDisplay.deliveryAddress.lastname }}</dd>
                                 <dt class="col-sm-3"><span class="text-primary">Téléphone</span> </dt>
-                                <dd class="col-sm-8">0692831792</dd>
-                                <dt class="col-sm-3"><span class="text-primary">Email</span> </dt>
-                                <dd class="col-sm-8">jean.dupont@mail.com</dd>
+                                <dd class="col-sm-8">{{ orderToDisplay.deliveryAddress.phone }}</dd>
+                                <dt class="col-sm-3"><span class="text-primary">Adresse</span> </dt>
+                                <dd class="col-sm-8">
+                                    {{ orderToDisplay.deliveryAddress.address }} <br>
+                                    {{ orderToDisplay.deliveryAddress.zipcode }} {{ orderToDisplay.deliveryAddress.city }} <br>
+                                </dd>
                             </dl>
                         </div>
                         <div class="col-lg-3 text-right">
-                            Mardi 18 Février 2019 20:12:09<br>
-                            <span class="badge badge-warning" style="font-size: 20px">154,20 €</span>
+                            {{ orderToDisplay.createdAt|date("d/m/Y \à H:i:s", "Europe/Paris") }}<br>
+                            <span class="badge badge-warning" style="font-size: 20px">{{ orderToDisplay.price|number_format(2) }} €</span>
                         </div>
                     </div>
                     <div class="row">
@@ -95,39 +80,33 @@
                                     <thead class="text-primary">
                                         <tr>
                                             <th style="text-align: left">Nom</th>
-                                            <th>Type</th>
-                                            <th>Quantité</th>
+                                            <th style="text-align: center">Quantité</th>
                                             <th>Prix unitaire</th>
                                             <th>Prix</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {% for bottle in orderToDisplay.basket %}
                                         <tr>
-                                            <td style="text-align: left">Prestige 2019</td>
-                                            <td>Bouteille</td>
-                                            <td>12</td>
-                                            <td>5,70</td>
-                                            <td>68,40</td>
+                                            <td style="text-align: left">{{ bottle.name }}</td>
+                                            <td style="text-align: center">{{ bottle.quantity }}</td>
+                                            {% set totalPrice = bottle.price * bottle.quantity %}
+                                            <td>{{ bottle.price|number_format(2) }} €</td>
+                                            <td>{{ totalPrice|number_format(2) }} €</td>
                                         </tr>
-                                        <tr>
-                                            <td style="text-align: left">Prestige 2019</td>
-                                            <td>Bouteille</td>
-                                            <td>12</td>
-                                            <td>5,70</td>
-                                            <td>68,40</td>
+                                    {% endfor %}
+                                        <tr style="background: #FFFFDD">
+                                            <td colspan="3" style="text-align: left">Sous-Total</td>
+                                            <td>{{ orderToDisplay.subPrice|number_format(2) }} €</td>
                                         </tr>
                                         <tr style="background: #FFFFDD">
-                                            <td colspan="4" style="text-align: left">Sous-Total</td>
-                                            <td>136,80 €</td>
-                                        </tr>
-                                        <tr style="background: #FFFFDD">
-                                            <td colspan="4" style="text-align: left">Frais livraison</td>
+                                            <td colspan="3" style="text-align: left">Frais livraison</td>
 
-                                            <td>17,20 €</td>
+                                            <td>{{ orderToDisplay.deliveryFees|number_format(2) }} €</td>
                                         </tr>
                                         <tr style="background: #FFFFAA">
-                                            <td colspan="4" style="text-align: left">Total</td>
-                                            <td><strong>154,20 €</strong></td>
+                                            <td colspan="3" style="text-align: left">Total</td>
+                                            <td><strong>{{ orderToDisplay.price|number_format(2) }} €</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

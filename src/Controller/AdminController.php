@@ -60,11 +60,4 @@ class AdminController extends AbstractController
         return $this->render('admin/page/pricing.html.twig');
     }
 
-    /**
-     * @Route("/admin/order", name="admin_order")
-     */
-    public function order()
-    {
-        return $this->render('admin/page/order.html.twig');
-    }
 }
