@@ -34,13 +34,19 @@ class DeliveryAddressType extends AbstractType
                 [
                     'attr' => [
                         'placeholder' => '0607080910'
-                    ],
-                    'required' => false
+                    ]
                 ])
             ->add('address', TextType::class,
                 [
                     'attr' => [
                         'placeholder' => '3, rue des lavandières'
+                    ],
+                ])
+            ->add('addressComplement', TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Bat D, Hall 52'
                     ],
                 ])
             ->add('zipcode', TextType::class,
@@ -53,6 +59,12 @@ class DeliveryAddressType extends AbstractType
                 [
                     'attr' => [
                         'placeholder' => 'Benais'
+                    ],
+                ])
+            ->add('email', EmailType::class,
+                [
+                    'attr' => [
+                        'placeholder' => 'exemple@mail.com'
                     ],
                 ])
             ->add('send', SubmitType::class,

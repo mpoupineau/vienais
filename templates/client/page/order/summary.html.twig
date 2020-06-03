@@ -1,0 +1,78 @@
+{% extends 'client/basePayment.html.twig' %}
+
+{% set step = 'summary' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="order-card success-card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p><span class="check-success"><i class="fa fa-check"></i></span> {{ "Votre commande est passée"|trans }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="order-card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h3>
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            <span href="#" id="show-basket-button"><i class="fa fa-plus"></i></span>
+                        </div>
+                    </div>
+                    <div id="basket-summary" class="row">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Produit</th>
+                                <th class="t-center" scope="col">Quantité</th>
+                                <th class="t-right" scope="col">Prix</th>
+                            </tr>
+                            </thead>
+                            {% for bottle in order.basket %}
+                                <tr>
+                                    <td>{{ bottle.name }}</td>
+                                    <td class="t-center">{{ bottle.quantity }}
+                                        {% set totalPrice = bottle.price * bottle.quantity %}
+                                    <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <div class="order-card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h3>
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            <span href="#" id="show-delivery-button"><i class="fa fa-plus"></i></span>
+                        </div>
+                    </div>
+                    <div id="delivery-summary" class="row">
+                        <div class="col-md-6">
+                            <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
+                            {{ order.deliveryAddress.address }} <br>
+                            {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }} <br>
+                            {{ order.deliveryAddress.phone }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="order-card">
+                    <a href="{{ path('client_home') }}" class="btn basket-button">
+                        Revenir au site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

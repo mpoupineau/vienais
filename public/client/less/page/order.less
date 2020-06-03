@@ -1,9 +1,12 @@
+@import "../variable";
+
 .order-card {
   background: white;
   padding: 30px;
   box-shadow: 1px 1px 2px #aaaaaa;
   margin-bottom: 10px;
 }
+
 .basket-category {
   float: left;
   min-height: 36px;
@@ -20,18 +23,28 @@
   clear: both;
 }
 
-.basket-button {
+.basket-button, .basket-button-disabled {
   position: relative;
   right: 0;
   width: 100%;
   height: 42px;
   margin-top: 15px;
   font-size: 14px;
-  background: #8860d0;
+  background: @main-color;
   color: #fff;
   min-width: 90px;
   line-height: inherit;
   border-radius: 0;
+}
+
+.basket-button-disabled {
+  cursor: zoom-in;
+  background: #aaaaaa;
+  color: #777777;
+}
+
+.basket-button-disabled:hover {
+  color: #777777;
 }
 
 .return-button {
@@ -62,7 +75,7 @@
   text-align: center;
   line-height: 3em;
   border-radius: 50%;
-  background: #8860d0 ;
+  background: @main-color ;
   margin: 0 60px;
   display: inline-block;
   color: white;
@@ -76,7 +89,7 @@
   left: -10em;
   width: 13em;
   height: .2em;
-  background: #8860d0;
+  background: @main-color;
   z-index: -1;
 }
 
@@ -85,7 +98,7 @@
 }
 
 .breadcrumb-payment-item-active {
-  background: #8860d0;
+  background: @main-color;
 }
 
 .breadcrumb-payment-item-active ~ li {
@@ -97,7 +110,7 @@
 }
 
 .breadcrumb-payment-label {
-  color: #8860d0;
+  color: @main-color;
   position: absolute;
   top: 50px;
   left: 50%;

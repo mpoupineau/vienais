@@ -10,21 +10,21 @@
 <section class="bg1-pattern p-t-50 p-b-105">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <table class="table" style="background: white">
+            <div class="col-md-8 order-card">
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Type</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Quantité</th>
+                            <th  class="t-right" scope="col">Prix</th>
+                            <th class="t-right" scope="col">Quantité</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for vintage in vintages %}
                         {%  if vintage.bottles is not empty %}
                         <tr>
-                            <td rowspan="{{ 1 + vintage.bottles|length }}" style="text-align: center;">
+                            <td rowspan="{{ 1 + vintage.bottles|length }}" class="t-center">
                                 <div class="hov-img-zoom">
                                     <img style="width:120px" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
                                 </div>
@@ -34,9 +34,10 @@
                         {% for bottle in vintage.bottles %}
                         <tr>
                             <td>{{ bottle.capacity.name}}</td>
-                            <td>{{ bottle.price|number_format(2) }} €</td>
-                            <td>
+                            <td class="t-right">{{ bottle.price|number_format(2) }} €</td>
+                            <td class="t-right">
                                 {% if bottle.available %}
+                                    <input type="hidden" id="type_{{ bottle.id }}" name="type_{{ bottle.id }}" value="{{ bottle.capacity.name }}" readonly>
                                     <input type="hidden" id="price_{{ bottle.id }}" name="price_{{ bottle.id }}" value="{{ bottle.price }}" readonly>
                                     <input type="number" id="qty_{{ bottle.id }}" name="qty_{{ bottle.id }}"size="4" min="0" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
                                 {% else %}
@@ -51,10 +52,11 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <div class="basket-promotion">
-
+                <div class="basket-promotion order-card">
+                    <h5>Code promo</h5>
+                    <input type="text">
                 </div>
-                <div class="basket-information" style="background: white;padding: 30px;">
+                <div class="basket-information  order-card">
                     <div class="sub-total-price">
                         <span class="basket-category">{{ "Panier"|trans }}</span>
                         <span class="basket-result"></span>
@@ -70,10 +72,17 @@
                         <span class="basket-result"></span>
                     </div>
                     <div class="submit">
-                        <a href="{{ path('client_order_delivery') }}" class="btn basket-button">
+                        <a id="basket-validation-button" href="{{ path('client_order_delivery') }}" class="btn basket-button">
                             Valider mon panier
                         </a>
                     </div>
+                </div>
+                <div id="info-quantity" class="order-card success-card">
+
+                    <p>
+                        Nous vous livrons les bouteilles par cartons de 6 et les magnums par carton de 3, n'hésitez à panacher leurs contenus
+                    </p>
+                    <p id="quantity-info-details" class="" style="color:red"></p>
                 </div>
             </div>
         </div>

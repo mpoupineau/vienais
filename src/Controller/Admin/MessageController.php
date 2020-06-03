@@ -45,6 +45,7 @@ class MessageController extends AbstractController
             $message->setNew(false);
             $messageManager->add($message);
         }
+
         return $this->render('admin/page/message.html.twig',
             [
                 'messages' => $this->getDoctrine()->getRepository(Message::class)->findBy(

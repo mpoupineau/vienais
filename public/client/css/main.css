@@ -9,3 +9,48 @@
   height: 25px;
   line-height: 25px;
 }
+.success-card {
+  border-left: 6px solid #7CfC00;
+}
+.fail-card {
+  border-left: 6px solid red;
+}
+.check-success {
+  color: #7CfC00;
+  font-size: 50px;
+}
+/********************************/
+.tooltip-main {
+  position: relative;
+  display: inline-block;
+}
+.tooltip-main .tooltiptext-main {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip-main .tooltiptext-main::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+.tooltip-main:hover .tooltiptext-main {
+  visibility: visible;
+  opacity: 1;
+}

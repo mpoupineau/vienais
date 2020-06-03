@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    const STATE_INIT = "init";
+    const STATE_PAID = "payed";
+    const STATE_DELIVER = "delivered";
+
     /**
      * @var int
      *
@@ -52,6 +56,20 @@ class Order
      */
     private $price;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="state", type="string", nullable=false)
+     */
+    private $state = self::STATE_INIT;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="new", type="boolean", nullable=false)
+     */
+    private $new = true;
 
     /**
      * @var \DateTime
@@ -199,6 +217,43 @@ class Order
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     * @return Order
+     */
+    public function setState(string $state): Order
+    {
+        $this->state = $state;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNew(): bool
+    {
+        return $this->new;
+    }
+
+    /**
+     * @param bool $new
+     * @return Order
+     */
+    public function setNew(bool $new): Order
+    {
+        $this->new = $new;
+        return $this;
+    }
+
+
     public function getBasket()
     {
         $products = explode("/", $this->raw);
@@ -220,6 +275,18 @@ class Order
         return $basket;
     }
 
-
+    public function getFrenchState()
+    {
+        switch ($this->getState()) {
+            case self::STATE_INIT:
+                return "Non payée";
+            case self::STATE_PAID:
+                return "Payée";
+            case self::STATE_DELIVER:
+                return "Livrée";
+            default:
+                return "Error";
+        }
+    }
 
 }

@@ -9,41 +9,45 @@
                 <div class="order-card">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h2>
+                            <h3><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h3>
                         </div>
                         <div class="col-md-6" style="text-align: right">
                             <span href="#" id="show-basket-button"><i class="fa fa-plus"></i></span>
                         </div>
                     </div>
-                    <div id="basket-summary" class="row">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Produit</th>
-                                <th class="t-center" scope="col">Quantité</th>
-                                <th class="t-right" scope="col">Prix</th>
-                            </tr>
-                            </thead>
-                        {% for bottle in bottles %}
+                    <div id="basket-summary">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Produit</th>
+                                        <th class="t-center" scope="col">Quantité</th>
+                                        <th class="t-right" scope="col">Prix</th>
+                                    </tr>
+                                    </thead>
+                                {% for bottle in bottles %}
 
-                            {% if bottlesOrdered[bottle.id] is defined and 0 < bottlesOrdered[bottle.id]%}
-                                <tr>
-                                    <input type="hidden" name="qty_{{ bottle.id }}" readonly value="{{ bottlesOrdered[bottle.id] }}">
-                                    <input type="hidden" name="price_{{ bottle.id }}" readonly value="{{ bottle.price }}">
-                                    <td>{{ bottle.vintage.cuvee.name }} {{ bottle.vintage.year }} - {{ bottle.capacity.name}}</td>
-                                    <td class="t-center">{{ bottlesOrdered[bottle.id] }}
-                                    {% set totalPrice = bottle.price * bottlesOrdered[bottle.id] %}
-                                    <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                        </table>
+                                    {% if bottlesOrdered[bottle.id] is defined and 0 < bottlesOrdered[bottle.id]%}
+                                        <tr>
+                                            <input type="hidden" name="qty_{{ bottle.id }}" readonly value="{{ bottlesOrdered[bottle.id] }}">
+                                            <input type="hidden" name="price_{{ bottle.id }}" readonly value="{{ bottle.price }}">
+                                            <td>{{ bottle.vintage.cuvee.name }} {{ bottle.vintage.year }} - {{ bottle.capacity.name}}</td>
+                                            <td class="t-center">{{ bottlesOrdered[bottle.id] }}
+                                            {% set totalPrice = bottle.price * bottlesOrdered[bottle.id] %}
+                                            <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="order-card">
                     <div class="row m-b-20">
                         <div class="col-md-12">
-                            <h2><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h2>
+                            <h3><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h3>
                         </div>
                     </div>
                     {{ form_start(deliveryForm, {'attr': {'class': 'wrap-form-reservation size22 m-l-r-auto'}}) }}
@@ -70,11 +74,21 @@
 
                         <div class="col-md-12">
                             <span class="txt9">
-                                {{ form_label(deliveryForm.address, 'Addresse'|trans ) }} *
+                                {{ form_label(deliveryForm.address, 'Adresse'|trans ) }} *
                             </span>
 
                             <div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
                                 {{ form_widget(deliveryForm.address, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <span class="txt9">
+                                {{ form_label(deliveryForm.addressComplement, 'Complément d\'adresse'|trans ) }}
+                            </span>
+
+                            <div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                                {{ form_widget(deliveryForm.addressComplement, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
                             </div>
                         </div>
 
@@ -101,10 +115,26 @@
                         <div class="col-md-6">
                             <span class="txt9">
                                 {{ form_label(deliveryForm.phone, 'Téléphone'|trans ) }} *
+                                <div class="tooltip-main"><i class="fa fa-question-circle"></i>
+                                    <span class="tooltiptext-main">{{ 'Le numéro sera donné au livreur pour la livraison.' }}</span>
+                                </div>
                             </span>
 
                             <div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
                                 {{ form_widget(deliveryForm.phone, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <span class="txt9">
+                                {{ form_label(deliveryForm.email, 'Adresse mail'|trans ) }} *
+                                <div class="tooltip-main"><i class="fa fa-question-circle"></i>
+                                    <span class="tooltiptext-main">{{ 'Permettra de vous transmettre le numéro de suivi de livraison' }}</span>
+                                </div>
+                            </span>
+
+                            <div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                                {{ form_widget(deliveryForm.email, {'attr': {'class': 'bo-rad-10 sizefull txt10 p-l-20'}}) }}
                             </div>
                         </div>
                     </div>
@@ -125,7 +155,7 @@
                 <div class="basket-promotion">
 
                 </div>
-                <div class="basket-information  p-b-50 order-card">
+                <div class="basket-information order-card" style="padding-bottom: 60px">
                     <div class="sub-total-price">
                         <span class="basket-category">{{ "Panier"|trans }}</span>
                         <span class="basket-result"></span>

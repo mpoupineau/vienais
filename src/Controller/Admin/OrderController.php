@@ -32,6 +32,15 @@ class OrderController extends AbstractController
      */
     public function orderDetails($orderId)
     {
+
+        $order = $this->getDoctrine()->getRepository(Order::class)->find($orderId);
+
+        if ($order->isNew()) {
+            $order->setNew(false);
+            $this->getDoctrine()->getManager()->persist($order);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         return $this->render('admin/page/order.html.twig',
             [
                 "orders" => $this->getDoctrine()->getRepository(Order::class)->findBy(
@@ -40,7 +49,7 @@ class OrderController extends AbstractController
                         "id" => 'DESC'
                     ]
                 ),
-                'orderDetails' => $this->getDoctrine()->getRepository(Order::class)->find($orderId)
+                'orderDetails' => $order
             ]);
     }
 }

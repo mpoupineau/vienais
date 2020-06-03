@@ -34,7 +34,7 @@ class OrderController extends AbstractController
                         "visible" => true
                     ],
                     [
-                        "priority" => "ASC"
+                        "priority" => "DESC"
                     ]
                 ),
                 "bottlesOrdered" => $sessionManager->getBottles()
@@ -60,7 +60,7 @@ class OrderController extends AbstractController
             }
         }
 
-        return $this->render('client/page/delivery.html.twig',
+        return $this->render('client/page/order/delivery.html.twig',
             [
                 'deliveryForm' => $form->createView(),
                 "bottles" => $this->getDoctrine()->getRepository(Bottle::class)->findBy(
@@ -75,13 +75,24 @@ class OrderController extends AbstractController
     /**
      * @Route("/paiement/{orderId}", name="_payment")
      */
-    public  function payment($orderId) {
-        return $this->render('client/page/payment.html.twig',
+    public  function payment($orderId)
+    {
+        return $this->render('client/page/order/payment.html.twig',
             [
                 "order" => $this->getDoctrine()->getRepository(Order::class)->find($orderId)
             ]);
     }
 
+    /**
+     * @Route("/recapitulatif/{orderId}", name="_summary")
+     */
+    public function successPayment($orderId)
+    {
+        return $this->render('client/page/order/summary.html.twig',
+            [
+                "order" => $this->getDoctrine()->getRepository(Order::class)->find($orderId)
+            ]);
+    }
     /**
      * @Route("/partial/bottles-number", name="_partial_bottles_number")
      */

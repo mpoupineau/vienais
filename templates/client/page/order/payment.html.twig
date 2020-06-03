@@ -9,55 +9,68 @@
                 <div class="order-card">
                     <div class="row">
                         <div class="col-md-10">
-                            <h2><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h2>
+                            <h3><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h3>
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             <span href="#" id="show-basket-button"><i class="fa fa-plus"></i></span>
                         </div>
                     </div>
-                    <div id="basket-summary" class="row">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Produit</th>
-                                <th class="t-center" scope="col">Quantité</th>
-                                <th class="t-right" scope="col">Prix</th>
-                            </tr>
-                            </thead>
-                            {% for bottle in order.basket %}
-                                <tr>
-                                    <td>{{ bottle.name }}</td>
-                                    <td class="t-center">{{ bottle.quantity }}
-                                            {% set totalPrice = bottle.price * bottle.quantity %}
-                                    <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
+                    <div id="basket-summary">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Produit</th>
+                                        <th class="t-center" scope="col">Quantité</th>
+                                        <th class="t-right" scope="col">Prix</th>
+                                    </tr>
+                                    </thead>
+                                    {% for bottle in order.basket %}
+                                        <tr>
+                                            <td>{{ bottle.name }}</td>
+                                            <td class="t-center">{{ bottle.quantity }}
+                                                    {% set totalPrice = bottle.price * bottle.quantity %}
+                                            <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="order-card">
                     <div class="row">
                         <div class="col-md-10">
-                            <h2><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h2>
+                            <h3><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h3>
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             <span href="#" id="show-delivery-button"><i class="fa fa-plus"></i></span>
                         </div>
                     </div>
-                    <div id="delivery-summary" class="row">
-                        <div class="col-md-6">
-                            <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
-                            {{ order.deliveryAddress.address }} <br>
-                            {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }} <br>
-                            {{ order.deliveryAddress.phone }}
+                    <div id="delivery-summary">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
+                                {{ order.deliveryAddress.address }} <br>
+                                {% if '' !=  order.deliveryAddress.addressComplement %}
+                                    {{ order.deliveryAddress.addressComplement }} <br>
+                                {% endif %}
+                                {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ order.deliveryAddress.phone }} <br>
+                                {{ order.deliveryAddress.email }}
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="order-card">
                     <div class="row">
                         <div class="col-md-10">
-                            <h2><i class="fa fa-credit-card"></i> {{ "Moyen de paiement"|trans }}</h2>
+                            <h3><i class="fa fa-credit-card"></i> {{ "Moyen de paiement"|trans }}</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -86,7 +99,7 @@
                         <span class="basket-result">{{ order.price|number_format(2) }} €</span>
                     </div>
                     <div class="submit">
-                        <a href="#" class="btn basket-button">
+                        <a href="{{ path('client_order_summary', {orderId: order.id}) }}" class="btn basket-button">
                             Payer
                         </a>
                     </div>

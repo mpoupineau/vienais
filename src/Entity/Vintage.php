@@ -59,6 +59,7 @@ class Vintage
 
     /**
      * @ORM\OneToMany(targetEntity="Bottle", mappedBy="vintage")
+     * @ORM\OrderBy({"price" = "ASC"})
      */
     private $bottles;
 

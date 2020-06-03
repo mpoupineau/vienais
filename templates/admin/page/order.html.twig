@@ -15,15 +15,24 @@
                         <table class="table table-striped">
                             <tbody>
                             {% for order in orders %}
-                                <tr>
+                                {% if order.new %}
+                                    <tr class="font-weight-bold">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
                                     <td>
                                         <a href="{{ path('admin_order_details', { 'orderId': order.id }) }}">
-                                        <span class="badge badge-primary">#{{ order.id }}</span>
+                                            <span class="badge badge-primary">#{{ order.id }}</span><br>
+                                            <span class="badge badge-info">{{ order.frenchState }}</span>
                                         </a>
                                     </td>
                                     <td>
-                                        {{ order.deliveryAddress.firstname }} {{ order.deliveryAddress.lastname }}<br>
+                                        <a href="{{ path('admin_order_details', { 'orderId': order.id }) }}">
+                                        {{ order.deliveryAddress.firstname }} {{ order.deliveryAddress.lastname }}
+                                        </a>
+                                            {% if order.new %}<span class="badge badge-info">New</span>{% endif %}<br>
                                         <b>{{ order.price|number_format(2) }} €</b>
+
                                     </td>
                                     <td style="vertical-align:top;text-align: right">
                                         <i class="material-icons  text-primary">date_range</i><br>
@@ -60,16 +69,22 @@
                                 <dd class="col-sm-8">{{ orderToDisplay.deliveryAddress.firstname }} {{ orderToDisplay.deliveryAddress.lastname }}</dd>
                                 <dt class="col-sm-3"><span class="text-primary">Téléphone</span> </dt>
                                 <dd class="col-sm-8">{{ orderToDisplay.deliveryAddress.phone }}</dd>
-                                <dt class="col-sm-3"><span class="text-primary">Adresse</span> </dt>
+                                <dt class="col-sm-3"><span class="text-primary">email</span> </dt>
+                                <dd class="col-sm-8">{{ orderToDisplay.deliveryAddress.email }}</dd>
+                                <dt class="col-sm-3"><span class="text-primary">Adresse</span></dt>
                                 <dd class="col-sm-8">
                                     {{ orderToDisplay.deliveryAddress.address }} <br>
+                                    {% if '' !=  orderToDisplay.deliveryAddress.addressComplement %}
+                                    {{ orderToDisplay.deliveryAddress.addressComplement }} <br>
+                                    {% endif %}
                                     {{ orderToDisplay.deliveryAddress.zipcode }} {{ orderToDisplay.deliveryAddress.city }} <br>
                                 </dd>
                             </dl>
                         </div>
                         <div class="col-lg-3 text-right">
                             {{ orderToDisplay.createdAt|date("d/m/Y \à H:i:s", "Europe/Paris") }}<br>
-                            <span class="badge badge-warning" style="font-size: 20px">{{ orderToDisplay.price|number_format(2) }} €</span>
+                            <span class="badge badge-warning" style="font-size: 20px">{{ orderToDisplay.price|number_format(2) }} €</span><br>
+                            <span class="badge badge-info">{{ orderToDisplay.frenchState }}</span>
                         </div>
                     </div>
                     <div class="row">

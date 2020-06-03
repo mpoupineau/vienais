@@ -46,9 +46,23 @@ class DeliveryAddress
     /**
      * @var string
      *
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="string", length=255, nullable=false)
      */
     private $address;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="address_complement", type="string", length=255, nullable=true)
+     */
+    private $addressComplement;
 
     /**
      * @var string
@@ -139,6 +153,24 @@ class DeliveryAddress
     /**
      * @return string
      */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return DeliveryAddress
+     */
+    public function setEmail(string $email): DeliveryAddress
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getAddress()
     {
         return $this->address;
@@ -151,6 +183,24 @@ class DeliveryAddress
     public function setAddress(string $address): DeliveryAddress
     {
         $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAddressComplement(): ?string
+    {
+        return $this->addressComplement;
+    }
+
+    /**
+     * @param string|null $addressComplement
+     * @return DeliveryAddress
+     */
+    public function setAddressComplement(?string $addressComplement): DeliveryAddress
+    {
+        $this->addressComplement = $addressComplement;
         return $this;
     }
 
@@ -189,6 +239,4 @@ class DeliveryAddress
         $this->city = $city;
         return $this;
     }
-
-
 }

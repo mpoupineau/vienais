@@ -22,6 +22,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('client/theme/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/order.css') }}">
     {% block stylesheets %}
     {% endblock %}
@@ -53,7 +54,7 @@
                 3
                 <span class="breadcrumb-payment-label">Paiement</span>
             </li>
-            <li class="breadcrumb-payment-item {% if step is defined and step == 'recap' %}breadcrumb-payment-item-active{% endif %}">
+            <li class="breadcrumb-payment-item {% if step is defined and step == 'summary' %}breadcrumb-payment-item-active{% endif %}">
                 4
                 <span class="breadcrumb-payment-label">Récapitulatif</span>
             </li>
