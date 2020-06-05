@@ -10,46 +10,56 @@
 <section class="bg1-pattern p-t-50 p-b-105">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 order-card">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Type</th>
-                            <th  class="t-right" scope="col">Prix</th>
-                            <th class="t-right" scope="col">Quantité</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for vintage in vintages %}
-                        {%  if vintage.bottles is not empty %}
-                        <tr>
-                            <td rowspan="{{ 1 + vintage.bottles|length }}" class="t-center">
-                                <div class="hov-img-zoom">
-                                    <img style="width:120px" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
-                                </div>
-                            </td>
-                            <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
-                        </tr>
-                        {% for bottle in vintage.bottles %}
-                        <tr>
-                            <td>{{ bottle.capacity.name}}</td>
-                            <td class="t-right">{{ bottle.price|number_format(2) }} €</td>
-                            <td class="t-right">
-                                {% if bottle.available %}
-                                    <input type="hidden" id="type_{{ bottle.id }}" name="type_{{ bottle.id }}" value="{{ bottle.capacity.name }}" readonly>
-                                    <input type="hidden" id="price_{{ bottle.id }}" name="price_{{ bottle.id }}" value="{{ bottle.price }}" readonly>
-                                    <input type="number" id="qty_{{ bottle.id }}" name="qty_{{ bottle.id }}"size="4" min="0" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
-                                {% else %}
-                                    <i>indisponible</i>
-                                {% endif %}
-                            </td>
-                        </tr>
+            <div class="col-md-8">
+                <div class="order-card">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Type</th>
+                                <th  class="t-right" scope="col">Prix</th>
+                                <th class="t-right" scope="col">Quantité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for vintage in vintages %}
+                            {%  if vintage.bottles is not empty %}
+                            <tr>
+                                <td rowspan="{{ 1 + vintage.bottles|length }}" class="t-center">
+                                    <div class="d-none d-md-block hov-img-zoom">
+                                        <img style="width:120px" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
+                                    </div>
+                                </td>
+                                <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
+                            </tr>
+                            {% for bottle in vintage.bottles %}
+                            <tr>
+                                <td>{{ bottle.capacity.name}}</td>
+                                <td class="t-right">
+                                    {% if bottle.promoPrice %}
+                                        <span class="strikethrough">{{ bottle.price|number_format(2) }} €</span>
+                                        <span class="promo-price">  {{ bottle.promoPrice|number_format(2) }} €</span>
+                                        <input type="hidden" id="price_{{ bottle.id }}" name="price_{{ bottle.id }}" value="{{ bottle.promoPrice }}" readonly>
+                                    {% else %}
+                                        {{ bottle.price|number_format(2) }} €
+                                        <input type="hidden" id="price_{{ bottle.id }}" name="price_{{ bottle.id }}" value="{{ bottle.price }}" readonly>
+                                    {% endif %}
+                                </td>
+                                <td class="t-right">
+                                    {% if bottle.available %}
+                                        <input type="hidden" id="type_{{ bottle.id }}" name="type_{{ bottle.id }}" value="{{ bottle.capacity.name }}" readonly>
+                                        <input type="number" id="qty_{{ bottle.id }}" name="qty_{{ bottle.id }}" class="input-quantity" min="0" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
+                                    {% else %}
+                                        <i>indisponible</i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
                         {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="basket-promotion order-card">

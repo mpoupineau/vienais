@@ -114,7 +114,7 @@
                     {% for vintage in vintages %}
 
                                 <div class="col-lg-4 col-md-6">
-                                    <div class="card card-vintage">
+                                    <div class="card card-vintage {% if vintage.isPromoted %}card-vintage-promoted{% endif %}">
                                         <div class="card-horizontal">
                                             <div class="img-square-wrapper">
                                                 <img class="" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="Card image cap">
@@ -126,11 +126,14 @@
                                                     </div>
                                                     {{ vintage.year }}
                                                 </h4>
+                                                <p class="vintage-modal-button-div" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
+                                                    <span class="txt22"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                                                    {% if vintage.isPromoted %}
+                                                        <span class="promo-price">promotion !</span>
+                                                    {% endif %}
+                                                </p>
                                                 <p class="card-text txt23">
                                                     {{ vintage.description }}
-                                                </p>
-                                                <p class="txt22" style="cursor: pointer; text-align: right" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
-                                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                                 </p>
                                             </div>
                                         </div>

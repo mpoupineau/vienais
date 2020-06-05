@@ -261,12 +261,13 @@ class Order
 
         foreach ($products as $product) {
             $details = explode("|", $product);
-            if (3 === count($details)) {
+            if (4 === count($details)) {
                 $basket[] =
                     [
                         "name" => $details[0],
                         'quantity' => $details[1],
-                        'price' => floatval($details[2])
+                        'price' => floatval($details[2]),
+                        'promoPrice' => $details[3] ? floatval($details[3]) : $details[3]
                     ];
             }
 

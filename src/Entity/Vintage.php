@@ -189,5 +189,15 @@ class Vintage
         return $this;
     }
 
+    public function isPromoted()
+    {
+        foreach ($this->getBottles() as $bottle) {
+            if ($bottle->getPromoPrice()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

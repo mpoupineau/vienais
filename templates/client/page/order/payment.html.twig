@@ -29,9 +29,17 @@
                                     {% for bottle in order.basket %}
                                         <tr>
                                             <td>{{ bottle.name }}</td>
-                                            <td class="t-center">{{ bottle.quantity }}
-                                                    {% set totalPrice = bottle.price * bottle.quantity %}
-                                            <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
+                                            <td class="t-center">{{ bottle.quantity }}</td>
+                                            {% set totalPrice = bottle.price * bottle.quantity %}
+                                            <td class="t-right">
+                                                {% if bottle.promoPrice %}
+                                                    {% set totalPromoPrice = bottle.promoPrice * bottle.quantity %}
+                                                    <span class="strikethrough">{{ totalPrice|number_format(2) }} €</span>
+                                                    <span class="promo-price">  {{ totalPromoPrice|number_format(2) }} €</span>
+                                                {% else %}
+                                                    {{ totalPrice|number_format(2) }} €
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </table>

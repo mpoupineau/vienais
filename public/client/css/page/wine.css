@@ -64,6 +64,12 @@
 .card-vintage img {
   width: 120px;
 }
+.card-vintage-promoted {
+  border-right: 4px solid #8860d0;
+}
 .pointer:hover {
+  cursor: pointer;
+}
+.vintage-modal-button-div {
   cursor: pointer;
 }

@@ -34,6 +34,11 @@ class BottleType extends AbstractType
                 [
                     'label' => 'Prix (en €)'
                 ])
+            ->add('promoPrice', NumberType::class,
+                [
+                    'required' => false,
+                    'label' => 'Prix Promotion (en €)'
+                ])
             ->add('vintage', EntityType::class,
                 [
                     'label' => 'Type',

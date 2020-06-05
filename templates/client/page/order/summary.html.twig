@@ -41,7 +41,15 @@
                                     <td>{{ bottle.name }}</td>
                                     <td class="t-center">{{ bottle.quantity }}
                                         {% set totalPrice = bottle.price * bottle.quantity %}
-                                    <td class="t-right">{{ totalPrice|number_format(2) }} €</td>
+                                    <td class="t-right">
+                                        {% if bottle.promoPrice %}
+                                            {% set totalPromoPrice = bottle.promoPrice * bottle.quantity %}
+                                            <span class="strikethrough">{{ totalPrice|number_format(2) }} €</span>
+                                            <span class="promo-price">  {{ totalPromoPrice|number_format(2) }} €</span>
+                                        {% else %}
+                                            {{ totalPrice|number_format(2) }} €
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </table>
@@ -56,12 +64,20 @@
                             <span href="#" id="show-delivery-button"><i class="fa fa-plus"></i></span>
                         </div>
                     </div>
-                    <div id="delivery-summary" class="row">
-                        <div class="col-md-6">
-                            <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
-                            {{ order.deliveryAddress.address }} <br>
-                            {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }} <br>
-                            {{ order.deliveryAddress.phone }}
+                    <div id="delivery-summary">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
+                                {{ order.deliveryAddress.address }} <br>
+                                {% if '' !=  order.deliveryAddress.addressComplement %}
+                                    {{ order.deliveryAddress.addressComplement }} <br>
+                                {% endif %}
+                                {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ order.deliveryAddress.phone }} <br>
+                                {{ order.deliveryAddress.email }}
+                            </div>
                         </div>
                     </div>
                 </div>

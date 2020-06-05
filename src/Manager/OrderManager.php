@@ -34,7 +34,7 @@ class OrderManager
                 $bottle = $this->entityManager->getRepository(Bottle::class)->find($bottleId);
                 if ($bottle->isAvailable()){
                     $rawBottles .= $bottle->getVintage()->getCuvee()->getName() . " " . $bottle->getVintage()->getYear() . " -  " . $bottle->getCapacity()->getName();
-                    $rawBottles .= "|" . $quantity . "|" . $bottle->getPrice() . '/';
+                    $rawBottles .= "|" . $quantity . "|" . $bottle->getPrice(). "|" . $bottle->getPromoPrice() . '/';
                     $subPrice += $quantity * $bottle->getPrice();
                 }
             }

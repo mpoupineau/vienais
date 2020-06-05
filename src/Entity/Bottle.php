@@ -29,6 +29,13 @@ class Bottle
     private $price;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="promo_price", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $promoPrice;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
@@ -166,4 +173,24 @@ class Bottle
         $this->capacity = $capacity;
         return $this;
     }
+
+    /**
+     * @return float
+     */
+    public function getPromoPrice()
+    {
+        return $this->promoPrice;
+    }
+
+    /**
+     * @param float $promoPrice
+     * @return Bottle
+     */
+    public function setPromoPrice(?float $promoPrice): Bottle
+    {
+        $this->promoPrice = $promoPrice;
+        return $this;
+    }
+
+
 }

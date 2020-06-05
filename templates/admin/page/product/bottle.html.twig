@@ -29,6 +29,10 @@
                                 {{ form_label(form.price) }}
                                 {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
                             </div>
+                            <div class="form-group">
+                                {{ form_label(form.promoPrice) }}
+                                {{ form_widget(form.promoPrice, {'attr': {'class': 'form-control'}}) }}
+                            </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
@@ -84,7 +88,12 @@
                             <tr>
                                 <td class="td-name text-center">
                                     {{ bottle.vintage.year }} {{ bottle.vintage.cuvee.name }}<br>
-                                    {{ bottle.price|number_format(2) }} €
+                                    {% if bottle.promoPrice %}
+                                        <span class="strikethrough">{{ bottle.price|number_format(2) }} €</span>
+                                        <span style="color: #8860D0"> {{ bottle.promoPrice|number_format(2) }} €</span>
+                                    {% else %}
+                                        {{ bottle.price|number_format(2) }} €
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {{ bottle.capacity.name }}

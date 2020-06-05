@@ -14,18 +14,25 @@
             <thead>
             <tr>
                 <th scope="col">Type</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Quantité</th>
+                <th class="t-right" scope="col">Prix</th>
+                <th class="t-right" scope="col">Quantité</th>
             </tr>
             </thead>
             <tbody>
             {% for bottle in vintage.bottles %}
                 <tr>
                     <td>{{ bottle.capacity.name}}</td>
-                    <td>{{ bottle.price|number_format(2) }} €</td>
-                    <td>
+                    <td class="t-right" >
+                        {% if bottle.promoPrice %}
+                            <span class="strikethrough">{{ bottle.price|number_format(2) }} €</span>
+                            <span class="promo-price">  {{ bottle.promoPrice|number_format(2) }} €</span>
+                        {% else %}
+                            {{ bottle.price|number_format(2) }} €
+                        {% endif %}
+                    </td>
+                    <td class="t-right" >
                         {% if bottle.available %}
-                            <input size="4" name="bottle_{{ bottle.id }}" type="number" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
+                            <input class="input-quantity" name="bottle_{{ bottle.id }}" type="number" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
                         {% else %}
                             <i>indisponible</i>
                         {% endif %}

@@ -106,8 +106,24 @@
                                             <td style="text-align: left">{{ bottle.name }}</td>
                                             <td style="text-align: center">{{ bottle.quantity }}</td>
                                             {% set totalPrice = bottle.price * bottle.quantity %}
-                                            <td>{{ bottle.price|number_format(2) }} €</td>
-                                            <td>{{ totalPrice|number_format(2) }} €</td>
+                                            <td>
+                                                {% if bottle.promoPrice %}
+                                                    {% set totalPromoPrice = bottle.promoPrice * bottle.quantity %}
+                                                    <span class="strikethrough">{{ bottle.price|number_format(2) }} €</span>
+                                                    {{ bottle.promoPrice|number_format(2) }} €
+                                                {% else %}
+                                                    {{ bottle.price|number_format(2) }} €
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if bottle.promoPrice %}
+                                                    {% set totalPromoPrice = bottle.promoPrice * bottle.quantity %}
+                                                    <span class="strikethrough">{{ totalPrice|number_format(2) }} €</span>
+                                                    {{ totalPromoPrice|number_format(2) }} €
+                                                {% else %}
+                                                    {{ totalPrice|number_format(2) }} €
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                         <tr style="background: #FFFFDD">

@@ -21,7 +21,7 @@ class SessionManager
     public function updateBottles($bottles)
     {
         $bottlesOrdered = $this->session->get('bottles', []);
-        dump($bottles);
+
         foreach ($bottles as $key => $value){
             if ("" !== $value) {
                 $bottlesOrdered[$key] = $value;
