@@ -120,3 +120,43 @@ $('#show-delivery-button').click(() => {
     }
 });
 
+/************* Payment details ***********************************/
+$('#show-card-payment-info-button').click(() => {
+    if ($('#card-payment-info').css("display") === "none") {
+        $('#card-payment-info').show('fast');
+        $('#check-info').hide('fast');
+        $('#show-card-payment-info-button').removeClass('basket-button-unselected');
+        $('#show-card-payment-info-button').addClass('basket-button');
+        $('#show-check-info-button').addClass('basket-button-unselected');
+        $('#show-check-info-button').removeClass('basket-button');
+        $('#div-payment-button').find('a').html('Payer par carte');
+        $('#div-payment-button').find('a').attr('href', Routing.generate('client_order_summary', {
+            'bottleId': 1,
+            'type': 'card'
+        }));
+    }/* else {
+        $('#card-payment-info').hide('fast');
+        $('#show-card-payment-info-button').addClass('basket-button-unselected');
+        $('#show-card-payment-info-button').removeClass('basket-button');
+    }*/
+});
+
+$('#show-check-info-button').click(() => {
+    if ($('#check-info').css("display") === "none") {
+        $('#check-info').show('fast');
+        $('#card-payment-info').hide('fast');
+        $('#show-check-info-button').removeClass('basket-button-unselected');
+        $('#show-check-info-button').addClass('basket-button');
+        $('#show-card-payment-info-button').addClass('basket-button-unselected');
+        $('#show-card-payment-info-button').removeClass('basket-button');
+        $('#div-payment-button').find('a').html('Payer par chèque');
+        $('#div-payment-button').find('a').attr('href', Routing.generate('client_order_summary', {
+            'bottleId': 1,
+            'type': 'check'
+        }));
+    }/* else {
+        $('#check-info').hide('fast');
+        $('#show-check-info-button').addClass('basket-button-unselected');
+        $('#show-check-info-button').removeClass('basket-button');
+    }*/
+});

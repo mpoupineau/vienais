@@ -82,8 +82,47 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-
+                        <div class="col-lg-3 col-md-6">
+                            <button id="show-card-payment-info-button" class="btn basket-button-unselected">Carte bancaire</button>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <button id="show-check-info-button" class="btn basket-button-unselected">Chèque</button>
+                        </div>
+                    </div>
+                    <div id="card-payment-info">
+                        <div class="row">
+                            <div class="p-l-30 col-md-12">
+                                <p>
+                                    <b> Vous choisissez le paiement sécurisé en ligne :</b>
+                                </p>
+                                <p>
+                                    Après avoir cliqué sur "Payer", vous serez redirigé vers le site de paiement en ligne, où vous réglerez votre commande en toute sécurité<br>
+                                    La commande vous sera envoyée après votre réglement.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="check-info">
+                        <div class="row">
+                            <div class="p-l-30 col-md-12">
+                                <p>
+                                    <b>Vous choisissez le paiement par chèque :</b>
+                                </p>
+                                <p>
+                                    Imprimer le récapitulatif de commande <br>
+                                    Remplir votre chèque à l'ordre "EARL des Vienais" <br>
+                                    Envoyez votre chèque à l'adresse suivante :
+                                </p>
+                                <p class="p-l-50 p-t-5 p-b-5">
+                                    <i>
+                                        3 rue des lavandières<br>
+                                        37140 Benais
+                                    </i>
+                                <p>
+                                <p>
+                                    La commande vous sera envoyée à la réception du chèque
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,8 +145,8 @@
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
                         <span class="basket-result">{{ order.price|number_format(2) }} €</span>
                     </div>
-                    <div class="submit">
-                        <a href="{{ path('client_order_summary', {orderId: order.id}) }}" class="btn basket-button">
+                    <div id="div-payment-button" class="submit">
+                        <a href="{{ path('client_order_summary', {orderId: order.id, type: "card"}) }}" class="btn basket-button">
                             Payer
                         </a>
                     </div>

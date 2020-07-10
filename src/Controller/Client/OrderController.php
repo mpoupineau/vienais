@@ -84,9 +84,9 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/recapitulatif/{orderId}", name="_summary")
+     * @Route("/recapitulatif/{orderId}/{type}", options = { "expose" = true }, name="_summary")
      */
-    public function successPayment($orderId)
+    public function successPayment($orderId, $type)
     {
         return $this->render('client/page/order/summary.html.twig',
             [

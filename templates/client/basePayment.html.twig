@@ -64,7 +64,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 m-t-20 m-b-20">
+                {% block return_to_order %}
                 <a href="{{ path('client_order') }}" class="btn return-button"><i class="fa fa-arrow-left"></i> Retour à la commande</a>
+                {% endblock %}
             </div>
         </div>
     </div>
@@ -110,6 +112,8 @@
 <!--===============================================================================================-->
 <script type="text/javascript" src="{{ asset('client/theme/vendor/daterangepicker/daterangepicker.js') }}"></script>
 <!--===============================================================================================-->
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 <script type="text/javascript" src="{{ asset('client/theme/js/main.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/page/order.js') }}"></script>
 {% block javascripts %}{% endblock %}
