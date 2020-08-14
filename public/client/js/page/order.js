@@ -62,10 +62,11 @@ function checkQuantity() {
         }
     });
 
+    const totalProduct = totalBottle + totalMagnum;
     const magnumModulo = totalMagnum % 3;
     const bottleModulo = totalBottle % 6;
 
-    if (0 === magnumModulo && 0 === bottleModulo) {
+    if (0 < totalProduct && 0 === magnumModulo && 0 === bottleModulo) {
         $('#info-quantity').removeClass('fail-card');
         $('#info-quantity').addClass('success-card');
         $("#basket-validation-button").removeClass('basket-button-disabled');

@@ -4,7 +4,8 @@
 {% block content %}
     <div class="row"></div>
 <div class="row flex-column-reverse flex-md-row" >
-    <div class="col-md-6">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
 
         <div class="card">
             <div class="card-header card-header-text card-header-primary">
@@ -17,60 +18,36 @@
                     <table class="table table-striped">
                         <thead class="text-primary">
                             <tr>
-                                <th>Catégorie</th>
-                                <th>6-11</th>
-                                <th>12-17</th>
-                                <th>18-29</th>
-                                <th>30-48</th>
-                                <th>49-60</th>
-                                <th>61-128</th>
+                                <th style="text-align: right">Quantité</th>
+                                <th>Frais par quantité</th>
                             </tr>
                         </thead>
                         <tbody>
+                        {{ form_start(form) }}
+                        {% for deliveryFee in form.deliveryFees %}
                             <tr>
-                                <td>Catégorie 1</td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
+                                <td style="text-align: right">
+                                    {{ deliveryFee.vars.value.name }}
+                                    {{ form_widget(deliveryFee.name, {'attr': {'class': 'form-control'}}) }}
+                                </td>
+                                <td style="width: 200px">
+                                    {{ deliveryFee.vars.value.fees }}
+                                    {{ form_widget(deliveryFee.fees, {'attr': {'class': 'form-control'}}) }}
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Catégorie 2</td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                            </tr>
-                            <tr>
-                                <td>Catégorie 3</td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                            </tr>
-                            <tr>
-                                <td>Catégorie 4</td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                                <td><input type="number" style="width: 80px" value="1.2"></td>
-                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
+                    <div style="text-align: right">
+                        {{ form_widget(form.save, {'label':'Modifier', 'attr': {'class': 'btn btn-fill btn-success btn-wd'}}) }}
+                    </div>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6" >
-        <div class="card">
+    <div class="col-md-4" >
+        <!--<div class="card">
             <div class="card-header card-header-text card-header-primary">
                 <div class="card-text">
                     <h4 class="card-title"><i class="material-icons">message</i> Catégories</h4>
@@ -121,9 +98,6 @@
                                 </td>
                                 <td>
                                     <input type="number" style="width: 80px">
-                                    <!--<a href="#" class="btn btn-success btn-simple">
-                                        <i class="material-icons">done</i>
-                                    </a>-->
                                 </td>
                             </tr>
                             <tr>
@@ -156,7 +130,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 {% endblock %}

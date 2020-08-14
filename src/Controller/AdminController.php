@@ -52,12 +52,4 @@ class AdminController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/admin/pricing", name="admin_pricing")
-     */
-    public function pricing()
-    {
-        return $this->render('admin/page/pricing.html.twig');
-    }
-
 }
