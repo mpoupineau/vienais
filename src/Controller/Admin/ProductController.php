@@ -103,9 +103,17 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('admin_product_bottle');
         }
 
-        $bottleManager->delete($bottle);
+
+        try {
+            $bottleManager->delete($bottle);
+        } catch (\Exception $exception) {
+            $session = new Session();
+            $session->getFlashBag()->add('warning', "Echec de la suppression . Détails : " . $exception->getMessage());
+            return $this->redirectToRoute('admin_product_bottle');
+        }
+
         $session = new Session();
-        $session->getFlashBag()->add('success', "Bouteille \"" . $bottle->getName() . "\" supprimée");
+        $session->getFlashBag()->add('success', "Bouteille \"" . $bottle->getId() . "\" supprimée");
         return $this->redirectToRoute('admin_product_bottle');
     }
 
@@ -193,7 +201,13 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('admin_product_cuvee');
         }
 
-        $cuveeManager->delete($cuvee);
+        try {
+            $cuveeManager->delete($cuvee);
+        } catch (\Exception $exception) {
+            $session = new Session();
+            $session->getFlashBag()->add('warning', "Echec de la suppression : Il doit rester une bouteille de la cuvée \"" . $cuvee->getName() . "\". Détails : " . $exception->getMessage());
+            return $this->redirectToRoute('admin_product_cuvee');
+        }
         $session = new Session();
         $session->getFlashBag()->add('success', "Cuvée \"" . $cuvee->getName() . "\" supprimé");
         return $this->redirectToRoute('admin_product_cuvee');

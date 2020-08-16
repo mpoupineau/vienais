@@ -1,6 +1,9 @@
 .t-justify {
   text-align: justify;
 }
+.t-uppercase {
+  text-transform: uppercase;
+}
 .cart-number {
   background-color: #8860d0;
   font-weight: bold;

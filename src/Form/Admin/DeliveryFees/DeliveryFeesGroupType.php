@@ -1,5 +1,5 @@
 <?php
-namespace App\Form\Admin\Photo;
+namespace App\Form\Admin\DeliveryFees;
 /**
  * Created by PhpStorm.
  * User: mpoupineau

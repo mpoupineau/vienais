@@ -10,7 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * DeliveryFees
  *
- * @ORM\Entity
  */
 class DeliveryFeesGroup
 {

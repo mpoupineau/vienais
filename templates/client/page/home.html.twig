@@ -103,23 +103,42 @@
     </section>
 
     {% if news is not null %}
-    <section>
-        <div class="parallax0 parallax100" style="background-image: url({{ asset( image_news_location ~ news.imagePath) }});">
-            <div class="overlay0-parallax t-center size34 p-t-20">
-                <h3 class="tit4 t-center p-l-15 p-r-15 p-t-3">
-                    {{ news.title }}
-                </h3>
-                <p class="p-l-15 p-r-15" style="color: white">
-                    {{ news.text }}<br>
-                    <a href="{{ path('client_news' )}}" class="txt6">
-                        {{ 'En savoir plus'|trans }}
-                        <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-                    </a>
-                </p>
-                <p>
-                </p>
+        <section class="bg3-pattern p-t-80 p-b-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="pic-blo4 hov-img-zoom bo-rad-10 pos-relative">
+                            <a href="{{ path('client_news_details', { 'newsSlug' : news.slug }) }}">
+                                <img style="max-height:700px" src="{{ asset( image_news_location ~ news.imagePath) }}" alt="IMG-BLOG">
+                            </a>
+
+                            <div class="date-blo4 flex-col-c-m">
+                                <span class="txt30 m-b-4">
+                                    {{ news.createdAt|date("d") }}
+                                </span>
+
+                                <span class="txt31">
+                                    {{ news.createdAt|date("m/Y") }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-blo4 p-t-33">
+                            <h4 class="p-b-16">
+                                <a href="{{ path('client_news_details', { 'newsSlug' : news.slug }) }}" class="tit2 t-uppercase">{{ news.title }}</a>
+                            </h4>
+                            <p class="text-white t-justify">
+                                {{ news.text }}
+                            </p>
+                            <a href="{{ path('client_news_details', { 'newsSlug' : news.slug }) }}" class="dis-block txt6 m-t-30">
+                                {{ "Lire l'actualité"|trans }}
+                                <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
     </section>
     {% endif %}
 
