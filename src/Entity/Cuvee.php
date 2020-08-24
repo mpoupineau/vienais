@@ -24,7 +24,7 @@ class Cuvee
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=30, nullable=true)
+     * @ORM\Column(name="name", type="string", length=100, nullable=true)
      */
     private $name;
 

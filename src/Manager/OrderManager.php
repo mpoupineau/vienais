@@ -2,6 +2,7 @@
 namespace App\Manager;
 
 use App\Entity\Bottle;
+use App\Entity\DeliveryFees;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -26,7 +27,8 @@ class OrderManager
     {
         $order = new Order();
         $rawBottles = "";
-        $subPrice = 0.0;
+        $subPrice = $this->calculateSubPrice($bottles);
+        $deliveryFees = $this->calculateDeliveryFees($bottles);
 
         foreach ($bottles as $bottleId => $quantity) {
             if (0 < $quantity) {
@@ -35,14 +37,13 @@ class OrderManager
                 if ($bottle->isAvailable()){
                     $rawBottles .= $bottle->getVintage()->getCuvee()->getName() . " " . $bottle->getVintage()->getYear() . " -  " . $bottle->getCapacity()->getName();
                     $rawBottles .= "|" . $quantity . "|" . $bottle->getPrice(). "|" . $bottle->getPromoPrice() . '/';
-                    $subPrice += $quantity * $bottle->getPrice();
                 }
             }
         }
 
-        $order->setDeliveryFees(0.0);
+        $order->setDeliveryFees($deliveryFees);
         $order->setSubPrice($subPrice);
-        $order->setPrice($subPrice);
+        $order->setPrice($this->calculateTotalPrice($deliveryFees, $subPrice));
         $order->setRaw($rawBottles);
         $order->setDeliveryAddress($address);
 
@@ -53,9 +54,105 @@ class OrderManager
         return $order;
     }
 
+    public function calculateSubPrice($bottles)
+    {
+        $subPrice = 0.0;
+
+        foreach ($bottles as $bottleId => $quantity) {
+            if (0 < $quantity) {
+                /** @var Bottle $bottle */
+                $bottle = $this->entityManager->getRepository(Bottle::class)->find($bottleId);
+                if ($bottle->isAvailable()){
+                    if ($bottle->getPromoPrice()) {
+                        $subPrice += $quantity * $bottle->getPromoPrice();
+                    } else {
+                        $subPrice += $quantity * $bottle->getPrice();
+                    }
+                }
+            }
+        }
+
+        return round($subPrice, 2);
+    }
+
+    public function calculateDeliveryFees($bottles)
+    {
+        $totalVolume =  0;
+        foreach ($bottles as $key => $value){
+            if ("" !== $value) {
+                /** @var Bottle $bottle */
+                $bottle = $this->entityManager->getRepository(Bottle::class)->find($key);
+                $volume = ceil($bottle->getCapacity()->getVolume());
+                $totalVolume += $volume * $value;
+            }
+        }
+
+        /** @var DeliveryFees[] $deliveryFeesList */
+        $deliveryFeesList = $this->entityManager->getRepository(DeliveryFees::class)->findBy(
+            [],
+            [
+                "quantity" => 'DESC'
+            ]
+        );
+
+        foreach ($deliveryFeesList as $deliveryFees) {
+
+            if ($deliveryFees->getQuantity() <= $totalVolume) {
+                return round($totalVolume * $deliveryFees->getFees(), 2);
+            }
+        }
+        return 0;
+    }
+
+    public function calculateTotalPrice($deliveryFees, $subPrice)
+    {
+        return round($deliveryFees + $subPrice, 2);
+    }
+
     public function delete(Bottle $bottle)
     {
         $this->entityManager->remove($bottle);
+        $this->entityManager->flush();
+    }
+
+    public function setPaymentType(Order $order, $paymentType)
+    {
+        if ("check" === $paymentType) {
+            $order->setPaymentType(Order::PAYMENT_TYPE_CHECK);
+            $order->setState(Order::STATE_WAITING_FOR_CHECK);
+        } else {
+            $order->setPaymentType(Order::PAYMENT_TYPE_CARD);
+            $order->setState(Order::STATE_WAITING_FOR_CARD);
+        }
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Order $order
+     * @param $result
+     * @throws \Exception
+     */
+    public function setPaymentResult(Order $order, $result)
+    {
+        if (Order::STATE_WAITING_FOR_CARD !== $order->getState()) {
+            throw new \Exception('Invalid current state');
+        }
+
+        switch ($result) {
+            case "success":
+                $order->setState(Order::STATE_PAID);
+                break;
+            case "cancelled":
+                $order->setState(Order::STATE_PAYMENT_CANCELED);
+                break;
+            default:
+                throw new \Exception('Invalid payment result');
+        }
+
+
+        $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
 }

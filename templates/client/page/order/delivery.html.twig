@@ -34,15 +34,15 @@
                                             <td>{{ bottle.vintage.cuvee.name }} {{ bottle.vintage.year }} - {{ bottle.capacity.name}}</td>
                                             <td class="t-center">{{ bottlesOrdered[bottle.id] }}</td>
                                             <td class="t-right">
-                                                {% set totalPrice = bottle.price * bottlesOrdered[bottle.id] %}
+                                                {% set totalBottlePrice = bottle.price * bottlesOrdered[bottle.id] %}
                                                 {% if bottle.promoPrice %}
                                                     {% set totalPromoPrice = bottle.promoPrice * bottlesOrdered[bottle.id] %}
                                                     <input type="hidden" name="price_{{ bottle.id }}" readonly value="{{ bottle.promoPrice }}">
-                                                    <span class="strikethrough">{{ totalPrice|number_format(2) }} €</span>
+                                                    <span class="strikethrough">{{ totalBottlePrice|number_format(2) }} €</span>
                                                     <span class="promo-price">  {{ totalPromoPrice|number_format(2) }} €</span>
                                                 {% else %}
                                                     <input type="hidden" name="price_{{ bottle.id }}" readonly value="{{ bottle.price }}">
-                                                    {{ totalPrice|number_format(2) }} €
+                                                    {{ totalBottlePrice|number_format(2) }} €
                                                 {% endif %}
                                              </td>
                                         </tr>
@@ -167,20 +167,24 @@
                 <div class="basket-information order-card" style="padding-bottom: 60px">
                     <div class="sub-total-price">
                         <span class="basket-category">{{ "Panier"|trans }}</span>
-                        <span class="basket-result"></span>
+                        <span class="basket-result">{{ subPrice|number_format(2) }} €</span>
                         <hr class="basket-separator">
                     </div>
                     <div class="transport-fees">
                         <span class="basket-category">{{ "Frais de livraison"|trans }}</span>
-                        <span class="basket-result">0,00 €</span>
+                        <span class="basket-result">{{ deliveryFees|number_format(2) }} €</span>
                         <hr class="basket-separator">
                     </div>
                     <div class="total-price">
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
-                        <span class="basket-result"></span>
+                        <span class="basket-result">{{ totalPrice|number_format(2) }} €</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('client/js/page/delivery.js') }}"></script>
 {% endblock %}

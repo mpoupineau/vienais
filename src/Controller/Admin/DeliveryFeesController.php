@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\DeliveryFees;
 use App\Entity\DeliveryFeesGroup;
-use App\Form\Admin\Photo\DeliveryFeesGroupType;
+use App\Form\Admin\DeliveryFees\DeliveryFeesGroupType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,7 +21,12 @@ class DeliveryFeesController extends AbstractController
     {
 
         $deliveryFeesGroup = new DeliveryFeesGroup();
-        $deliveryFeesGroup->setDeliveryFees($this->getDoctrine()->getRepository(DeliveryFees::class)->findAll());
+        $deliveryFeesGroup->setDeliveryFees($this->getDoctrine()->getRepository(DeliveryFees::class)->findBy(
+            [],
+            [
+                "quantity" => 'ASC'
+            ]
+        ));
 
         $form = $this->createForm(DeliveryFeesGroupType::class, $deliveryFeesGroup);
 
@@ -31,7 +36,6 @@ class DeliveryFeesController extends AbstractController
             $session = new Session();
             if ($form->isValid()) {
                 foreach ($form->getData()->getDeliveryFees() as $deliveryFee) {
-                    dump($deliveryFee);
                     $this->getDoctrine()->getManager()->persist($deliveryFee);
                 }
                 $this->getDoctrine()->getManager()->flush();

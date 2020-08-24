@@ -29,4 +29,9 @@ class SessionManager
         }
         $this->session->set('bottles', $bottlesOrdered);
     }
+
+    public function removeBottles()
+    {
+        $this->session->remove('bottles');
+    }
 }

@@ -74,7 +74,6 @@ class DeliveryFees
      */
     public function setName(?string $name): DeliveryFees
     {
-        dump($name);
         $this->name = $name;
         return $this;
     }
@@ -111,7 +110,6 @@ class DeliveryFees
      */
     public function setFees(float $fees): DeliveryFees
     {
-        dump($fees);
         $this->fees = $fees;
         return $this;
     }

@@ -425,6 +425,7 @@ class ProductController extends AbstractController
      */
     public function vintage_delete(VintageManager $vintageManager, $vintageId)
     {
+        /** @var Vintage $vintage */
         $vintage = $this->getDoctrine()->getRepository(Vintage::class)->find($vintageId);
 
         if (!$vintage) {
@@ -433,9 +434,17 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('admin_product_vintage');
         }
 
+        try {
+            $vintageManager->delete($vintage);
+        } catch (\Exception $exception) {
+            $session = new Session();
+            $session->getFlashBag()->add('warning', "Echec de la suppresion : Il doit rester une bouteille du millésime \"" . $vintage->getYear() . " ". $vintage->getCuvee()->getName()."\". Détails : " . $exception->getMessage());
+            return $this->redirectToRoute('admin_product_vintage');
+        }
+
         $vintageManager->delete($vintage);
         $session = new Session();
-        $session->getFlashBag()->add('success', "Millésime \"" . $vintage->getName() . "\" supprimé");
+        $session->getFlashBag()->add('success', "Millésime \"" . $vintage->getYear() . " ". $vintage->getCuvee()->getName()."\" supprimé");
         return $this->redirectToRoute('admin_product_vintage');
     }
 }

@@ -31,7 +31,7 @@
                                     {{ form_widget(deliveryFee.name, {'attr': {'class': 'form-control'}}) }}
                                 </td>
                                 <td style="width: 200px">
-                                    {{ deliveryFee.vars.value.fees }}
+                                    {{ deliveryFee.vars.value.fees|number_format(2) }} €
                                     {{ form_widget(deliveryFee.fees, {'attr': {'class': 'form-control'}}) }}
                                 </td>
                             </tr>

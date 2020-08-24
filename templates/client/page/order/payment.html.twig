@@ -83,7 +83,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-3 col-md-6">
-                            <button id="show-card-payment-info-button" class="btn basket-button-unselected">Carte bancaire</button>
+                            <button id="show-card-payment-info-button" class="btn basket-button">Carte bancaire</button>
                         </div>
                         <div class="col-lg-3 col-md-6">
                             <button id="show-check-info-button" class="btn basket-button-unselected">Chèque</button>
@@ -146,12 +146,18 @@
                         <span class="basket-result">{{ order.price|number_format(2) }} €</span>
                     </div>
                     <div id="div-payment-button" class="submit">
-                        <a href="{{ path('client_order_summary', {orderId: order.id, type: "card"}) }}" class="btn basket-button">
-                            Payer
+                        <input id="order-reference" type="hidden" readonly value="{{ order.reference }}">
+                        <a href="{{ path('client_order_payment_choice', {orderReference: order.reference, paymentType: "card"}) }}" class="btn basket-button">
+                            Payer par carte
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('client/js/page/payment.js') }}"></script>
 {% endblock %}

@@ -2,16 +2,48 @@
 
 {% set step = 'summary' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/print_order.css') }}" media="print">
+{% endblock %}
+
 {% block return_to_order %}
 {% endblock %}
+
+{% if order.state in ["payed", "waiting_for_check"] %}
+    {% set result = "success" %}
+{% else %}
+    {% set result = "fail"%}
+{% endif %}
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <div class="order-card success-card">
+            <div class="col-print-12 col-md-8">
+                <div id="card-payment-result" class="order-card {{ result }}-card">
                     <div class="row">
                         <div class="col-md-10">
-                            <p><span class="check-success"><i class="fa fa-check"></i></span> {{ "Votre commande est a bien été prise en compte."|trans }}</p>
+                            {% if order.state in ["payed", "waiting_for_check"] %}
+                                <p>
+                                    <span class="check-success"><i class="fa fa-check"></i></span> {{ "Votre commande a bien été prise en compte."|trans }}
+                                </p>
+                                <p>
+                                    Référence de la commande : {{ order.reference }}
+                                </p>
+                            {% elseif order.state in ["payment_canceled", "payment_failed"] %}
+                                <p>
+                                    <span class="check-error"><i class="fa fa-times"></i></span> {{ "Votre paiement a échoué."|trans }}
+                                </p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            {% if "check" == order.paymentType %}
+                                <p>
+                                    Vous avez choisi le paiement par chèque
+                                </p>
+                                <a href="javascript:window.print()">Imprimer la commande</a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -20,8 +52,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="order-card">
-                    <div class="row">
+                <div id="card-basket-summary" class="order-card">
+                    <div id="basket-summary-header" class="row">
                         <div class="col-md-10">
                             <h3><i class="fa fa-shopping-basket"></i>  {{ "Mon panier"|trans }}</h3>
                         </div>
@@ -57,7 +89,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="order-card">
+                <div id="card-delivery-summary" class="order-card">
                     <div class="row">
                         <div class="col-md-10">
                             <h3><i class="fa fa-map-marker"></i> {{ "Adresse de livraison"|trans }}</h3>
@@ -85,7 +117,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="order-card">
+                <div id="card-back-to-site" class="order-card">
                     <a href="{{ path('client_home') }}" class="btn basket-button">
                         Revenir au site
                     </a>
@@ -93,4 +125,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('client/js/page/payment.js') }}"></script>
 {% endblock %}

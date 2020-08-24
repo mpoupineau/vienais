@@ -50,10 +50,13 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         $bottlesOrdered = $sessionManager->getBottles();
+        $subPrice = $orderManager->calculateSubPrice($bottlesOrdered);
+        $deliveryFees = $orderManager->calculateDeliveryFees($bottlesOrdered);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $order = $orderManager->add($bottlesOrdered, $form->getData());
+                $sessionManager->removeBottles();
                 return $this->redirectToRoute('client_order_payment', ["orderId" => $order->getId()]);
             } else {
                 dump('error');
@@ -68,31 +71,121 @@ class OrderController extends AbstractController
                         "available" => true
                     ]
                 ),
-                "bottlesOrdered" => $bottlesOrdered
+                "bottlesOrdered" => $bottlesOrdered,
+                "subPrice" => $subPrice,
+                "deliveryFees" => $deliveryFees,
+                "totalPrice" => $orderManager->calculateTotalPrice($deliveryFees, $subPrice)
             ]);
     }
 
     /**
-     * @Route("/paiement/{orderId}", name="_payment")
+     * @Route("/paiement/{orderReference}", name="_payment")
      */
-    public  function payment($orderId)
+    public function payment($orderReference)
     {
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
         return $this->render('client/page/order/payment.html.twig',
             [
-                "order" => $this->getDoctrine()->getRepository(Order::class)->find($orderId)
+                "order" => $order
             ]);
     }
 
     /**
-     * @Route("/recapitulatif/{orderId}/{type}", options = { "expose" = true }, name="_summary")
+     * @Route("/paiement/{orderReference}/{paymentType}", requirements={"paymentType": "card|check"}, options = { "expose" = true }, name="_payment_choice")
      */
-    public function successPayment($orderId, $type)
+    public function paymentChoice($orderReference, $paymentType, OrderManager $orderManager)
+    {
+        /** @var Order $order */
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
+        $orderManager->setPaymentType($order, $paymentType);
+
+        if ("check" === $paymentType) {
+            return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
+        } else {
+            return $this->redirectToRoute('client_order_payment_redirect', ['orderReference' => $order->getReference()]);
+        }
+    }
+
+    /**
+     * @Route("/paiement/{orderReference}/redirection", name="_payment_redirect")
+     */
+    public function startCardPayment($orderReference)
+    {
+        return $this->render('client/page/order/redirect.html.twig',
+            [
+                "order" => $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+                    [
+                        "reference" => $orderReference
+                    ]
+                )
+            ]);
+    }
+
+    /**
+     * @Route("/paiement/{orderReference}/success", name="_payment_success")
+     */
+    public function successPayment($orderReference, OrderManager $orderManager)
+    {
+        /** @var Order $order */
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
+        try {
+            $orderManager->setPaymentResult($order, "success");
+            return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
+        } catch (\Exception $exception) {
+            return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
+        }
+    }
+
+    /**
+     * @Route("/paiement/{orderReference}/cancelled", name="_payment_cancelled")
+     */
+    public function cancelledPayment($orderReference, OrderManager $orderManager)
+    {
+        /** @var Order $order */
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
+        try {
+            $orderManager->setPaymentResult($order, "cancelled");
+            return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
+        } catch (\Exception $exception) {
+            return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
+        }
+    }
+
+    /**
+     * @Route("/recapitulatif/{orderReference}", options = { "expose" = true }, name="_summary")
+     */
+    public function endPayment($orderReference)
     {
         return $this->render('client/page/order/summary.html.twig',
             [
-                "order" => $this->getDoctrine()->getRepository(Order::class)->find($orderId)
+                "order" => $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+                    [
+                        "reference" => $orderReference
+                    ]
+                )
             ]);
     }
+
     /**
      * @Route("/partial/bottles-number", name="_partial_bottles_number")
      */
@@ -112,5 +205,13 @@ class OrderController extends AbstractController
             [
                 "bottlesNumber" => $bottlesNumber
             ]);
+    }
+
+    /**
+     * @Route("/partial/delivery-fees/update", options = { "expose" = true }, name="_partial_deliveryfees")
+     */
+    public function updateBottle(Request $request, OrderManager $orderManager)
+    {
+        return $this->json(['deliveryFees' => $orderManager->calculateDeliveryFees($request->get('bottles'))]);
     }
 }

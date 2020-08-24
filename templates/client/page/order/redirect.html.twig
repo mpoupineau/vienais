@@ -1,0 +1,23 @@
+{% extends 'client/basePayment.html.twig' %}
+
+{% set step = 'payment' %}
+
+{% block return_to_order %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="order-card">
+                    <p class="t-center">
+                        {{ 'Vous allez être redirigé vers Paypal ...' }}
+                    </p>
+                    <p class="t-center">
+                        <a class="btn btn-success" href="{{ path('client_order_payment_success', { 'orderReference' : order.reference }) }}">Simuler paiement accepté</a><br>
+                        <a class="btn btn-danger"  href="{{ path('client_order_payment_cancelled', { 'orderReference' : order.reference }) }}">Simuler paiement refusé</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

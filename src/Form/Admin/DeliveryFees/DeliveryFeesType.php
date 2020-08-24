@@ -25,7 +25,11 @@ class DeliveryFeesType extends AbstractType
                     'required' => false,
                     'label' => 'Nom'
                 ])
-            ->add('fees', HiddenType::class)
+            ->add('fees', HiddenType::class,
+                [
+                    'required' => false,
+                    'label' => 'Frais'
+                ])
         ;
     }
 

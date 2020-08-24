@@ -13,8 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Order
 {
     const STATE_INIT = "init";
+    const STATE_WAITING_FOR_CHECK = "waiting_for_check";
+    const STATE_WAITING_FOR_CARD = "waiting_for_card";
+    const STATE_PAYMENT_CANCELED = "payment_canceled";
+    const STATE_PAYMENT_FAILED = "payment_failed";
     const STATE_PAID = "payed";
     const STATE_DELIVER = "delivered";
+
+    const PAYMENT_TYPE_CARD = "card";
+    const PAYMENT_TYPE_CHECK = "check";
 
     /**
      * @var int
@@ -24,6 +31,13 @@ class Order
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reference", type="text", length=100, nullable=false)
+     */
+    private $reference;
 
     /**
      * @var string|null
@@ -65,6 +79,13 @@ class Order
     private $state = self::STATE_INIT;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_type", type="string", nullable=true)
+     */
+    private $paymentType;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="new", type="boolean", nullable=false)
@@ -89,6 +110,7 @@ class Order
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->reference = $this->generateReference();
     }
 
     /**
@@ -106,6 +128,24 @@ class Order
     public function setId(int $id): Order
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReference(): string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param string $reference
+     * @return Order
+     */
+    public function setReference(string $reference): Order
+    {
+        $this->reference = $reference;
         return $this;
     }
 
@@ -226,6 +266,25 @@ class Order
     }
 
     /**
+     * @return string
+     */
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
+    }
+
+    /**
+     * @param string $paymentType
+     * @return Order
+     */
+    public function setPaymentType(string $paymentType): Order
+    {
+        $this->paymentType = $paymentType;
+        return $this;
+    }
+
+
+    /**
      * @param string $state
      * @return Order
      */
@@ -290,4 +349,10 @@ class Order
         }
     }
 
+    public function generateReference()
+    {
+        $date = new \DateTime();
+        echo $date->getTimestamp();
+        return random_bytes(6) . $date->getTimestamp();
+    }
 }

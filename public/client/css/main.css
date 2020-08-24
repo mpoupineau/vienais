@@ -25,6 +25,11 @@
   color: #7CfC00;
   font-size: 50px;
 }
+
+.check-error {
+  color: red;
+  font-size: 50px;
+}
 /********************************/
 .tooltip-main {
   position: relative;

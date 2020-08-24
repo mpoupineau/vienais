@@ -97,7 +97,7 @@
                                     <a href="{{ path('admin_product_vintage_update', { 'vintageId': vintage.id }) }}" class="btn btn-success btn-simple">
                                         <i class="material-icons">edit</i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#" data-id="{{ vintage.id }}">
+                                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#vintageDeleteModal" data-id="{{ vintage.id }}" data-name="{{ vintage.year ~ " " ~ vintage.cuvee.name }}">
                                         <i class="material-icons">close</i>
                                     </button>
                                 </td>
@@ -109,6 +109,40 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="vintageDeleteModal" tabindex="-1" role="dialog" aria-labelledby="vintageDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vintageDeleteModalLabel">Supprimer la cuvée</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+$('#vintageDeleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var name = button.data('name') // Extract info from data-* attributes
+    var id = button.data('id') // Extract info from data-* attributes
+    var url = '{{ path('admin_product_vintage_delete', { 'vintageId': 'id' }) }}'
+        url = url.replace("id", id)
+        var modal = $(this)
+        modal.find('.modal-title').text('Supprimer le millésime ' + name)
+        modal.find('.modal-footer a').attr("href", url)
+    })
+</script>
 {% endblock %}
 
 

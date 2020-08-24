@@ -111,6 +111,63 @@
     -o-animation: spin 1.5s linear infinite;
     animation: spin 1.5s linear infinite;
 }
+
+#loader-1-xs-5 {
+    padding: 5px;
+}
+
+#loader-1-xs-5 #loader{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    height: 1vw;
+    width: 1vw;
+    border: 3px solid transparent;
+    border-top-color: #8860D0;
+    border-bottom-color: #8860D0;
+    border-radius: 50%;
+    z-index: 2;
+    padding: 10px;
+    -webkit-animation: spin 2s linear infinite;
+    -moz-animation: spin 2s linear infinite;
+    -o-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+#loader-1-xs-5 #loader:before{
+    content: "";
+    position: absolute;
+    top:2%;
+    bottom: 2%;
+    left: 2%;
+    right: 2%;
+    border: 3px solid transparent;
+    z-index: 2;
+    border-top-color: #810035;
+    border-radius: 50%;
+    -webkit-animation: spin 3s linear infinite;
+    -moz-animation: spin 3s linear infinite;
+    -o-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+
+}
+
+#loader-1-xs-5 #loader:after{
+    content: "";
+    position: absolute;
+    top:5%;
+    bottom: 5%;
+    left: 5%;
+    right: 5%;
+    border: 3px solid transparent;
+    border-top-color: #FAED26;
+    z-index: 2;
+    border-radius: 50%;
+    -webkit-animation: spin 1.5s linear infinite;
+    -moz-animation: spin 1.5s linear infinite;
+    -o-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
 #loader-1-s-2 #loader{
     position: relative;
     left: 50%;

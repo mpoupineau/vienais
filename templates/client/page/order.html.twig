@@ -4,6 +4,8 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('client/css/page/order.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/vendor/loader/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('client/css/vendor/loader/loader-1.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -48,6 +50,7 @@
                                 <td class="t-right">
                                     {% if bottle.available %}
                                         <input type="hidden" id="type_{{ bottle.id }}" name="type_{{ bottle.id }}" value="{{ bottle.capacity.name }}" readonly>
+                                        <input type="hidden" id="volume_{{ bottle.id }}" name="volume_{{ bottle.id }}" value="{{ bottle.capacity.volume }}" readonly>
                                         <input type="number" id="qty_{{ bottle.id }}" name="qty_{{ bottle.id }}" class="input-quantity" min="0" value="{{ bottlesOrdered[bottle.id] is defined ?  bottlesOrdered[bottle.id] : 0 }}">
                                     {% else %}
                                         <i>indisponible</i>
@@ -74,12 +77,12 @@
                     </div>
                     <div class="transport-fees">
                         <span class="basket-category">{{ "Frais de livraison"|trans }}</span>
-                        <span class="basket-result">0,00 €</span>
+                        <span class="basket-result">- €</span>
                         <hr class="basket-separator">
                     </div>
                     <div class="total-price">
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
-                        <span class="basket-result"></span>
+                        <span class="basket-result">- €</span>
                     </div>
                     <div class="submit">
                         <a id="basket-validation-button" href="{{ path('client_order_delivery') }}" class="btn basket-button">

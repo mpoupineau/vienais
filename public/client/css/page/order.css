@@ -115,6 +115,9 @@
 /************** Payment page **/
 #check-info,
 #card-payment-info {
-  display: none;
   margin-top: 20px;
+}
+
+#check-info {
+  display: none;
 }
