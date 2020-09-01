@@ -67,39 +67,10 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="basket-promotion order-card">
-                    <h5>Code promo</h5>
-                    <input type="text">
-                </div>
-                <div class="basket-information  order-card">
-                    <div class="sub-total-price">
-                        <span class="basket-category">{{ "Panier"|trans }}</span>
-                        <span class="basket-result"></span>
-                        <hr class="basket-separator">
-                    </div>
-                    <div class="transport-fees">
-                        <span class="basket-category">{{ "Frais de livraison"|trans }}</span>
-                        <span class="basket-result">- €</span>
-                        <hr class="basket-separator">
-                    </div>
-                    <div class="total-price">
-                        <span class="basket-category">{{ "TOTAL"|trans }}</span>
-                        <span class="basket-result">- €</span>
-                    </div>
-                    <div class="submit">
-                        <a id="basket-validation-button" href="{{ path('client_order_delivery') }}" class="btn basket-button">
-                            Valider mon panier
-                        </a>
-                    </div>
-                    <p class="m-t-5 t-center">
-                        Paiement possible par carte ou par chèque.
-                    </p>
-                </div>
-                <div id="info-quantity" class="order-card success-card ">
+                <div class="order-card fail-card ">
                     <p>
-                        Nous vous livrons les bouteilles par cartons de 6 et les magnums par carton de 3, n'hésitez à panacher leurs contenus
+                        Les commandes en ligne ne sont pour le moment pas disponibles, elles le seront très bientôt !
                     </p>
-                    <p id="quantity-info-details" class="" style="color:red"></p>
                 </div>
             </div>
         </div>
