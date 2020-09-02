@@ -111,7 +111,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card card-vintage {% if vintage.isPromoted %}card-vintage-promoted{% endif %}">
                                         <div class="card-horizontal">
-                                            <div class="img-square-wrapper">
+                                            <div class="img-square-wrapper" style="background: #CCCCCC">
                                                 <img class="" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="Card image cap">
                                             </div>
                                             <div class="p-2">
@@ -121,15 +121,15 @@
                                                     </div>
                                                     {{ vintage.year }}
                                                 </h4>
-                                                <p class="vintage-modal-button-div" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
-                                                    <span class="txt22"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
-                                                    {% if vintage.isPromoted %}
-                                                        <span class="promo-price">promotion !</span>
-                                                    {% endif %}
-                                                </p>
                                                 <p class="card-text txt23 t-justify">
                                                     {{ vintage.description }}
                                                 </p>
+                                                <a class="vintage-modal-button-div txt15" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
+                                                    {% if vintage.isPromoted %}
+                                                        <span class="promo-price">Promotion !</span>
+                                                    {% endif %}
+                                                    Découvrir <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
