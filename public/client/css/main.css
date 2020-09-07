@@ -1,3 +1,15 @@
+.header-fixed .logo {
+  background: rgb(255, 255, 255, 0);
+}
+.logo {
+  background: rgb(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+
+.t-underline {
+  text-decoration: underline;
+}
+
 .t-justify {
   text-align: justify;
 }
