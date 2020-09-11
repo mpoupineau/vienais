@@ -73,3 +73,7 @@
 .vintage-modal-button-div {
   cursor: pointer;
 }
+
+.layer {
+  background-color: rgba(0, 0, 0, 0.2);
+}
