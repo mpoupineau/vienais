@@ -1,5 +1,10 @@
 {% extends 'client/base.html.twig' %}
 {% block title %}Domaine des Vienais{% endblock %}
+{% block meta_keywords %}Domaine des vienais, vin de bourgueil, Guillaume Poupineau, Gérard Poupineau, Benais{% endblock %}
+{% block meta_description %}Découvrez le site du domaine des vienais, producteur de vin de bourgueil{% endblock %}
+{% block other_meta %}
+    <meta name="google-site-verification" content="Ex7d0hLqGAyGh1r1nZrC6o2JH7Z3VO5_FN-WFOyvQRk" />
+{% endblock %}
 {% block title_page %}Domaine des Vienais{% endblock %}
 {% block header_image %}
     <section class="section-slide">
@@ -128,9 +133,6 @@
                             <h4 class="p-b-16">
                                 <a href="{{ path('client_news_details', { 'newsSlug' : news.slug }) }}" class="tit2 t-uppercase">{{ news.title }}</a>
                             </h4>
-                            <p class="text-white t-justify">
-                                {{ news.text }}
-                            </p>
                             <a href="{{ path('client_news_details', { 'newsSlug' : news.slug }) }}" class="dis-block txt6 m-t-30">
                                 {{ "Lire l'actualité"|trans }}
                                 <i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>

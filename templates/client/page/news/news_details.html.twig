@@ -1,6 +1,8 @@
 {% extends 'client/base.html.twig' %}
 
 {% block title_page %}{{ 'Actualité' | trans}}{% endblock %}
+{% block meta_keywords %}Domaine des Vienais, Guillaume Poupineau, Gérard Poupineau, vin de Bourgueil, Benais, actualité{% endblock %}
+{% block meta_description %}{{ news.title }}{% endblock %}
 
 {% block body %}
     <section>
@@ -28,8 +30,7 @@
 
                             <!-- - -->
                             <div class="text-blo4 p-t-33">
-                                <h4 class="p-b-16">
-                                    <a href="#" class="tit9">{{ news.title }}</a>
+                                <h4 class="p-b-16 tit9">{{ news.title }}
                                 </h4>
                                 <p>
                                     {{ news.text }}
