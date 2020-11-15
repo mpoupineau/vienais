@@ -26,11 +26,14 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $messageManager->add($form->getData());
-                $form = $this->createForm(MessageType::class, new Message());
+                if (null === $form['location']->getData()) {
+                    $messageManager->add($form->getData());
+                    $form = $this->createForm(MessageType::class, new Message());
+                }
+
                 $formResponse = "Merci pour votre message, nous vous répondrons dès que possible";
             } else {
-                $formResponse = "Une erreur est apparue dans l'envoi du message, vous pouvez nous contacter en envoyant directement un mail à domainedesvienais@wanadoo.fr.";
+                $formResponse = "Une erreur est apparue dans l'envoi du message, vous pouvez nous contacter en envoyant directement un mail à contact@domaine-des-vienais.com.";
             }
         }
 

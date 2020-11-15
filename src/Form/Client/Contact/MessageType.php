@@ -49,6 +49,11 @@ class MessageType extends AbstractType
                         'placeholder' => 'message'
                     ],
                 ])
+            ->add('location', HiddenType::class,
+                [
+                    'required' => false,
+                    'mapped' => false,
+                ])
             ->add('send', SubmitType::class,
                 [
                     'label' => 'Envoyer',
