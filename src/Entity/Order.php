@@ -353,6 +353,6 @@ class Order
     {
         $date = new \DateTime();
         echo $date->getTimestamp();
-        return random_bytes(6) . $date->getTimestamp();
+        return bin2hex(random_bytes(3)) . $date->getTimestamp() . bin2hex(random_bytes(3));
     }
 }

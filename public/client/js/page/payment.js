@@ -30,10 +30,10 @@ $('#show-card-payment-info-button').click(() => {
         $('#show-card-payment-info-button').addClass('basket-button');
         $('#show-check-info-button').addClass('basket-button-unselected');
         $('#show-check-info-button').removeClass('basket-button');
-        $('#div-payment-button').find('a').html('Payer par carte');
+        $('#div-payment-button').find('a').html('Payer en ligne');
         $('#div-payment-button').find('a').attr('href', Routing.generate('client_order_payment_choice', {
             'orderReference': $('#order-reference').val(),
-            'paymentType': 'card'
+            'paymentType': 'carte'
         }));
     }
 });
@@ -49,7 +49,7 @@ $('#show-check-info-button').click(() => {
         $('#div-payment-button').find('a').html('Payer par chèque');
         $('#div-payment-button').find('a').attr('href', Routing.generate('client_order_payment_choice', {
             'orderReference': $('#order-reference').val(),
-            'paymentType': 'check'
+            'paymentType': 'cheque'
         }));
     }
 });

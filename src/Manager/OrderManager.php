@@ -145,12 +145,10 @@ class OrderManager
                 $order->setState(Order::STATE_PAID);
                 break;
             case "cancelled":
+            default:
                 $order->setState(Order::STATE_PAYMENT_CANCELED);
                 break;
-            default:
-                throw new \Exception('Invalid payment result');
         }
-
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();

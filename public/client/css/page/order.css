@@ -121,3 +121,8 @@
 #check-info {
   display: none;
 }
+
+.payment-logo {
+  width: 70px;
+  margin: 5px;
+}
