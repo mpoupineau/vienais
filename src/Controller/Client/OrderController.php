@@ -26,12 +26,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /** @Route("/commande", name="client_order") */
 class OrderController extends AbstractController
 {
-    /**
+    /*
      * @Route("/mail/{orderReference}", name="_mail")
-     */
+     * /
     public function mail($orderReference, MailerInterface $mailer)
     {
-        /** @var Order $order */
+        /** @var Order $order * /
         $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
             [
                 "reference" => $orderReference
@@ -50,7 +50,44 @@ class OrderController extends AbstractController
             [
                 "order" => $order
             ]);
-    }
+    }*/
+
+    /*
+     * @Route("/pay_mock/{orderReference}", name="_pay_mock")
+     * /
+    public function paiementMcok($orderReference, MailerInterface $mailer)
+    {
+        /** @var Order $order * /
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
+        try {
+            $orderPage = PaypalManager::getOrderPage($order,
+                "http://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
+                    'orderReference' => $order->getReference(),
+                    'paymentResult' => 'success'
+                ]),
+                "http://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
+                    'orderReference' => $order->getReference(),
+                    'paymentResult' => 'cancelled'
+                ])
+            );
+            dump($orderPage);
+        } catch (\Exception $ex) {
+            return $this->render('client/page/order/payment.html.twig',
+                [
+                    "order" => $order
+                ]);
+        }
+
+        return $this->render('client/page/order/payment.html.twig',
+            [
+                "order" => $order
+            ]);
+    }*/
 
     /**
      * @Route("", name="")
@@ -88,7 +125,6 @@ class OrderController extends AbstractController
                 $order = $orderManager->add($bottlesOrdered, $form->getData());
                 $sessionManager->removeBottles();
                 return $this->redirectToRoute('client_order_payment', ["orderReference" => $order->getReference()]);
-            } else {
             }
         }
 
@@ -164,11 +200,11 @@ class OrderController extends AbstractController
 
         try {
             $orderPage = PaypalManager::getOrderPage($order,
-                "http://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
+                getenv("SECURE_SCHEME") . "://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
                     'orderReference' => $order->getReference(),
                     'paymentResult' => 'success'
                 ]),
-                "http://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
+                getenv("SECURE_SCHEME") . "://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
                     'orderReference' => $order->getReference(),
                     'paymentResult' => 'cancelled'
                 ])

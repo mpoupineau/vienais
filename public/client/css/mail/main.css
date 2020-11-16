@@ -1,0 +1,36 @@
+body {
+    width: 800px;
+    margin: auto;
+    border: 1px solid black;
+    background: #F2F2F2;
+    font-family: Montserrat, sans-serif;
+
+}
+
+.header {
+    border-bottom: 3px solid white;
+    text-align: center;
+}
+
+.content {
+    padding: 30px;
+}
+
+h1 {
+    font-family: 'Roboto', Helvetica, sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #8860d0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#delivery-summary, #basket-summary {
+    padding: 30px;
+    background: white;
+}
+
+tr {
+    height: 30px;
+}

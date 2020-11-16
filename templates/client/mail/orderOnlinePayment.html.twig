@@ -1,0 +1,118 @@
+{% apply inline_css %}
+<style>
+    body {
+        width: 800px;
+        margin: auto;
+        background: #F2F2F2;
+        font-family: Montserrat, sans-serif;
+
+    }
+
+    .header {
+        border-bottom: 3px solid white;
+        text-align: center;
+    }
+
+    .content {
+        padding: 30px;
+    }
+
+    h1 {
+        font-family: 'Roboto', Helvetica, sans-serif;
+        font-weight: lighter;
+        font-size: 20px;
+        line-height: 1.2;
+        color: #8860d0;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    tr {
+        height: 30px;
+    }
+</style>
+<div class="header">
+    <img src="https://domaine-des-vienais.com/client/images/logo.png" alt="IMG-LOGO">
+</div>
+<div class="content">
+    <h1>
+        Bonjour,
+    </h1>
+    <p>
+        Merci de votre confiance, votre commande est en cours de préparation !
+    </p>
+
+    <h1>
+        LIVRAISON
+    </h1>
+    <table style="background: white; padding: 30px; width: 100%">
+        <tbody>
+            <tr>
+                <td>
+                    <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
+                    {{ order.deliveryAddress.address }} <br>
+                    {% if '' !=  order.deliveryAddress.addressComplement %}
+                        {{ order.deliveryAddress.addressComplement }} <br>
+                    {% endif %}
+                    {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }}
+                </td>
+                <td>
+                    {{ order.deliveryAddress.phone }} <br>
+                    {{ order.deliveryAddress.email }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>
+        VOTRE COMMANDE
+    </h1>
+
+    <table style="background: white; padding: 30px; width: 100%">
+        <thead>
+        <tr>
+            <th style="text-align: left">Produit</th>
+            <th class="t-center" scope="col">Quantité</th>
+            <th class="t-right" scope="col">Prix</th>
+        </tr>
+        </thead>
+        {% for bottle in order.basket %}
+            <tr style="padding: 5px">
+                <td style="text-align: left" >{{ bottle.name }}</td>
+                <td style="text-align: center" >{{ bottle.quantity }}</td>
+                {% set totalPrice = bottle.price * bottle.quantity %}
+                <td style="text-align: right" >
+                    {% if bottle.promoPrice %}
+                        {% set totalPromoPrice = bottle.promoPrice * bottle.quantity %}
+                        {{ totalPromoPrice|number_format(2) }} €
+                    {% else %}
+                        {{ totalPrice|number_format(2) }} €
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        <tfoot>
+        <tr>
+            <th style="text-align: left">Sous-total</th>
+            <th class="t-center" scope="col"></th>
+            <th style="text-align: right" scope="col">{{ order.subPrice|number_format(2) }} €</th>
+        </tr>
+        <tr>
+            <th style="text-align: left">Frais d'envoi</th>
+            <th class="t-center" scope="col"></th>
+            <th style="text-align: right" scope="col">{{ order.deliveryFees|number_format(2) }} €</th>
+        </tr>
+        <tr>
+            <th style="text-align: left">Total</th>
+            <th class="t-center" scope="col"></th>
+            <th style="text-align: right" scope="col">{{ order.price|number_format(2) }} €</th>
+        </tr>
+        </tfoot>
+    </table>
+
+    <p>
+        A bientôt au domaine.
+    </p>
+
+</div>
+{% endapply %}
