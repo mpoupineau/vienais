@@ -13,16 +13,45 @@ use App\Entity\DeliveryAddress;
 use App\Entity\Order;
 use App\Entity\Vintage;
 use App\Form\Client\Order\DeliveryAddressType;
+use App\Manager\MailerManager;
 use App\Manager\OrderManager;
 use App\Manager\PaypalManager;
 use App\Manager\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /** @Route("/commande", name="client_order") */
 class OrderController extends AbstractController
 {
+    /**
+     * @Route("/mail/{orderReference}", name="_mail")
+     */
+    public function mail($orderReference, MailerInterface $mailer)
+    {
+        /** @var Order $order */
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
+        try {
+            $mailer->send(MailerManager::onlinePaymentOrderMock($order));
+        } catch (TransportExceptionInterface $exception) {
+
+        } catch (\Exception $exception) {
+
+        }
+
+        return $this->render('client/mail/orderOnlinePayment.html.twig',
+            [
+                "order" => $order
+            ]);
+    }
+
     /**
      * @Route("", name="")
      */
@@ -60,7 +89,6 @@ class OrderController extends AbstractController
                 $sessionManager->removeBottles();
                 return $this->redirectToRoute('client_order_payment', ["orderReference" => $order->getReference()]);
             } else {
-                dump('error');
             }
         }
 
@@ -115,7 +143,7 @@ class OrderController extends AbstractController
 
         $orderManager->setPaymentType($order, $paymentType);
 
-        if ("cheque" === $paymentType) {
+        if (Order::PAYMENT_TYPE_CHECK === $paymentType) {
             return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
         } else {
             return $this->redirectToRoute('client_order_payment_redirect', ['orderReference' => $order->getReference()]);
@@ -146,7 +174,6 @@ class OrderController extends AbstractController
                 ])
             );
         } catch (\Exception $ex) {
-            dump($ex);
             return $this->render('client/page/order/payment.html.twig',
                 [
                     "order" => $order
@@ -182,8 +209,30 @@ class OrderController extends AbstractController
     /**
      * @Route("/recapitulatif/{orderReference}", options = { "expose" = true }, name="_summary")
      */
-    public function endPayment($orderReference)
+    public function endPayment($orderReference, MailerInterface $mailer, OrderManager $orderManager)
     {
+
+        /** @var Order $order */
+        $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
+            [
+                "reference" => $orderReference
+            ]
+        );
+
+        if (!$order->isMailSent()) {
+            if (Order::PAYMENT_TYPE_CHECK === $order->getPaymentType()) {
+                $mail = MailerManager::onlinePaymentOrder($order);
+            } else {
+                $mail = MailerManager::onlinePaymentOrder($order);
+            }
+
+            try {
+                $mailer->send($mail);
+                $orderManager->mailSent($order);
+            } catch (\Exception $exception) {
+            }
+        }
+
         return $this->render('client/page/order/summary.html.twig',
             [
                 "order" => $this->getDoctrine()->getRepository(Order::class)->findOneBy(

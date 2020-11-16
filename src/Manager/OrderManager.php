@@ -129,6 +129,13 @@ class OrderManager
         $this->entityManager->flush();
     }
 
+    public function mailSent(Order $order)
+    {
+        $order->setMailSent(true);
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
+
     /**
      * @param Order $order
      * @param $result

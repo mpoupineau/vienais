@@ -20,8 +20,8 @@ class Order
     const STATE_PAID = "payed";
     const STATE_DELIVER = "delivered";
 
-    const PAYMENT_TYPE_CARD = "card";
-    const PAYMENT_TYPE_CHECK = "check";
+    const PAYMENT_TYPE_CARD = "carte";
+    const PAYMENT_TYPE_CHECK = "cheque";
 
     /**
      * @var int
@@ -91,6 +91,13 @@ class Order
      * @ORM\Column(name="new", type="boolean", nullable=false)
      */
     private $new = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="mail_sent", type="boolean", nullable=false)
+     */
+    private $mailSent = false;
 
     /**
      * @var \DateTime
@@ -312,6 +319,23 @@ class Order
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function isMailSent(): bool
+    {
+        return $this->mailSent;
+    }
+
+    /**
+     * @param bool $mailSent
+     * @return Order
+     */
+    public function setMailSent(bool $mailSent): Order
+    {
+        $this->mailSent = $mailSent;
+        return $this;
+    }
 
     public function getBasket()
     {
