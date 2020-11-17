@@ -257,7 +257,7 @@ class OrderController extends AbstractController
 
         if (!$order->isMailSent()) {
             if (Order::PAYMENT_TYPE_CHECK === $order->getPaymentType()) {
-                $mail = MailerManager::onlinePaymentOrder($order);
+                $mail = MailerManager::onlineCheckOrder($order);
             } else {
                 $mail = MailerManager::onlinePaymentOrder($order);
             }

@@ -24,6 +24,18 @@ class MailerManager
             ]);
     }
 
+    public static function onlineCheckOrder(Order $order)
+    {
+        return (new TemplatedEmail())
+            ->from(new Address('contact@domaine-des-vienais.com', 'Domaine des Vienais'))
+            ->to(new Address($order->getDeliveryAddress()->getEmail(), $order->getDeliveryAddress()->getFirstname() . ' ' . $order->getDeliveryAddress()->getLastname()))
+            ->subject('Confirmation de commande')
+            ->htmlTemplate('client/mail/orderCheckPayment.html.twig')
+            ->context([
+                'order' => $order
+            ]);
+    }
+
     public static function onlinePaymentOrderMock(Order $order)
     {
         return (new TemplatedEmail())

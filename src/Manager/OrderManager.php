@@ -117,7 +117,7 @@ class OrderManager
 
     public function setPaymentType(Order $order, $paymentType)
     {
-        if ("check" === $paymentType) {
+        if (Order::PAYMENT_TYPE_CHECK === $paymentType) {
             $order->setPaymentType(Order::PAYMENT_TYPE_CHECK);
             $order->setState(Order::STATE_WAITING_FOR_CHECK);
         } else {

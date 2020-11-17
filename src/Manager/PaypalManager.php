@@ -62,7 +62,7 @@ class PaypalManager
                     "currency_code" => "EUR"
                 ]
             ]],
-            "order_application_context" => [
+            "application_context" => [
                 "cancel_url" => $cancelUrl,
                 "return_url" => $successUrl,
                 "brand_name" => "Domaine des Vienais",

@@ -1,19 +1,25 @@
 body {
     width: 800px;
     margin: auto;
-    border: 1px solid black;
-    background: #F2F2F2;
     font-family: Montserrat, sans-serif;
-
+    color: #555555;
 }
 
 .header {
-    border-bottom: 3px solid white;
+    border-bottom: 3px solid #810035;
     text-align: center;
+    padding: 10px;
 }
 
 .content {
+    background: #F2F2F2;
     padding: 30px;
+}
+
+.footer {
+    border-top: 3px solid #810035;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -21,9 +27,9 @@ h1 {
     font-weight: lighter;
     font-size: 20px;
     line-height: 1.2;
-    color: #8860d0;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 10px;
+    color: #810035
 }
 
 #delivery-summary, #basket-summary {
@@ -31,6 +37,54 @@ h1 {
     background: white;
 }
 
+.table {
+    background: white;
+    padding: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
 tr {
-    height: 30px;
+    height: 40px;
+    padding: 5px;
+}
+
+thead th {
+    border-bottom: 5px solid #EEEEEE;
+}
+
+tfoot  {
+    border-top: 5px solid #EEEEEE;
+}
+.price {
+    color: black;
+}
+
+.t-right {
+    text-align: right;
+}
+.t-left {
+    text-align: left;
+}
+.t-center {
+    text-align: center;
+}
+
+.test {
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 19px;
+    word-break: break-word;
+}
+
+.purple {
+    color: #810035;
+    font-weight: bold;
+}
+
+a {
+    color: #810035;
 }
