@@ -49,7 +49,7 @@ class MessageType extends AbstractType
                         'placeholder' => 'message'
                     ],
                 ])
-            ->add('location', HiddenType::class,
+            ->add('location', TextType::class,
                 [
                     'required' => false,
                     'mapped' => false,

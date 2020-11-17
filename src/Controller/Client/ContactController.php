@@ -29,6 +29,8 @@ class ContactController extends AbstractController
                 if (null === $form['location']->getData()) {
                     $messageManager->add($form->getData());
                     $form = $this->createForm(MessageType::class, new Message());
+                } else {
+                    $form = $this->createForm(MessageType::class, new Message());
                 }
 
                 $formResponse = "Merci pour votre message, nous vous répondrons dès que possible";
