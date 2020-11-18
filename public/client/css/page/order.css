@@ -126,3 +126,10 @@
   width: 70px;
   margin: 5px;
 }
+
+/******************************************/
+.modal-body-delivery {
+  background: url('../../images/clair_modal.jpg');
+  min-height: 100px;
+  padding: 50px;
+}

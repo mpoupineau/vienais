@@ -10,6 +10,7 @@ namespace App\Controller\Client;
 
 use App\Entity\Bottle;
 use App\Entity\DeliveryAddress;
+use App\Entity\DeliveryFees;
 use App\Entity\Order;
 use App\Entity\Vintage;
 use App\Form\Client\Order\DeliveryAddressType;
@@ -104,7 +105,13 @@ class OrderController extends AbstractController
                         "priority" => "DESC"
                     ]
                 ),
-                "bottlesOrdered" => $sessionManager->getBottles()
+                "bottlesOrdered" => $sessionManager->getBottles(),
+                "deliveryFees" => $this->getDoctrine()->getRepository(DeliveryFees::class)->findBy(
+                    [],
+                    [
+                        "quantity" => "ASC"
+                    ]
+                )
             ]);
     }
 
