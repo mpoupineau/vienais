@@ -133,3 +133,16 @@
   min-height: 100px;
   padding: 50px;
 }
+
+.input_promo_code {
+  border-bottom : 1px solid black
+}
+
+#promo_code_result {
+  color: limegreen;
+}
+
+.discount-price {
+  display: none;
+  color: limegreen;
+}

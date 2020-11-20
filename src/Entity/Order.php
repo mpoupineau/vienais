@@ -62,6 +62,13 @@ class Order
      */
     private $deliveryFees;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_discount", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $totalDiscount = 0.0;
+
 
     /**
      * @var float
@@ -84,6 +91,21 @@ class Order
      * @ORM\Column(name="payment_type", type="string", nullable=true)
      */
     private $paymentType;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="discount_id", type="integer", nullable=true)
+     */
+    private $discountId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="discount_description", type="text", nullable=true)
+     */
+    private $discountDescription;
+
 
     /**
      * @var bool
@@ -336,6 +358,62 @@ class Order
         $this->mailSent = $mailSent;
         return $this;
     }
+
+    /**
+     * @return float
+     */
+    public function getTotalDiscount(): float
+    {
+        return $this->totalDiscount;
+    }
+
+    /**
+     * @param float $totalDiscount
+     * @return Order
+     */
+    public function setTotalDiscount(float $totalDiscount): Order
+    {
+        $this->totalDiscount = $totalDiscount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDiscountId(): ?int
+    {
+        return $this->discountId;
+    }
+
+    /**
+     * @param int $discountId
+     * @return Order
+     */
+    public function setDiscountId(int $discountId): Order
+    {
+        $this->discountId = $discountId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDiscountDescription(): ?string
+    {
+        return $this->discountDescription;
+    }
+
+    /**
+     * @param string $discountDescription
+     * @return Order
+     */
+    public function setDiscountDescription(string $discountDescription): Order
+    {
+        $this->discountDescription = $discountDescription;
+        return $this;
+    }
+
+
 
     public function getBasket()
     {

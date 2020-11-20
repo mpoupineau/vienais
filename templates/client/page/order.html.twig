@@ -67,10 +67,30 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <!--<div class="basket-promotion order-card">
+                <div class="basket-promotion order-card">
                     <h5>Code promo</h5>
-                    <input type="text">
-                </div>-->
+                    <table>
+                        <tr>
+                            <td class="">
+                                <div class="bo2">
+                                    <input class="sizefull input_promo_code" name="promo_code" type="text">
+                                </div>
+                            </td>
+                            <td>
+                                <button id="verify_promo_code"  class="btn" type="submit">
+                                    Valider
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <p id="promo_code_result">
+                        {% if promoCode %}
+                            {% if promoCode.isValid %}
+                                "{{ promoCode.code }}" : {{ promoCode.description }}
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                </div>
                 <div class="basket-information  order-card">
                     <div class="sub-total-price">
                         <span class="basket-category">{{ "Panier"|trans }}</span>
@@ -82,10 +102,16 @@
                         <span class="basket-result">- €</span>
                         <hr class="basket-separator">
                     </div>
+                    <div class="discount-price">
+                        <span class="basket-category">{{ "Économie"|trans }}</span>
+                        <span class="basket-result">- €</span>
+                        <hr class="basket-separator">
+                    </div>
                     <div class="total-price">
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
                         <span class="basket-result">- €</span>
                     </div>
+                    <p id="discount-price"></p>
                     <div class="submit">
                         <a id="basket-validation-button" href="{{ path('client_order_delivery') }}" class="btn basket-button">
                             Valider mon panier

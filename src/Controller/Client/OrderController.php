@@ -12,6 +12,7 @@ use App\Entity\Bottle;
 use App\Entity\DeliveryAddress;
 use App\Entity\DeliveryFees;
 use App\Entity\Order;
+use App\Entity\PromoCode;
 use App\Entity\Vintage;
 use App\Form\Client\Order\DeliveryAddressType;
 use App\Manager\MailerManager;
@@ -106,6 +107,7 @@ class OrderController extends AbstractController
                     ]
                 ),
                 "bottlesOrdered" => $sessionManager->getBottles(),
+                "promoCode" => $this->getDoctrine()->getRepository(PromoCode::class)->find($sessionManager->getPromoCode()),
                 "deliveryFees" => $this->getDoctrine()->getRepository(DeliveryFees::class)->findBy(
                     [],
                     [
@@ -124,14 +126,25 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         $bottlesOrdered = $sessionManager->getBottles();
-        $subPrice = $orderManager->calculateSubPrice($bottlesOrdered);
-        $deliveryFees = $orderManager->calculateDeliveryFees($bottlesOrdered);
+        $promoCodeSession = $sessionManager->getPromoCode();
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $order = $orderManager->add($bottlesOrdered, $form->getData());
+                $order = $orderManager->add($bottlesOrdered, $form->getData(), $promoCodeSession);
                 $sessionManager->removeBottles();
+                $sessionManager->removePromoCode();
                 return $this->redirectToRoute('client_order_payment', ["orderReference" => $order->getReference()]);
+            }
+        }
+
+        $subPrice = $orderManager->calculateSubPrice($bottlesOrdered);
+        $deliveryFees = $orderManager->calculateDeliveryFees($bottlesOrdered);
+        $totalDiscount = 0;
+
+        if ("" !== $promoCodeSession) {
+            $promoCode = $this->getDoctrine()->getRepository(PromoCode::class)->find($promoCodeSession);
+            if ($promoCode && $promoCode->isValid()) {
+                $totalDiscount = $orderManager->calculateDiscount($promoCodeSession, $deliveryFees);
             }
         }
 
@@ -146,7 +159,8 @@ class OrderController extends AbstractController
                 "bottlesOrdered" => $bottlesOrdered,
                 "subPrice" => $subPrice,
                 "deliveryFees" => $deliveryFees,
-                "totalPrice" => $orderManager->calculateTotalPrice($deliveryFees, $subPrice)
+                "discount" => $totalDiscount,
+                "totalPrice" => $orderManager->calculateTotalPrice($deliveryFees, $subPrice, $totalDiscount)
             ]);
     }
 
@@ -262,17 +276,19 @@ class OrderController extends AbstractController
             ]
         );
 
-        if (!$order->isMailSent()) {
-            if (Order::PAYMENT_TYPE_CHECK === $order->getPaymentType()) {
-                $mail = MailerManager::onlineCheckOrder($order);
-            } else {
-                $mail = MailerManager::onlinePaymentOrder($order);
-            }
+        if (in_array($order->getState(), [Order::STATE_PAID, Order::STATE_WAITING_FOR_CHECK])) {
+            if (!$order->isMailSent()) {
+                if (Order::PAYMENT_TYPE_CHECK === $order->getPaymentType()) {
+                    $mail = MailerManager::onlineCheckOrder($order);
+                } else {
+                    $mail = MailerManager::onlinePaymentOrder($order);
+                }
 
-            try {
-                $mailer->send($mail);
-                $orderManager->mailSent($order);
-            } catch (\Exception $exception) {
+                try {
+                    $mailer->send($mail);
+                    $orderManager->mailSent($order);
+                } catch (\Exception $exception) {
+                }
             }
         }
 
@@ -310,8 +326,54 @@ class OrderController extends AbstractController
     /**
      * @Route("/partial/delivery-fees/update", options = { "expose" = true }, name="_partial_deliveryfees")
      */
-    public function updateBottle(Request $request, OrderManager $orderManager)
+    public function updateBottle(Request $request, OrderManager $orderManager, SessionManager $sessionManager)
     {
-        return $this->json(['deliveryFees' => $orderManager->calculateDeliveryFees($request->get('bottles'))]);
+        $deliveryFees = $orderManager->calculateDeliveryFees($request->get('bottles'));
+        return $this->json([
+            'deliveryFees' => $deliveryFees,
+            'discount' => $orderManager->calculateDiscount($sessionManager->getPromoCode(), $deliveryFees)
+        ]);
+    }
+
+    /**
+     * @Route("/partial/promo_code/verify", options = { "expose" = true }, name="_partial_promocode")
+     */
+    public function verifyPromoCode(Request $request, SessionManager $sessionManager)
+    {
+        /** @var PromoCode $promoCode */
+        $promoCode = $this->getDoctrine()->getRepository(PromoCode::class)->findOneBy(
+            [
+                'code' => $request->get('code')
+            ]
+        );
+
+        if (!$promoCode) {
+            return $this->json(
+                [
+                    'status' => 'error',
+                    'message' => 'code not found'
+                ]
+            );
+        }
+
+        if (!$promoCode->isValid()) {
+            return $this->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Ce code est expiré'
+                ]
+            );
+        }
+
+
+        $sessionManager->updatePromoCode($promoCode->getId());
+
+        return $this->json(
+            [
+                'status' => 'success',
+                'message' => 'code found',
+                'promoCode' => $promoCode
+            ]
+        );
     }
 }

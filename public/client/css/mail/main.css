@@ -59,6 +59,11 @@ thead th {
 tfoot  {
     border-top: 5px solid #EEEEEE;
 }
+
+.green {
+    color: limegreen !important;
+}
+
 .price {
     color: black;
 }

@@ -109,18 +109,20 @@ function updateDeliveryFees() {
     });
 
     $('.transport-fees').find('.basket-result').html('<div class="loader-wrapper" id="loader-1-xs-5"><div id="loader"></div><\div>');
+    $('.discount-price').find('.basket-result').html('<div class="loader-wrapper" id="loader-1-xs-5"><div id="loader"></div><\div>');
     $('.total-price').find('.basket-result').html('<div class="loader-wrapper" id="loader-1-xs-5"><div id="loader"></div><\div>');
     $.ajax({
         url: Routing.generate('client_order_partial_deliveryfees'),
         type: "POST",
         data: {bottles:bottles},
         success: (data) => {
-            const subTotal =  parseFloat($('.sub-total-price').find('.basket-result').text().slice(0, -1));
-            const deliveryFees = data.deliveryFees;
-            const total = deliveryFees + subTotal;
-            $('.transport-fees').find('.basket-result').text(deliveryFees.toFixed(2) + " €");
-            $('.total-price').find('.basket-result').text(total.toFixed(2) + " €");
+            $('.transport-fees').find('.basket-result').text(data.deliveryFees.toFixed(2) + " €");
+            $('.discount-price').find('.basket-result').text(data.discount.toFixed(2) + " €");
 
+            if (0 < data.discount) {
+                $('.discount-price').css('display','block');
+            }
+            calculateTotalPrice();
         }
     });
 }
@@ -128,13 +130,49 @@ function updateDeliveryFees() {
 function hideDeliveryFees() {
     $('.transport-fees').find('.basket-result').text("- €");
     $('.total-price').find('.basket-result').text("- €");
+    $('.discount-price').find('.basket-result').text("- €");
 
+}
+
+function calculateTotalPrice() {
+    const subTotal =  parseFloat($('.sub-total-price').find('.basket-result').text().slice(0, -1));
+    const deliveryFees =  parseFloat($('.transport-fees').find('.basket-result').text().slice(0, -1));
+    const discount =  parseFloat($('.discount-price').find('.basket-result').text().slice(0, -1));
+
+    const total = subTotal + deliveryFees - discount;
+    $('.total-price').find('.basket-result').text(total.toFixed(2) + " €");
 }
 
 $("#basket-validation-button").click((elem) => {
     if ($("#basket-validation-button").hasClass('basket-button-disabled')) {
         elem.preventDefault();
     }
+});
+
+/** Test Promotion Code **/
+$( "#verify_promo_code" ).click(() => {
+    $('#promo_code_result').html('<div class="loader-wrapper" id="loader-1-s-2"><div id="loader"></div><\div>');
+    const code = $("input[name='promo_code']").val();
+
+    $.ajax({
+        url: Routing.generate('client_order_partial_promocode'),
+        type: "POST",
+        data: {code:code},
+        success: (data) => {
+            if ("success" === data.status) {
+                $('#promo_code_result').html("\"" + data.promoCode.code + "\" : " + data.promoCode.description);
+                updateDeliveryFees();
+                $('.discount-price').css('display','block');
+            } else {
+                $('#promo_code_result').html("Ce code n'est pas valide");
+                $('.discount-price').css('display','hidden');
+            }
+        },
+        error: (results, status, error) => {
+            $('#promo_code_result').html('Une erreur est survenue');
+            $('.discount-price').css('display','hidden');
+        }
+    });
 });
 
 

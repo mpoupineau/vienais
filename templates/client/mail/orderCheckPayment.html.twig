@@ -93,6 +93,10 @@
                     <td class="t-left" colspan="2">Frais d'envoi</td>
                     <td class="t-right price" >{{ order.deliveryFees|number_format(2) }} €</td>
                 </tr>
+                <tr class="green" {% if 0 == order.totalDiscount %} style="display: none" {% endif %}>
+                    <td class="t-left" colspan="2">Économie</td>
+                    <td class="t-right price green" >{{ order.totalDiscount|number_format(2) }} €</td>
+                </tr>
                 <tr>
                     <th class="t-left" colspan="2">Montant total</th>
                     <th class="t-right price" >{{ order.price|number_format(2) }} €</th>
