@@ -100,9 +100,6 @@ class OrderController extends AbstractController
             [
                 "vintages" => $this->getDoctrine()->getRepository(Vintage::class)->findBy(
                     [
-                        "visible" => true
-                    ],
-                    [
                         "priority" => "DESC"
                     ]
                 ),

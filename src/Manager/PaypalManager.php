@@ -86,8 +86,6 @@ class PaypalManager
             ]
         ];
 
-        dump($request->body);
-
         return $request;
     }
 }

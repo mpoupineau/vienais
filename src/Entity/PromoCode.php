@@ -72,6 +72,13 @@ class PromoCode
     private $variableReduction;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="visible", type="boolean", nullable=false)
+     */
+    private $visible = false;
+
+    /**
      * @return int
      */
     public function getId()
@@ -212,6 +219,24 @@ class PromoCode
     public function setVariableReduction(float $variableReduction): PromoCode
     {
         $this->variableReduction = $variableReduction;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    /**
+     * @param bool $visible
+     * @return PromoCode
+     */
+    public function setVisible(bool $visible): PromoCode
+    {
+        $this->visible = $visible;
         return $this;
     }
 

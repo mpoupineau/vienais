@@ -12,6 +12,7 @@ use App\Entity\Cuvee;
 use App\Entity\News;
 use App\Entity\Photo;
 use App\Entity\PhotoTag;
+use App\Entity\PromoCode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -75,6 +76,32 @@ class ClientController extends AbstractController
                     ]
                 ),
                 "photoTags" => $this->getDoctrine()->getRepository(PhotoTag::class)->findAll()
+            ]);
+    }
+
+    /**
+     * @Route("/partial/promo-code", name="client_partial_promo_code")
+     */
+    public function getPromoCode()
+    {
+        $promoCodes = $this->getDoctrine()->getRepository(PromoCode::class)->findBy(
+            [
+                'visible' => true
+            ]
+        );
+
+        if (isset($promoCodes[0]) && $promoCodes[0]->isValid()) {
+            return $this->render('client/inc/promoCode.html.twig',
+                [
+                    "promoCode" => $promoCodes[0],
+                    "hasCode" => true
+                ]);
+        }
+
+        return $this->render('client/inc/promoCode.html.twig',
+            [
+                "promoCode" => null,
+                "hasCode" => false
             ]);
     }
 }

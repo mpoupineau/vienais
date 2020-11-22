@@ -37,6 +37,7 @@
                                 <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
                             </tr>
                             {% for bottle in vintage.bottles %}
+                                {% if bottle.visible %}
                             <tr>
                                 <td>{{ bottle.capacity.name}}</td>
                                 <td class="t-right">
@@ -59,6 +60,7 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                                {% endif %}
                             {% endfor %}
                             {% endif %}
                         {% endfor %}
