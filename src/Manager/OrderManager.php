@@ -188,4 +188,11 @@ class OrderManager
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
+
+    public function setTppReference(Order $order, $tppReference)
+    {
+        $order->setTppReference($tppReference);
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
 }

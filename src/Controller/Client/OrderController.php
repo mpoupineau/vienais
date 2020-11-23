@@ -99,6 +99,7 @@ class OrderController extends AbstractController
         return $this->render('client/page/order.html.twig',
             [
                 "vintages" => $this->getDoctrine()->getRepository(Vintage::class)->findBy(
+                    [],
                     [
                         "priority" => "DESC"
                     ]
@@ -207,7 +208,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/paiement/{orderReference}/redirection", name="_payment_redirect")
      */
-    public function startCardPayment($orderReference)
+    public function startCardPayment($orderReference, OrderManager $orderManager)
     {
         /** @var Order $order */
         $order = $this->getDoctrine()->getRepository(Order::class)->findOneBy(
@@ -217,7 +218,7 @@ class OrderController extends AbstractController
         );
 
         try {
-            $orderPage = PaypalManager::getOrderPage($order,
+            $result = PaypalManager::getOrderPage($order,
                 getenv("SECURE_SCHEME") . "://".$_SERVER['HTTP_HOST'].$this->generateUrl('client_order_payment_result', [
                     'orderReference' => $order->getReference(),
                     'paymentResult' => 'success'
@@ -233,6 +234,9 @@ class OrderController extends AbstractController
                     "order" => $order
                 ]);
         }
+
+        $orderManager->setTppReference($order, $result['paypalOrderId']);
+
         return $this->render('client/page/order/redirect.html.twig',
             [
                 "order" => $this->getDoctrine()->getRepository(Order::class)->findOneBy(
@@ -240,7 +244,7 @@ class OrderController extends AbstractController
                         "reference" => $orderReference
                     ]
                 ),
-                "redirectUrl" => $orderPage
+                "redirectUrl" => $result['orderPage']
             ]);
     }
 
@@ -257,6 +261,11 @@ class OrderController extends AbstractController
         );
 
         $orderManager->setPaymentResult($order, $paymentResult);
+
+        if ("success" === $paymentResult) {
+            PaypalManager::captureOrder($order->getTppReference());
+        }
+
         return $this->redirectToRoute('client_order_summary', ['orderReference' => $order->getReference()]);
     }
 

@@ -106,6 +106,13 @@ class Order
      */
     private $discountDescription;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tpp_reference", type="text", length=100, nullable=true)
+     */
+    private $tppReference;
+
 
     /**
      * @var bool
@@ -413,7 +420,23 @@ class Order
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getTppReference(): ?string
+    {
+        return $this->tppReference;
+    }
 
+    /**
+     * @param string $tppReference
+     * @return Order
+     */
+    public function setTppReference(string $tppReference): Order
+    {
+        $this->tppReference = $tppReference;
+        return $this;
+    }
 
     public function getBasket()
     {

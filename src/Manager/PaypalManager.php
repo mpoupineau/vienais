@@ -7,7 +7,9 @@ use App\Entity\Order;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 class PaypalManager
 {
@@ -33,7 +35,7 @@ class PaypalManager
      * @param Order $order
      * @param string $successUrl
      * @param string $cancelUrl
-     * @return string
+     * @return array
      * @throws \Exception
      */
     public static function getOrderPage(Order $order, $successUrl, $cancelUrl)
@@ -43,7 +45,10 @@ class PaypalManager
         $links = $response->result->links;
         foreach ($links as $link) {
             if ('approve' === $link->rel) {
-                return $link->href;
+                return [
+                    "orderPage" => $link->href,
+                    "paypalOrderId" => $response->result->id
+            ];
             }
         }
 
@@ -87,5 +92,21 @@ class PaypalManager
         ];
 
         return $request;
+    }
+
+
+    public static function getOrder($orderId)
+    {
+        $request = new OrdersGetRequest($orderId);
+
+        return self::client()->execute($request);
+    }
+
+    public static function captureOrder($orderId)
+    {
+        $request = new OrdersCaptureRequest($orderId);
+        $request->prefer('return=representation');
+
+        return self::client()->execute($request);
     }
 }
