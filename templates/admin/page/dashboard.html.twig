@@ -50,7 +50,11 @@
                         <p>Actualité</p>
                     </a>
                     <a class="nav-link" href="{{ path('admin_order') }}">
-                        <p>Commandes</p>
+                        <p>Commandes
+                            {% if 0 < newOrderCount %}
+                            <span class="badge badge-success">{{ newOrderCount }}</span>
+                            {% endif %}
+                        </p>
                     </a>
                     <a class="nav-link" href="{{ path('admin_message') }}">
                         <p>Message</p>

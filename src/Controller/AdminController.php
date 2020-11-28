@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Cuvee;
 use App\Entity\Message;
+use App\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,7 +38,14 @@ class AdminController extends AbstractController
      */
     public function dashboard()
     {
-        return $this->render('admin/page/dashboard.html.twig');
+        $orders = $this->getDoctrine()->getRepository(Order::class)->findBy(
+            [
+                'new' => true
+            ]
+        );
+        return $this->render('admin/page/dashboard.html.twig', [
+            'newOrderCount' => count($orders)
+        ]);
     }
 
     /**

@@ -18,6 +18,7 @@ class Order
     const STATE_PAYMENT_CANCELED = "payment_canceled";
     const STATE_PAYMENT_FAILED = "payment_failed";
     const STATE_PAID = "payed";
+    const STATE_SENT = "sent";
     const STATE_DELIVER = "delivered";
 
     const PAYMENT_TYPE_CARD = "carte";
@@ -304,7 +305,7 @@ class Order
     /**
      * @return string
      */
-    public function getPaymentType(): string
+    public function getPaymentType(): ?string
     {
         return $this->paymentType;
     }
@@ -464,9 +465,16 @@ class Order
     {
         switch ($this->getState()) {
             case self::STATE_INIT:
-                return "Non payée";
+                return "Non validée";
+            case self::STATE_WAITING_FOR_CHECK:
+            case self::STATE_WAITING_FOR_CARD:
+                return "En attente";
+            case self::STATE_PAYMENT_CANCELED:
+                return "Annulée";
             case self::STATE_PAID:
                 return "Payée";
+            case self::STATE_SENT:
+                return "Expédiée";
             case self::STATE_DELIVER:
                 return "Livrée";
             default:
