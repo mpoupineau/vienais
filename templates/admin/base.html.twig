@@ -14,9 +14,35 @@
 
     <!-- Material Dashboard CSS -->
     {% block style %}
-    <link rel="stylesheet" href="{{ asset('admin/css/material-dashboard.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/css/material-dashboard-demo.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/css/admin.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin/css/admin.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin/css/material-dashboard.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin/css/material-dashboard-demo.min.css') }}">
+        <style>
+            .badge-init {
+                background: darkred;
+            }
+            .badge-payment_canceled {
+                background: red;
+            }
+            .badge-waiting_for_check, .badge-waiting_for_card {
+                background: yellowgreen;
+            }
+            .badge-payed {
+                background: limegreen;
+            }
+            .badge-delivered {
+                background: green;
+            }
+            .card-init, .card-payment_canceled {
+                background: #FFEEEE;
+            }
+            .card-waiting_for_check, .card-waiting_for_card {
+                background: #FFFFEE;
+            }
+            .card-payed, .card-delivered {
+                background: #EEFFEE;
+            }
+        </style>
     {% endblock style %}
 
 </head>

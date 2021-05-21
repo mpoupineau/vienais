@@ -2,6 +2,8 @@
 
 {% set step = 'payment' %}
 
+{% block return_to_order %}
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
@@ -95,9 +97,12 @@
                                 <p>
                                     <b> Vous choisissez le paiement sécurisé en ligne :</b>
                                 </p>
+                                <img class="payment-logo" src="{{ asset('client/images/commande/cb.jpg') }}" alt="CB">
+                                <img class="payment-logo" src="{{ asset('client/images/commande/visa.png') }}" alt="visa">
+                                <img class="payment-logo" src="{{ asset('client/images/commande/mastercard.png') }}" alt="mastercard">
+                                <img class="payment-logo" src="{{ asset('client/images/commande/paypal.png') }}" alt="paypal">
                                 <p>
-                                    Après avoir cliqué sur "Payer", vous serez redirigé vers le site de paiement en ligne, où vous réglerez votre commande en toute sécurité<br>
-                                    La commande vous sera envoyée après votre réglement.
+                                    Après avoir cliqué sur "Payer en ligne", vous serez redirigé vers le site de paiement en ligne (Paypal), où vous réglerez votre commande en toute sécurité.<br>
                                 </p>
                             </div>
                         </div>
@@ -109,18 +114,19 @@
                                     <b>Vous choisissez le paiement par chèque :</b>
                                 </p>
                                 <p>
-                                    Imprimer le récapitulatif de commande <br>
-                                    Remplir votre chèque à l'ordre "EARL des Vienais" <br>
+                                    Notez la référence de la commande : <i>{{ order.reference }}</i> <br>
+                                    Remplissez votre chèque à l'ordre "EARL des Vienais" <br>
                                     Envoyez votre chèque à l'adresse suivante :
                                 </p>
                                 <p class="p-l-50 p-t-5 p-b-5">
                                     <i>
-                                        3 rue des lavandières<br>
+                                        Domaine des Vienais<br>
+                                        3, rue des lavandières<br>
                                         37140 Benais
                                     </i>
+                                </p>
                                 <p>
-                                <p>
-                                    La commande vous sera envoyée à la réception du chèque
+                                    La commande vous sera envoyée à la réception du chèque.
                                 </p>
                             </div>
                         </div>
@@ -141,14 +147,19 @@
                         <span class="basket-result">{{ order.deliveryFees|number_format(2) }} €</span>
                         <hr class="basket-separator">
                     </div>
+                    <div class="discount-price" {% if 0 < order.totalDiscount %} style="display: block" {% endif %}>
+                        <span class="basket-category">{{ "Économie"|trans }}</span>
+                        <span class="basket-result">{{ order.totalDiscount|number_format(2) }} €</span>
+                        <hr class="basket-separator">
+                    </div>
                     <div class="total-price">
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
                         <span class="basket-result">{{ order.price|number_format(2) }} €</span>
                     </div>
                     <div id="div-payment-button" class="submit">
                         <input id="order-reference" type="hidden" readonly value="{{ order.reference }}">
-                        <a href="{{ path('client_order_payment_choice', {orderReference: order.reference, paymentType: "card"}) }}" class="btn basket-button">
-                            Payer par carte
+                        <a href="{{ path('client_order_payment_choice', {orderReference: order.reference, paymentType: "carte"}) }}" class="btn basket-button">
+                            Payer en ligne
                         </a>
                     </div>
                 </div>

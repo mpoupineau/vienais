@@ -25,25 +25,38 @@
                                 <p>
                                     <span class="check-success"><i class="fa fa-check"></i></span> {{ "Votre commande a bien été prise en compte."|trans }}
                                 </p>
-                                <p>
-                                    Référence de la commande : {{ order.reference }}
-                                </p>
+
+                                {% if "cheque" == order.paymentType %}
+                                    <p class="t-underline m-b-5">
+                                        Vous avez choisi le paiement par chèque :
+                                    </p>
+                                    <p>
+                                        Notez la référence de la commande : <b>{{ order.reference }}</b> <br>
+                                        Remplissez votre chèque à l'ordre "EARL des Vienais" <br>
+                                        Envoyez votre chèque à l'adresse suivante :
+                                    </p>
+                                    <p class="p-l-50 p-t-5 p-b-5">
+                                        <i>
+                                            Domaine des Vienais<br>
+                                            3, rue des lavandières<br>
+                                            37140 Benais
+                                        </i>
+                                    </p>
+                                    <p>
+                                        La commande vous sera envoyée à la réception du chèque.
+                                    </p>
+                                {% else %}
+                                    <p class="m-b-5">
+                                        Référence de la commande : <b>{{ order.reference }}</b>
+                                    </p>
+                                    <p>Votre commande est en cours de préparation !</p>
+                                {% endif %}
                             {% elseif order.state in ["payment_canceled", "payment_failed"] %}
                                 <p>
                                     <span class="check-error"><i class="fa fa-times"></i></span> {{ "Votre paiement a échoué."|trans }}
                                 </p>
                             {% endif %}
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            {% if "check" == order.paymentType %}
-                                <p>
-                                    Vous avez choisi le paiement par chèque
-                                </p>
-                                <a href="javascript:window.print()">Imprimer la commande</a>
-                            {% endif %}
                         </div>
                     </div>
                     <div class="row">

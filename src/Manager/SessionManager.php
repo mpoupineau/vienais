@@ -34,4 +34,19 @@ class SessionManager
     {
         $this->session->remove('bottles');
     }
+
+    public function getPromoCode()
+    {
+        return $this->session->get('promoCode', "");
+    }
+
+    public function updatePromoCode($codeId)
+    {
+        $this->session->set('promoCode', $codeId);
+    }
+
+    public function removePromoCode()
+    {
+        $this->session->remove('promoCode');
+    }
 }

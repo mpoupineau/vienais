@@ -26,7 +26,7 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if (null === $form['location']->getData()) {
+                if (null === $form['location']->getData() && 'Henryexcar' !== $form['firstname']->getData()) {
                     $messageManager->add($form->getData());
                     $form = $this->createForm(MessageType::class, new Message());
                 } else {
@@ -38,7 +38,6 @@ class ContactController extends AbstractController
                 $formResponse = "Une erreur est apparue dans l'envoi du message, vous pouvez nous contacter en envoyant directement un mail à contact@domaine-des-vienais.com.";
             }
         }
-
 
         return $this->render('client/page/contact.html.twig',
             [

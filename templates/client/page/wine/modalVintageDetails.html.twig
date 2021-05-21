@@ -23,6 +23,7 @@
             </thead>
             <tbody>
             {% for bottle in vintage.bottles %}
+                {% if bottle.visible %}
                 <tr>
                     <td>{{ bottle.capacity.name}}</td>
                     <td class="t-right" >
@@ -41,6 +42,7 @@
                         {% endif %}
                     </td>
                 </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>

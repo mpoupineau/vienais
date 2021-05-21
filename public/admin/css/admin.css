@@ -31,3 +31,12 @@
     -o-transform:rotate(-5deg);
     transform:rotate(-15deg);
 }
+
+/********** Badge ************/
+.badge-payed {
+    background: green;
+}
+
+.badge.badge-init {
+    background: darkred;
+}

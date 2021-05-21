@@ -92,6 +92,12 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "paypal/paypal-checkout-sdk": {
+        "version": "1.0.1"
+    },
+    "paypal/paypalhttp": {
+        "version": "1.0.0"
+    },
     "php": {
         "version": "7.2"
     },
@@ -436,6 +442,15 @@
     },
     "symfony/yaml": {
         "version": "v4.2.3"
+    },
+    "tijsverkoyen/css-to-inline-styles": {
+        "version": "2.2.3"
+    },
+    "twig/cssinliner-extra": {
+        "version": "v3.1.1"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.1.1"
     },
     "twig/twig": {
         "version": "v2.6.2"

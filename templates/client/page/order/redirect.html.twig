@@ -2,6 +2,10 @@
 
 {% set step = 'payment' %}
 
+{% block meta %}
+    <meta http-equiv="refresh" content="3;url={{ redirectUrl }}" />
+{% endblock %}
+
 {% block return_to_order %}
 {% endblock %}
 {% block body %}
@@ -9,12 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="order-card">
-                    <p class="t-center">
-                        {{ 'Vous allez être redirigé vers Paypal ...' }}
+                    <p class="t-center m-b-20">
+                        {{ 'Vous allez être redirigé vers le site de paiement en ligne (Paypal) ...' }}
                     </p>
-                    <p class="t-center">
-                        <a class="btn btn-success" href="{{ path('client_order_payment_success', { 'orderReference' : order.reference }) }}">Simuler paiement accepté</a><br>
-                        <a class="btn btn-danger"  href="{{ path('client_order_payment_cancelled', { 'orderReference' : order.reference }) }}">Simuler paiement refusé</a>
+                    <p class="t-center t-underline">
+                        <a href="{{ redirectUrl }}">Accéder à la page de paiement</a><br>
                     </p>
                 </div>
             </div>

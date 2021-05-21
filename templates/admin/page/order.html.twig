@@ -22,8 +22,15 @@
                                 {% endif %}
                                     <td>
                                         <a href="{{ path('admin_order_details', { 'orderId': order.id }) }}">
-                                            <span class="badge badge-primary">#{{ order.id }}</span><br>
-                                            <span class="badge badge-info">{{ order.frenchState }}</span>
+                                            <span class="badge badge-primary">#{{ order.id }}</span>
+                                            {% if "carte" == order.paymentType %}
+                                                <i class="material-icons">credit_card</i>
+                                            {% elseif "cheque" == order.paymentType %}
+                                                <i class="material-icons">money</i>
+                                            {% endif %}<br>
+                                            <span class="badge badge-{{ order.state }}">
+                                                {{ order.frenchState }}
+                                            </span>
                                         </a>
                                     </td>
                                     <td>
@@ -52,7 +59,7 @@
             {% else %}
                 {% set orderToDisplay = orders|first %}
             {% endif %}
-            <div class="card">
+            <div class="card card-{{ orderToDisplay.state }}">
                 <div class="card-header card-header-text card-header-primary">
                     <div class="card-text">
                         <h4 class="card-title"><i class="material-icons">payment</i> Commande</h4>
@@ -60,11 +67,22 @@
                 </div>
                 <div class="card-body">
                     <div class="row" >
-                        <div class="col-xl-2 col-lg-3">
-                            <span class="badge badge-primary" style="font-size: 15px">#{{ orderToDisplay.id }}</span><br><br>
+                        <div class="col-xl-3 col-lg-3">
+                            <span class="badge badge-primary" style="font-size: 15px">#{{ orderToDisplay.id }}</span><br>
+                            <span class="text-primary">N°{{ orderToDisplay.reference }}</span>
                         </div>
-                        <div class="col-xl-7 col-lg-6">
-                            <dl class="row">
+                        <div class="col-xl-9 col-lg-9">
+                            <div style="float: right" class=" text-right">
+                                {{ orderToDisplay.createdAt|date("d/m/Y \à H:i:s", "Europe/Paris") }}<br>
+                                <span class="badge badge-{{ orderToDisplay.state }}" style="font-size: 20px">{{ orderToDisplay.price|number_format(2) }} €</span><br>
+                                <span class="badge badge-{{ orderToDisplay.state }}">{{ orderToDisplay.frenchState }}</span><br>
+                                {% if "carte" == orderToDisplay.paymentType %}
+                                    <i class="material-icons">credit_card</i>
+                                {% elseif "cheque" == orderToDisplay.paymentType %}
+                                    <i class="material-icons">money</i>
+                                {% endif %}
+                            </div>
+                            <div class="row">
                                 <dt class="col-sm-3"><span class="text-primary">Nom</span></dt>
                                 <dd class="col-sm-8">{{ orderToDisplay.deliveryAddress.firstname }} {{ orderToDisplay.deliveryAddress.lastname }}</dd>
                                 <dt class="col-sm-3"><span class="text-primary">Téléphone</span> </dt>
@@ -79,20 +97,16 @@
                                     {% endif %}
                                     {{ orderToDisplay.deliveryAddress.zipcode }} {{ orderToDisplay.deliveryAddress.city }} <br>
                                 </dd>
-                            </dl>
+                            </div>
                         </div>
-                        <div class="col-lg-3 text-right">
-                            {{ orderToDisplay.createdAt|date("d/m/Y \à H:i:s", "Europe/Paris") }}<br>
-                            <span class="badge badge-warning" style="font-size: 20px">{{ orderToDisplay.price|number_format(2) }} €</span><br>
-                            <span class="badge badge-info">{{ orderToDisplay.frenchState }}</span>
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
                             <strong class="text-primary">Commande : </strong><br>
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="background: white">
                                 <table class="table" style="text-align: right">
-                                    <thead class="text-primary">
+                                    <thead class="text-primary" style="background: #EEEEEE">
                                         <tr>
                                             <th style="text-align: left">Nom</th>
                                             <th style="text-align: center">Quantité</th>
@@ -126,20 +140,29 @@
                                             </td>
                                         </tr>
                                     {% endfor %}
-                                        <tr style="background: #FFFFDD">
+                                    </tbody>
+                                    <tfoot style="background: #EEEEEE">
+                                        <tr >
                                             <td colspan="3" style="text-align: left">Sous-Total</td>
                                             <td>{{ orderToDisplay.subPrice|number_format(2) }} €</td>
                                         </tr>
-                                        <tr style="background: #FFFFDD">
+                                        <tr>
                                             <td colspan="3" style="text-align: left">Frais livraison</td>
 
                                             <td>{{ orderToDisplay.deliveryFees|number_format(2) }} €</td>
                                         </tr>
-                                        <tr style="background: #FFFFAA">
-                                            <td colspan="3" style="text-align: left">Total</td>
-                                            <td><strong>{{ orderToDisplay.price|number_format(2) }} €</strong></td>
+                                    {% if 0 < orderToDisplay.totalDiscount %}
+                                        <tr  class="text-success">
+                                            <td colspan="3" style="text-align: left">Économie ({{ orderToDisplay.discountDescription }})</td>
+
+                                            <td>{{ orderToDisplay.totalDiscount|number_format(2) }} €</td>
                                         </tr>
-                                    </tbody>
+                                    {% endif %}
+                                        <tr class="text-primary">
+                                            <td colspan="3" style="text-align: left">Total</td>
+                                            <td><b>{{ orderToDisplay.price|number_format(2) }} €</b></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>

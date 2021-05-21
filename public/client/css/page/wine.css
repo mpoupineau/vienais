@@ -1,13 +1,3 @@
-@media (min-width: 992px) {
-  .modal-xlg {
-    max-width: 800px;
-  }
-}
-@media (min-width: 1300px) {
-  .modal-xlg {
-    max-width: 1200px;
-  }
-}
 .cuvee-image {
   cursor: pointer;
 }
@@ -67,9 +57,7 @@
 .card-vintage-promoted {
   border-right: 4px solid #8860d0;
 }
-.pointer:hover {
-  cursor: pointer;
-}
+
 .vintage-modal-button-div {
   cursor: pointer;
 }

@@ -4,6 +4,7 @@ namespace App\Manager;
 use App\Entity\Bottle;
 use App\Entity\DeliveryFees;
 use App\Entity\Order;
+use App\Entity\PromoCode;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -23,12 +24,13 @@ class OrderManager
     }
 
 
-    public function add(array $bottles, $address)
+    public function add(array $bottles, $address, $promoCodeId)
     {
         $order = new Order();
         $rawBottles = "";
         $subPrice = $this->calculateSubPrice($bottles);
         $deliveryFees = $this->calculateDeliveryFees($bottles);
+        $totalDiscount = $this->calculateDiscount($promoCodeId, $deliveryFees);
 
         foreach ($bottles as $bottleId => $quantity) {
             if (0 < $quantity) {
@@ -43,9 +45,16 @@ class OrderManager
 
         $order->setDeliveryFees($deliveryFees);
         $order->setSubPrice($subPrice);
-        $order->setPrice($this->calculateTotalPrice($deliveryFees, $subPrice));
+        $order->setPrice($this->calculateTotalPrice($deliveryFees, $subPrice, $totalDiscount));
         $order->setRaw($rawBottles);
         $order->setDeliveryAddress($address);
+
+        if (0 < $totalDiscount) {
+            $promoCode = $this->entityManager->getRepository(PromoCode::class)->find($promoCodeId);
+            $order->setTotalDiscount($totalDiscount);
+            $order->setDiscountId($promoCodeId);
+            $order->setDiscountDescription($promoCode->getDescription());
+        }
 
         $this->entityManager->persist($address);
         $this->entityManager->persist($order);
@@ -62,6 +71,7 @@ class OrderManager
             if (0 < $quantity) {
                 /** @var Bottle $bottle */
                 $bottle = $this->entityManager->getRepository(Bottle::class)->find($bottleId);
+
                 if ($bottle->isAvailable()){
                     if ($bottle->getPromoPrice()) {
                         $subPrice += $quantity * $bottle->getPromoPrice();
@@ -104,9 +114,27 @@ class OrderManager
         return 0;
     }
 
-    public function calculateTotalPrice($deliveryFees, $subPrice)
+    public function calculateDiscount($promoCodeSession, $deliveryFees)
     {
-        return round($deliveryFees + $subPrice, 2);
+        if ("" !== $promoCodeSession) {
+            /** @var PromoCode $promoCode */
+            $promoCode = $this->entityManager->getRepository(PromoCode::class)->find($promoCodeSession);
+
+            if ($promoCode && $promoCode->isValid()) {
+                if (PromoCode::TYPE_FEES === $promoCode->getType()) {
+                    if (null !== $promoCode->getVariableReduction()) {
+                        return round($deliveryFees * $promoCode->getVariableReduction() / 100, 2);
+                    }
+                }
+            }
+        }
+
+        return 0.0;
+    }
+
+    public function calculateTotalPrice($deliveryFees, $subPrice, $totalDiscount)
+    {
+        return round($deliveryFees + $subPrice - $totalDiscount, 2);
     }
 
     public function delete(Bottle $bottle)
@@ -117,7 +145,7 @@ class OrderManager
 
     public function setPaymentType(Order $order, $paymentType)
     {
-        if ("check" === $paymentType) {
+        if (Order::PAYMENT_TYPE_CHECK === $paymentType) {
             $order->setPaymentType(Order::PAYMENT_TYPE_CHECK);
             $order->setState(Order::STATE_WAITING_FOR_CHECK);
         } else {
@@ -125,6 +153,13 @@ class OrderManager
             $order->setState(Order::STATE_WAITING_FOR_CARD);
         }
 
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
+
+    public function mailSent(Order $order)
+    {
+        $order->setMailSent(true);
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }
@@ -145,13 +180,18 @@ class OrderManager
                 $order->setState(Order::STATE_PAID);
                 break;
             case "cancelled":
+            default:
                 $order->setState(Order::STATE_PAYMENT_CANCELED);
                 break;
-            default:
-                throw new \Exception('Invalid payment result');
         }
 
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+    }
 
+    public function setTppReference(Order $order, $tppReference)
+    {
+        $order->setTppReference($tppReference);
         $this->entityManager->persist($order);
         $this->entityManager->flush();
     }

@@ -1,0 +1,126 @@
+{% apply inline_css(source('@css/mail/main.css')) %}
+
+    <div class="header">
+        <img src="https://domaine-des-vienais.com/client/images/logo.png" alt="IMG-LOGO">
+    </div>
+    <div class="content">
+        <div class="t-right"><span class="purple">N°</span> de commande : <b>{{ order.reference }}</b></div>
+        <h1>
+            Bonjour,
+        </h1>
+        <p>
+            Merci de votre confiance, votre commande est en cours de préparation !
+        </p>
+
+        <p class="t-underline m-b-5">
+            Vous avez choisi le paiement par chèque :
+        </p>
+        <ul>
+            <li>Notez la référence de la commande : "{{ order.reference }}" </li>
+            <li>Remplissez votre chèque à l'ordre "EARL des Vienais" </li>
+            <li>Envoyez votre chèque à l'adresse suivante :</li>
+        </ul>
+
+        <p class="t-center">
+            <i>
+                Domaine des Vienais<br>
+                3, rue des lavandières<br>
+                37140 Benais
+            </i>
+        </p>
+        <p>
+            La commande vous sera envoyée à la réception du chèque.
+        </p>
+        <h1>
+            LIVRAISON
+        </h1>
+        <div class="table">
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <b>{{ order.deliveryAddress.lastname }} {{ order.deliveryAddress.firstname }}</b><br>
+                        {{ order.deliveryAddress.address }} <br>
+                        {% if '' !=  order.deliveryAddress.addressComplement %}
+                            {{ order.deliveryAddress.addressComplement }} <br>
+                        {% endif %}
+                        {{ order.deliveryAddress.zipcode }} {{ order.deliveryAddress.city }}
+                    </td>
+                    <td>
+                        {{ order.deliveryAddress.phone }} <br>
+                        {{ order.deliveryAddress.email }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <h1>
+            VOTRE COMMANDE
+        </h1>
+
+        <div class="table">
+            <table>
+                <thead>
+                <tr>
+                    <th class="t-left">Produit</th>
+                    <th class="t-center">Quantité</th>
+                    <th class="t-right">Prix</th>
+                </tr>
+                </thead>
+                {% for bottle in order.basket %}
+                    <tr>
+                        <td class="t-left" >{{ bottle.name }}</td>
+                        <td class="t-center" >{{ bottle.quantity }}</td>
+                        {% set totalPrice = bottle.price * bottle.quantity %}
+                        <td class="t-right price" >
+                            {% if bottle.promoPrice %}
+                                {% set totalPromoPrice = bottle.promoPrice * bottle.quantity %}
+                                {{ totalPromoPrice|number_format(2) }} €
+                            {% else %}
+                                {{ totalPrice|number_format(2) }} €
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tfoot>
+                <tr>
+                    <td class="t-left" colspan="2">Sous-total</td>
+                    <td class="t-right price" >{{ order.subPrice|number_format(2) }} €</td>
+                </tr>
+                <tr>
+                    <td class="t-left" colspan="2">Frais d'envoi</td>
+                    <td class="t-right price" >{{ order.deliveryFees|number_format(2) }} €</td>
+                </tr>
+                <tr class="green" {% if 0 == order.totalDiscount %} style="display: none" {% endif %}>
+                    <td class="t-left" colspan="2">Économie</td>
+                    <td class="t-right price green" >{{ order.totalDiscount|number_format(2) }} €</td>
+                </tr>
+                <tr>
+                    <th class="t-left" colspan="2">Montant total</th>
+                    <th class="t-right price" >{{ order.price|number_format(2) }} €</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <p>
+            A bientôt au <a href="https://domaine-des-vienais.com" target="_blank">domaine</a>.
+        </p>
+
+    </div>
+    <div class="footer">
+        <table>
+            <tr>
+                <td>
+                    Si vous avez besoin d'aide, une question, <br>contactez-nous :
+                </td>
+                <td class="puple">
+                    02.47.97.35.19<br>
+                    contact@domaine-des-vienais.com
+                </td>
+            </tr>
+        </table> <br>
+        <div class="t-center purple"><a href="https://domaine-des-vienais.com" target="_blank">Domaine des Vienais</a> </div>
+    </div>
+{% endapply %}

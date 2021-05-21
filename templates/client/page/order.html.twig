@@ -15,6 +15,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
+                <!--<div style="border: 1px solid #8860d0" class="order-card">
+                </div>
+                -->
                 <div class="order-card">
                     <table class="table">
                         <thead>
@@ -37,6 +40,7 @@
                                 <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
                             </tr>
                             {% for bottle in vintage.bottles %}
+                                {% if bottle.visible %}
                             <tr>
                                 <td>{{ bottle.capacity.name}}</td>
                                 <td class="t-right">
@@ -59,6 +63,7 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                                {% endif %}
                             {% endfor %}
                             {% endif %}
                         {% endfor %}
@@ -69,7 +74,27 @@
             <div class="col-md-4">
                 <div class="basket-promotion order-card">
                     <h5>Code promo</h5>
-                    <input type="text">
+                    <table>
+                        <tr>
+                            <td class="">
+                                <div class="bo2">
+                                    <input class="sizefull input_promo_code" name="promo_code" type="text">
+                                </div>
+                            </td>
+                            <td>
+                                <button id="verify_promo_code"  class="btn" type="submit">
+                                    Valider
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <p id="promo_code_result">
+                        {% if promoCode %}
+                            {% if promoCode.isValid %}
+                                "{{ promoCode.code }}" : {{ promoCode.description }}
+                            {% endif %}
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="basket-information  order-card">
                     <div class="sub-total-price">
@@ -78,7 +103,12 @@
                         <hr class="basket-separator">
                     </div>
                     <div class="transport-fees">
-                        <span class="basket-category">{{ "Frais de livraison"|trans }}</span>
+                        <span class="basket-category">{{ "Frais de livraison"|trans }} <i data-toggle="modal" data-target="#modalDeliveryFees" class="fa fa-question-circle pointer"></i></span>
+                        <span class="basket-result">- €</span>
+                        <hr class="basket-separator">
+                    </div>
+                    <div class="discount-price">
+                        <span class="basket-category">{{ "Économie"|trans }}</span>
                         <span class="basket-result">- €</span>
                         <hr class="basket-separator">
                     </div>
@@ -86,6 +116,7 @@
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
                         <span class="basket-result">- €</span>
                     </div>
+                    <p id="discount-price"></p>
                     <div class="submit">
                         <a id="basket-validation-button" href="{{ path('client_order_delivery') }}" class="btn basket-button">
                             Valider mon panier
@@ -97,14 +128,56 @@
                 </div>
                 <div id="info-quantity" class="order-card success-card ">
                     <p>
-                        Nous vous livrons les bouteilles par cartons de 6 et les magnums par carton de 3, n'hésitez à panacher leurs contenus
+                        Nous vous livrons les bouteilles par cartons de 6 et les magnums par cartons de 3, n'hésitez à panacher leurs contenus (12 bouteilles minimum).
                     </p>
                     <p id="quantity-info-details" class="" style="color:red"></p>
+                    <br>
+                    <p>
+                        Livraison en France métropolitaine
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+    <div class="modal fade" id="modalDeliveryFees" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg"  role="document">
+            <div class="modal-content">
+                <div class="color1 modal-body-delivery">
+                    <p><b>Livraison uniquement en France métropolitaine.</b></p><br>
+                    <p>
+                        Les frais de livraison sont calculés en fonction de la quantité de produits dans votre commande (1 bouteille = 1 litre en vrac = 0.5 magnum)
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="t-right">Quantité</th>
+                                <th class="t-center">Frais par quantité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set deliveryFeeExample =  0 %}
+                        {% for deliveryFee in deliveryFees %}
+                            {% if deliveryFee.quantity == 36 %}
+                            {% set deliveryFeeExample =  deliveryFee.fees %}
+                            {% endif %}
+                            <tr>
+                                <td class="t-right">{{ deliveryFee.name }}</td>
+                                <td class="t-center">{{ deliveryFee.fees |number_format(2) }} €</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <p>
+                        {% set totalDeliveryFees =  36 * deliveryFeeExample %}
+                        Exemple pour une commande de 36 bouteilles : <br>
+                        36 * {{ deliveryFeeExample|number_format(2) }} € = {{ totalDeliveryFees |number_format(2) }} €
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

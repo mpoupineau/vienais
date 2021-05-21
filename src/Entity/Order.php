@@ -18,10 +18,11 @@ class Order
     const STATE_PAYMENT_CANCELED = "payment_canceled";
     const STATE_PAYMENT_FAILED = "payment_failed";
     const STATE_PAID = "payed";
+    const STATE_SENT = "sent";
     const STATE_DELIVER = "delivered";
 
-    const PAYMENT_TYPE_CARD = "card";
-    const PAYMENT_TYPE_CHECK = "check";
+    const PAYMENT_TYPE_CARD = "carte";
+    const PAYMENT_TYPE_CHECK = "cheque";
 
     /**
      * @var int
@@ -62,6 +63,13 @@ class Order
      */
     private $deliveryFees;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_discount", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $totalDiscount = 0.0;
+
 
     /**
      * @var float
@@ -86,11 +94,40 @@ class Order
     private $paymentType;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="discount_id", type="integer", nullable=true)
+     */
+    private $discountId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="discount_description", type="text", nullable=true)
+     */
+    private $discountDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tpp_reference", type="text", length=100, nullable=true)
+     */
+    private $tppReference;
+
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="new", type="boolean", nullable=false)
      */
     private $new = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="mail_sent", type="boolean", nullable=false)
+     */
+    private $mailSent = false;
 
     /**
      * @var \DateTime
@@ -268,7 +305,7 @@ class Order
     /**
      * @return string
      */
-    public function getPaymentType(): string
+    public function getPaymentType(): ?string
     {
         return $this->paymentType;
     }
@@ -312,6 +349,95 @@ class Order
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function isMailSent(): bool
+    {
+        return $this->mailSent;
+    }
+
+    /**
+     * @param bool $mailSent
+     * @return Order
+     */
+    public function setMailSent(bool $mailSent): Order
+    {
+        $this->mailSent = $mailSent;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalDiscount(): float
+    {
+        return $this->totalDiscount;
+    }
+
+    /**
+     * @param float $totalDiscount
+     * @return Order
+     */
+    public function setTotalDiscount(float $totalDiscount): Order
+    {
+        $this->totalDiscount = $totalDiscount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDiscountId(): ?int
+    {
+        return $this->discountId;
+    }
+
+    /**
+     * @param int $discountId
+     * @return Order
+     */
+    public function setDiscountId(int $discountId): Order
+    {
+        $this->discountId = $discountId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDiscountDescription(): ?string
+    {
+        return $this->discountDescription;
+    }
+
+    /**
+     * @param string $discountDescription
+     * @return Order
+     */
+    public function setDiscountDescription(string $discountDescription): Order
+    {
+        $this->discountDescription = $discountDescription;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTppReference(): ?string
+    {
+        return $this->tppReference;
+    }
+
+    /**
+     * @param string $tppReference
+     * @return Order
+     */
+    public function setTppReference(string $tppReference): Order
+    {
+        $this->tppReference = $tppReference;
+        return $this;
+    }
 
     public function getBasket()
     {
@@ -339,9 +465,16 @@ class Order
     {
         switch ($this->getState()) {
             case self::STATE_INIT:
-                return "Non payée";
+                return "Non validée";
+            case self::STATE_WAITING_FOR_CHECK:
+            case self::STATE_WAITING_FOR_CARD:
+                return "En attente";
+            case self::STATE_PAYMENT_CANCELED:
+                return "Annulée";
             case self::STATE_PAID:
                 return "Payée";
+            case self::STATE_SENT:
+                return "Expédiée";
             case self::STATE_DELIVER:
                 return "Livrée";
             default:
@@ -353,6 +486,6 @@ class Order
     {
         $date = new \DateTime();
         echo $date->getTimestamp();
-        return random_bytes(6) . $date->getTimestamp();
+        return bin2hex(random_bytes(3)) . $date->getTimestamp();
     }
 }

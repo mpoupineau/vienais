@@ -175,6 +175,11 @@
                         <span class="basket-result">{{ deliveryFees|number_format(2) }} €</span>
                         <hr class="basket-separator">
                     </div>
+                    <div class="discount-price" {% if 0 < discount %} style="display: block" {% endif %}>
+                        <span class="basket-category">{{ "Économie"|trans }}</span>
+                        <span class="basket-result">{{ discount|number_format(2) }} €</span>
+                        <hr class="basket-separator">
+                    </div>
                     <div class="total-price">
                         <span class="basket-category">{{ "TOTAL"|trans }}</span>
                         <span class="basket-result">{{ totalPrice|number_format(2) }} €</span>
