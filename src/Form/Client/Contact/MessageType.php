@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class MessageType extends AbstractType
 {
@@ -49,11 +50,7 @@ class MessageType extends AbstractType
                         'placeholder' => 'message'
                     ],
                 ])
-            ->add('location', TextType::class,
-                [
-                    'required' => false,
-                    'mapped' => false,
-                ])
+            ->add('captcha', CaptchaType::class)
             ->add('send', SubmitType::class,
                 [
                     'label' => 'Envoyer',

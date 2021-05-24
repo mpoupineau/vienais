@@ -57,7 +57,11 @@
                         </p>
                     </a>
                     <a class="nav-link" href="{{ path('admin_message') }}">
-                        <p>Message</p>
+                        <p>Message
+                            {% if 0 < newMessageCount %}
+                                <span class="badge badge-success">{{ newMessageCount }}</span>
+                            {% endif %}
+                        </p>
                     </a>
                 </div>
             </div>

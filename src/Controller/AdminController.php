@@ -43,8 +43,14 @@ class AdminController extends AbstractController
                 'new' => true
             ]
         );
+        $message = $this->getDoctrine()->getRepository(Message::class)->findBy(
+            [
+                'new' => true
+            ]
+        );
         return $this->render('admin/page/dashboard.html.twig', [
-            'newOrderCount' => count($orders)
+            'newOrderCount' => count($orders),
+            'newMessageCount' => count($message)
         ]);
     }
 

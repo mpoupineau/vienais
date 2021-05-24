@@ -2,9 +2,7 @@ version: '3.5'
 services:
     vienais-web:
         container_name: vienais-web
-        build:
-            context: ./docker
-            dockerfile: Dockerfile
+        image: vienais-web
         environment:
             SYMFONY_ENV: dev
         volumes:
