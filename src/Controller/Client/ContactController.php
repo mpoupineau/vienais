@@ -26,13 +26,7 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if (null === $form['location']->getData() && 'Henryexcar' !== $form['firstname']->getData()) {
-                    $messageManager->add($form->getData());
-                    $form = $this->createForm(MessageType::class, new Message());
-                } else {
-                    $form = $this->createForm(MessageType::class, new Message());
-                }
-
+                $messageManager->add($form->getData());
                 $formResponse = "Merci pour votre message, nous vous répondrons dès que possible";
             } else {
                 $formResponse = "Une erreur est apparue dans l'envoi du message, vous pouvez nous contacter en envoyant directement un mail à contact@domaine-des-vienais.com.";

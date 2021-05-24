@@ -1,0 +1,5 @@
+gregwar_captcha:
+  width: 160
+  height: 50
+  invalid_message: "Le captcha est incorrect"
+  max_front_lines: 0

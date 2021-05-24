@@ -1,52 +1,8 @@
-.body .social {
-  padding: 10px;
-  font-size: 20px;
-  width: 50px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
-  color: #1d2124;
-  border: 1px solid #1d2124;
-}
-.body .social:hover {
-  color: #1d2124;
-  text-decoration: none;
-}
-.body_contact {
-  border-top: 2px solid #ffffff;
-}
-.body_contact .col_contact {
-  background: #ffffff;
-}
-.contact_info {
-  padding: 20px;
-  font-size: 20px;
-  background: #e9e2db;
-}
-.social {
-  color: #343148;
-  padding: 10px;
-  font-size: 20px;
-  width: 50px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 5px;
-  border: 1px solid #343148;
-  transition: background 0.2s;
-  margin-bottom: 5px;
-}
-.social:hover {
-  color: #F2F2F2;
-  text-decoration: none;
-}
-.fa-facebook:hover {
-  background: #3B5998;
-}
-.fa-twitter:hover {
-  background: #55ACEE;
-}
-.fa-instagram:hover {
-  background: #fb3958;
+#message_captcha {
+  margin-left: 10px;
+  width: 50%;
+  height: 50px;
+  border-radius: 10px;
 }
 /*
 .fa:hover {
