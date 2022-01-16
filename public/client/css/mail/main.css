@@ -9,6 +9,7 @@ body {
     border-bottom: 3px solid #810035;
     text-align: center;
     padding: 10px;
+    max-height: 200px;
 }
 
 .content {
