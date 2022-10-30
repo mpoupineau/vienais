@@ -32,14 +32,26 @@
                         {% for vintage in vintages %}
                             {%  if vintage.bottles is not empty %}
                             <tr>
-                                <td rowspan="{{ 1 + vintage.bottles|length }}" class="t-center">
+                                {% if vintage.isRewarded %}
+                                    {% set nbColumn = 2  + vintage.bottles|length %}
+                                {% else %}
+                                    {% set nbColumn = 1  + vintage.bottles|length %}
+                                {% endif %}
+                                <td rowspan="{{ nbColumn }}" class="t-center">
                                     <div class="d-none d-md-block hov-img-zoom">
                                         <img style="width:120px" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="no image">
                                     </div>
                                 </td>
                                 <td colspan="3" class="txt5">{{ vintage.cuvee.name }} {{ vintage.year }}</td>
                             </tr>
-                            {% for bottle in vintage.bottles %}
+                            {% if vintage.isRewarded %}
+                                <tr>
+                                <td colspan="3"  class="td-prize-display">
+                                    <img src="{{ asset( image_prize_location ~ vintage.prize.imagePath) }}" alt="prize"> {{ vintage.prize.fullName }}
+                                </td>
+                                </tr>
+                            {% endif %}
+                                {% for bottle in vintage.bottles %}
                                 {% if bottle.visible %}
                             <tr>
                                 <td>{{ bottle.capacity.name}}</td>

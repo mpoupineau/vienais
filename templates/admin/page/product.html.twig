@@ -17,5 +17,8 @@
         <li class="nav-item">
             <a class="nav-link {% if page is defined and page == 'capacity' %}active{% endif %}"  href="{{ path('admin_product_capacity') }}">Capacité</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {% if page is defined and page == 'prize' %}active{% endif %}"  href="{{ path('admin_product_prize') }}">Médaille</a>
+        </li>
     </ul>
 {% endblock %}

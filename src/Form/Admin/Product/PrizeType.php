@@ -7,20 +7,23 @@ namespace App\Form\Admin\Product;
  * Time: 20:26
  */
 
-use App\Entity\Cuvee;
-use App\Entity\Prize;
+use App\Entity\WineType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Vintage;
+use App\Entity\Prize;
 
-class VintageType extends AbstractType
+class PrizeType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,37 +34,22 @@ class VintageType extends AbstractType
                     'required' => false,
                     'attr' => ['readonly' => true]
                 ])
-            ->add('year', IntegerType::class,
+            ->add('competition', TextType::class,
                 [
-                    'label' => 'Année'
+                    'label' => 'Compétition'
                 ])
-            ->add('cuvee', EntityType::class,
+            ->add('result', TextType::class,
                 [
-                    'label' => 'Type',
-                    'class' => Cuvee::class,
-                    'choice_label' => 'name'
+                    'label' => 'Résultat'
                 ])
-            ->add('description', TextareaType::class,
+            ->add('image_path', HiddenType::class,
                 [
-                    'label' => 'Description'
+                    'required' => false,
+                    'attr' => ['readonly' => true]
                 ])
-            ->add('visible', CheckboxType::class,
+            ->add('image_file', FileType::class,
                 [
                     'required' => false
-                ])
-            ->add('priority', IntegerType::class,
-                [
-                    'label' => 'Priorité'
-                ])
-            ->add('prize', EntityType::class,
-                [
-                    'label' => 'Médaille',
-                    'class' => Prize::class,
-                    'choice_label' => function (Prize $prize) {
-                        return $prize->getFullname();
-                    },
-                    'placeholder' => 'Pas de médaille',
-                    'required' => false,
                 ])
             ->add('save', SubmitType::class)
         ;
@@ -70,7 +58,7 @@ class VintageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Vintage::class,
+            'data_class' => Prize::class,
         ]);
     }
 }

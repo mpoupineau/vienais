@@ -63,3 +63,15 @@
 .layer {
   background-color: rgba(0, 0, 0, 0.2);
 }
+.card-vintage-rewarded {
+  background: #FFFFAA;
+}
+.prize-display {
+  background: #FFF;
+  box-shadow: 0 0 5px #b8860b;
+  padding: 5px;
+  margin: 20px 100px;
+}
+.prize-display img {
+  width: 50px;
+}

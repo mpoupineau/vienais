@@ -19,6 +19,9 @@
                     {{ form_start(form) }}
                     <div class="row" style="padding-left: 30px;">
                         <div class="col-xl-5">
+                            <p style="color:red">
+                                <i class="material-icons">info</i> Ne pas prendre une image trop grande
+                            </p>
                             <div class="row">
                                 {{ form_errors(form.image_file) }}
                                 {% block cuvee_input_image %}

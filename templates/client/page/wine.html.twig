@@ -110,7 +110,7 @@
                     {% for vintage in vintages %}
 
                                 <div class="col-lg-4 col-md-6">
-                                    <div class="card card-vintage {% if vintage.isPromoted %}card-vintage-promoted{% endif %}">
+                                    <div class="card card-vintage {% if vintage.isRewarded %}card-vintage-rewarded{% endif %} {% if vintage.isPromoted %}card-vintage-promoted{% endif %}">
                                         <div class="card-horizontal">
                                             <div class="img-square-wrapper" style="background: #CCCCCC">
                                                 <img class="" src="{{ asset( image_cuvee_location ~ vintage.cuvee.imagePath) }}" alt="Card image cap">
@@ -121,6 +121,15 @@
                                                     {{ vintage.cuvee.name }}
                                                     </div>
                                                     {{ vintage.year }}
+                                                    {% if vintage.isRewarded %}
+                                                        <div class="tooltip-main">
+                                                            <a class="vintage-modal-button-div txt15" data-toggle="modal" data-id="{{ vintage.id }}" data-target="#modalVintage">
+
+                                                            <img style="width:30px" src="{{ asset( image_prize_location ~ vintage.prize.imagePath) }}" alt="prize">
+                                                            <span class="tooltiptext-main tooltiptext-prize">{{ vintage.prize.fullName }}</span>
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
                                                 </h4>
                                                 <p class="card-text txt23 t-justify">
                                                     {{ vintage.description }}

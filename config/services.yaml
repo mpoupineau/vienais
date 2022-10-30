@@ -8,6 +8,7 @@ parameters:
     image_cuvee_location: 'images/cuvee/'
     image_news_location: 'images/news/'
     photo_location: 'images/photo/'
+    image_prize_location: 'images/prize/'
 
 services:
     # default configuration for services in *this* file

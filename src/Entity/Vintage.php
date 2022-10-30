@@ -64,6 +64,14 @@ class Vintage
     private $bottles;
 
     /**
+     * @var Prize|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Prize")
+     * @ORM\JoinColumn(name="prize_id", referencedColumnName="id")
+     */
+    private $prize;
+
+    /**
      * @return int
      */
     public function getId()
@@ -189,6 +197,24 @@ class Vintage
         return $this;
     }
 
+    /**
+     * @return Prize|null
+     */
+    public function getPrize()
+    {
+        return $this->prize;
+    }
+
+    /**
+     * @param Prize|null $prize
+     * @return Vintage
+     */
+    public function setPrize(?Prize $prize)
+    {
+        $this->prize = $prize;
+        return $this;
+    }
+
     public function isPromoted()
     {
         foreach ($this->getBottles() as $bottle) {
@@ -198,6 +224,11 @@ class Vintage
         }
 
         return false;
+    }
+
+    public function isRewarded()
+    {
+        return $this->prize !== null;
     }
 
 }

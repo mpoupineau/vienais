@@ -6,6 +6,7 @@ twig:
         image_cuvee_location: '%image_cuvee_location%'
         image_news_location: '%image_news_location%'
         photo_location: '%photo_location%'
+        image_prize_location: '%image_prize_location%'
     paths:
         # point this wherever your css files live
         '%kernel.project_dir%/public/client/css': css

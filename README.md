@@ -8,6 +8,7 @@
 
 ## Installation
  - Copier le fichier .env : ```cp .env.dist.dev .env```
+ - Build de l'image : ```cd docker && docker build . -t vienais-web```
  - Build du container : ```docker-compose build```
  - Lancement du container :
      * Mode normal : ```docker-compose up```
@@ -26,3 +27,4 @@
     
 ### Commandes
  - Publish assets : php bin/console assets:install --symlink public
+ - Generate css files : ./generate_css_files.sh
